@@ -19,28 +19,21 @@ import xdata.etl.cinder.entity.Test2;
  */
 @Service
 public class TestServiceImpl implements TestService {
-	@Resource(name = "sessionFactory1")
-	private SessionFactory sf1;
-	@Resource(name = "sessionFactory2")
-	private SessionFactory sf2;
+	@Resource(name = "cinderSf")
+	private SessionFactory sf;
 
 	@Override
 	@Transactional
 	public void save() {
 
-		Session s = sf1.openSession();
-
+		Session s = sf.getCurrentSession();
 		Test1 test1 = new Test1();
 		s.save(test1);
 
-		System.out.println(test1.getCreateTime());
-		
 		Test2 test2 = new Test2();
 		test2.setName("test2");
-		
-		sf2.getCurrentSession().save(test2);
-		
-//		throw new RuntimeException("test");
+
+		s.save(test2);
 
 	}
 

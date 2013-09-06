@@ -12,47 +12,34 @@
         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
-
-	<bean id="dataSource1" class="com.atomikos.jdbc.AtomikosDataSourceBean"
-		init-method="init" destroy-method="close">
-		<property name="uniqueResourceName">
-			<value>mysql/dataSource1</value>
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:mysql.properties</value>
+			</list>
 		</property>
-
-		<property name="xaDataSourceClassName">
-			<value>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</value>
-		</property>
-
-		<property name="xaProperties">
-			<props>
-				<prop key="user">root</prop>
-				<prop key="password">test</prop>
-				<prop key="URL">
-					jdbc:mysql://localhost:3306/etl_test?useUnicode=true&amp;characterEncoding=utf8&amp;pinGlobalTxToPhysicalConnection=true
-				</prop>
-			</props>
-		</property>
-		<property name="poolSize" value="3" />
-		<property name="testQuery">
-			<value>SELECT 1</value>
-		</property>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="false" />
 	</bean>
-	<bean id="dataSource2" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+
+	<bean id="cinderDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
 		init-method="init" destroy-method="close">
 		<property name="uniqueResourceName">
-			<value>mysql/dataSource2</value>
+			<value>${cinder.unique.resource.name}</value>
 		</property>
 
 		<property name="xaDataSourceClassName">
-			<value>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</value>
+			<value>${cinder.driverClassName}</value>
 		</property>
 
 		<property name="xaProperties">
 			<props>
-				<prop key="user">root</prop>
-				<prop key="password">test</prop>
+				<prop key="user">${cinder.user}</prop>
+				<prop key="password">${cinder.password}</prop>
 				<prop key="URL">
-					jdbc:mysql://localhost:3306/etl?useUnicode=true&amp;characterEncoding=utf8&amp;pinGlobalTxToPhysicalConnection=true
+					${cinder.url}
 				</prop>
 			</props>
 		</property>
@@ -62,27 +49,30 @@
 		</property>
 	</bean>
 
-	<bean id="sessionFactory1"
+	<bean id="cinderSf"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource1" />
+		<property name="dataSource" ref="cinderDataSource" />
 		<property name="hibernateProperties">
-			<value>
-				hibernate.c3p0.min_size=5
-				hibernate.c3p0.max_size=20
-				hibernate.c3p0.timeout=1800
-				hibernate.c3p0.max_statements=50
-				hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
-				hibernate.show_sql = true
-				hibernate.default_schema = etl
-				hibernate.max_fetch_depth = 3
-				hibernate.default_batch_fetch_size = 8
-				hibernate.id.new_generator_mappings = true
-				hibernate.hbm2ddl.auto=update
-				hibernate.current_session_context_class = jta
-				hibernate.transaction.factory_class=com.atomikos.icatch.jta.hibernate3.AtomikosJTATransactionFactory
-				hibernate.transaction.manager_lookup_class=com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup
+			<props>
+				<prop key="hibernate.c3p0.min_size">${cinder.hibernate.c3p0.min_size}</prop>
+				<prop key="hibernate.c3p0.max_size">${cinder.hibernate.c3p0.max_size}</prop>
+				<prop key="hibernate.c3p0.timeout">${cinder.hibernate.c3p0.timeout}</prop>
+				<prop key="hibernate.c3p0.max_statements">${cinder.hibernate.c3p0.max_statements}</prop>
+				<prop key="hibernate.dialect">${cinder.hibernate.dialect}</prop>
+				<prop key="hibernate.max_fetch_depth">${cinder.hibernate.max_fetch_depth}</prop>
+				<prop key="hibernate.default_batch_fetch_size">${cinder.hibernate.default_batch_fetch_size}</prop>
+				<prop key="hibernate.id.new_generator_mappings">${cinder.hibernate.id.new_generator_mappings}</prop>
 
-			</value>
+				<prop key="hibernate.hbm2ddl.auto">${cinder.hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.current_session_context_class">${cinder.hibernate.current_session_context_class}
+				</prop>
+				<prop key="hibernate.transaction.factory_class">${cinder.hibernate.transaction.factory_class}</prop>
+				<prop key="hibernate.transaction.manager_lookup_class">${cinder.hibernate.transaction.manager_lookup_class}
+				</prop>
+				<prop key="hibernate.show_sql">${cinder.hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${cinder.hibernate.format_sql}</prop>
+			</props>
+
 		</property>
 		<property name="eventListeners">
 			<map>
@@ -90,54 +80,17 @@
 				</entry>
 			</map>
 		</property>
-		<property name="annotatedClasses">
+		<property name="packagesToScan">
 			<list>
-				<value>xdata.etl.cinder.entity.Test1</value>
+				<value>xdata.etl.cinder.entity</value>
 			</list>
 		</property>
 
 	</bean>
-
-	<bean id="sessionFactory2"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource2" />
-		<property name="hibernateProperties">
-			<value>
-				hibernate.c3p0.min_size=5
-				hibernate.c3p0.max_size=20
-				hibernate.c3p0.timeout=1800
-				hibernate.c3p0.max_statements=50
-				hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
-				hibernate.show_sql = true
-				hibernate.default_schema = etl_test
-				hibernate.max_fetch_depth = 3
-				hibernate.default_batch_fetch_size = 8
-				hibernate.id.new_generator_mappings = true
-				hibernate.hbm2ddl.auto=update
-				hibernate.current_session_context_class = jta
-				hibernate.transaction.factory_class=com.atomikos.icatch.jta.hibernate3.AtomikosJTATransactionFactory
-				hibernate.transaction.manager_lookup_class=com.atomikos.icatch.jta.hibernate3.TransactionManagerLookup
-			</value>
-		</property>
-		<property name="eventListeners">
-			<map>
-				<entry key="pre-insert" value-ref="entityHasTimeStampListener">
-				</entry>
-			</map>
-		</property>
-		<property name="annotatedClasses">
-			<list>
-				<value>xdata.etl.cinder.entity.Test2</value>
-			</list>
-		</property>
-
-	</bean>
-
 
 	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"
 		init-method="init" destroy-method="shutdownForce">
 		<constructor-arg>
-			<!-- IMPORTANT: specify all Atomikos properties here -->
 			<props>
 				<prop key="com.atomikos.icatch.service">
 					com.atomikos.icatch.standalone.UserTransactionServiceFactory
@@ -167,4 +120,5 @@
 	<context:annotation-config />
 	<context:component-scan base-package="xdata.etl.cinder" />
 	<tx:annotation-driven transaction-manager="JtaTransactionManager" />
+
 </beans>
