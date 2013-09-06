@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.shared.entity.authority;
+package xdata.etl.cinder.shared.entity.authorize;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -83,18 +83,18 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 		return isOpen;
 	}
 
-	@OneToMany(mappedBy = "requireAuthority", cascade = { CascadeType.REMOVE,
+	@OneToMany(mappedBy = "requireAuthorize", cascade = { CascadeType.REMOVE,
 			CascadeType.DETACH })
 	public Set<Menu> getMenus() {
 		return menus;
 	}
 
-	@ManyToMany(mappedBy = "extraAuthorities", cascade = { CascadeType.MERGE })
+	@ManyToMany(mappedBy = "extraAuthorizes", cascade = { CascadeType.MERGE })
 	public Set<User> getUsers() {
 		return users;
 	}
 
-	@ManyToMany(mappedBy = "authorities", cascade = { CascadeType.REMOVE,
+	@ManyToMany(mappedBy = "authorizes", cascade = { CascadeType.REMOVE,
 			CascadeType.DETACH })
 	public Set<UserGroup> getUserGroups() {
 		return userGroups;

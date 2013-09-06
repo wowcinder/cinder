@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import xdata.etl.cinder.shared.entity.authority.Authorize;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 
 /**
  * @author XuehuiHe

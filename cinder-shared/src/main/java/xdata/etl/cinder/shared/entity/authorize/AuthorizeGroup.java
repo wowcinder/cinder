@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.shared.entity.authority;
+package xdata.etl.cinder.shared.entity.authorize;
 
 import java.io.Serializable;
 import java.util.List;
