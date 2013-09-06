@@ -24,7 +24,7 @@ import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
  * @author XuehuiHe
  * @date 2013年8月2日
  */
-@Table(name = "authority_group")
+@Table(name = "authorize_group")
 @Entity
 public class AuthorizeGroup extends EntityHasTimeStampImpl implements
 		Serializable {
