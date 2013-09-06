@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import xdata.etl.cinder.shared.entity.authority.Authority;
+import xdata.etl.cinder.shared.entity.authority.Authorize;
 
 /**
  * @author XuehuiHe
@@ -24,7 +24,7 @@ public class Menu extends MenuNode {
 
 	private String token;
 
-	private Authority requireAuthority;
+	private Authorize requireAuthorize;
 
 	public Menu() {
 	}
@@ -37,16 +37,16 @@ public class Menu extends MenuNode {
 	}
 
 	@ManyToOne
-	public Authority getRequireAuthority() {
-		return requireAuthority;
+	public Authorize getRequireAuthorize() {
+		return requireAuthorize;
 	}
 
 	public void setToken(String token) {
 		this.token = token;
 	}
 
-	public void setRequireAuthority(Authority requireAuthority) {
-		this.requireAuthority = requireAuthority;
+	public void setRequireAuthorize(Authorize requireAuthorize) {
+		this.requireAuthorize = requireAuthorize;
 	}
 
 }

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
-import xdata.etl.cinder.shared.entity.authority.Authority;
+import xdata.etl.cinder.shared.entity.authority.Authorize;
 
 /**
  * @author XuehuiHe
@@ -35,7 +35,7 @@ public class User extends EntityHasTimeStampImpl implements Serializable {
 	private String email;
 	private String password;
 	private UserGroup userGroup;
-	private List<Authority> extraAuthorities;
+	private List<Authorize> extraAuthorizes;
 
 	public User() {
 	}
@@ -66,9 +66,9 @@ public class User extends EntityHasTimeStampImpl implements Serializable {
 	}
 
 	@ManyToMany
-	@JoinTable(name = "user_to_extra_authority")
-	public List<Authority> getExtraAuthorities() {
-		return extraAuthorities;
+	@JoinTable(name = "user_to_extra_authorize")
+	public List<Authorize> getExtraAuthorizes() {
+		return extraAuthorizes;
 	}
 
 	public void setId(Integer id) {
@@ -87,8 +87,8 @@ public class User extends EntityHasTimeStampImpl implements Serializable {
 		this.userGroup = userGroup;
 	}
 
-	public void setExtraAuthorities(List<Authority> extraAuthorities) {
-		this.extraAuthorities = extraAuthorities;
+	public void setExtraAuthorizes(List<Authorize> extraAuthorizes) {
+		this.extraAuthorizes = extraAuthorizes;
 	}
 
 }

@@ -31,21 +31,21 @@ import xdata.etl.cinder.shared.entity.user.UserGroup;
  * @date 2013年8月2日
  */
 @Entity
-@Table(name = "authority")
-public class Authority extends EntityHasTimeStampImpl implements Serializable {
+@Table(name = "authorize")
+public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 	private static final long serialVersionUID = -7252452619145327784L;
 
 	private Integer id;
 	private String token;
 	private String name;
 	private Integer displayOrder;
-	private AuthorityGroup group;
+	private AuthorizeGroup group;
 	private Boolean isOpen = false;
 	private Set<Menu> menus;
 	private Set<User> users;
 	private Set<UserGroup> userGroups;
 
-	public Authority() {
+	public Authorize() {
 	}
 
 	@Id
@@ -74,7 +74,7 @@ public class Authority extends EntityHasTimeStampImpl implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "gid")
-	public AuthorityGroup getGroup() {
+	public AuthorizeGroup getGroup() {
 		return group;
 	}
 
@@ -116,7 +116,7 @@ public class Authority extends EntityHasTimeStampImpl implements Serializable {
 		this.displayOrder = displayOrder;
 	}
 
-	public void setGroup(AuthorityGroup group) {
+	public void setGroup(AuthorizeGroup group) {
 		this.group = group;
 	}
 

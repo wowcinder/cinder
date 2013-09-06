@@ -26,7 +26,7 @@ import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
  */
 @Table(name = "authority_group")
 @Entity
-public class AuthorityGroup extends EntityHasTimeStampImpl implements
+public class AuthorizeGroup extends EntityHasTimeStampImpl implements
 		Serializable {
 
 	private static final long serialVersionUID = -1351283572556439616L;
@@ -36,9 +36,9 @@ public class AuthorityGroup extends EntityHasTimeStampImpl implements
 
 	private Integer displayOrder;
 
-	private List<Authority> authorities;
+	private List<Authorize> authorizes;
 
-	public AuthorityGroup() {
+	public AuthorizeGroup() {
 	}
 
 	@Id
@@ -60,8 +60,8 @@ public class AuthorityGroup extends EntityHasTimeStampImpl implements
 	}
 
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
-	public List<Authority> getAuthorities() {
-		return authorities;
+	public List<Authorize> getAuthorizes() {
+		return authorizes;
 	}
 
 	public void setId(Integer id) {
@@ -76,8 +76,8 @@ public class AuthorityGroup extends EntityHasTimeStampImpl implements
 		this.displayOrder = displayOrder;
 	}
 
-	public void setAuthorities(List<Authority> authorities) {
-		this.authorities = authorities;
+	public void setAuthorizes(List<Authorize> authorizes) {
+		this.authorizes = authorizes;
 	}
 
 }

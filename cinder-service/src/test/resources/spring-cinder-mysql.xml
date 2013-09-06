@@ -82,7 +82,8 @@
 		</property>
 		<property name="packagesToScan">
 			<list>
-				<value>xdata.etl.cinder.entity</value>
+				<value>xdata.etl.cinder.shared.entity</value>
+				<value>xdata.etl.cinder.hbasemeta.entity</value>
 			</list>
 		</property>
 
