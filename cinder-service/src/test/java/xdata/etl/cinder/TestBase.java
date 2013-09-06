@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date 2013年9月6日
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring-cinder-mysql.xml" })
+@ContextConfiguration(locations = { "classpath:spring-cinder-xa.xml" })
 public abstract class TestBase {
 
 }
