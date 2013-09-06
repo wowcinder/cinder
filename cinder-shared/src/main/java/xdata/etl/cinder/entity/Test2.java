@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import xdata.etl.cinder.common.entity.EntityHasTimeStampImpl;
+import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
 
 @Entity
 @Table(name = "test2")

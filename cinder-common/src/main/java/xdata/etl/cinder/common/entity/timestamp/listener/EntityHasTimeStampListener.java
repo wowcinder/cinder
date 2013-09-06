@@ -1,19 +1,21 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.common.entity.listener;
+package xdata.etl.cinder.common.entity.timestamp.listener;
 
 import java.util.Date;
 
 import org.hibernate.event.PreInsertEvent;
 import org.hibernate.event.PreInsertEventListener;
+import org.springframework.stereotype.Component;
 
-import xdata.etl.cinder.common.entity.EntityHasTimeStamp;
+import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStamp;
 
 /**
  * @author XuehuiHe
  * @date 2013年9月5日
  */
+@Component(value = "entityHasTimeStampListener")
 public class EntityHasTimeStampListener implements PreInsertEventListener {
 
 	private static final long serialVersionUID = 612228253431346177L;
@@ -28,7 +30,7 @@ public class EntityHasTimeStampListener implements PreInsertEventListener {
 			String[] propertyNames = event.getPersister().getEntityMetamodel()
 					.getPropertyNames();
 			Object[] state = event.getState();
-			
+
 			entity.setCreateTime(now);
 			setValue(state, propertyNames, entity.getCreateTimePropertyName(),
 					now, entity);

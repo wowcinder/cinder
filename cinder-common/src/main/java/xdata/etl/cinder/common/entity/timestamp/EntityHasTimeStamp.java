@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.common.entity;
+package xdata.etl.cinder.common.entity.timestamp;
 
 import java.util.Date;
 
