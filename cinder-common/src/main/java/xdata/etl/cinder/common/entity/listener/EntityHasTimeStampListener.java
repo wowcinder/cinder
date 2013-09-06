@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.common.entity.timestamp.listener;
+package xdata.etl.cinder.common.entity.listener;
 
 import java.util.Date;
 
@@ -16,7 +16,8 @@ import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStamp;
  * @date 2013年9月5日
  */
 @Component(value = "entityHasTimeStampListener")
-public class EntityHasTimeStampListener implements PreInsertEventListener {
+public class EntityHasTimeStampListener extends AbstractHibernateEventListener
+		implements PreInsertEventListener {
 
 	private static final long serialVersionUID = 612228253431346177L;
 
@@ -26,29 +27,12 @@ public class EntityHasTimeStampListener implements PreInsertEventListener {
 		if (o instanceof EntityHasTimeStamp) {
 			EntityHasTimeStamp entity = (EntityHasTimeStamp) o;
 			Date now = new Date();
-
-			String[] propertyNames = event.getPersister().getEntityMetamodel()
-					.getPropertyNames();
-			Object[] state = event.getState();
-
 			entity.setCreateTime(now);
-			setValue(state, propertyNames, entity.getCreateTimePropertyName(),
-					now, entity);
+			setValue(event.getState(), event.getPersister()
+					.getEntityMetamodel().getPropertyNames(),
+					entity.getCreateTimePropertyName(), now, entity);
 		}
 		return false;
 	}
 
-	void setValue(Object[] currentState, String[] propertyNames,
-			String propertyToSet, Object value, Object entity) {
-		int index = 0;
-		for (int i = 0; i < propertyNames.length; i++) {
-			if (propertyToSet.equals(propertyNames[i])) {
-				index = i;
-				break;
-			}
-		}
-		if (index >= 0) {
-			currentState[index] = value;
-		}
-	}
 }
