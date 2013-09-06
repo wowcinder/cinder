@@ -7,4 +7,30 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>cinder-business-meta</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-common</artifactId>
+			<version>${cinder.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+		</dependency>
+	</dependencies>
 </project>
