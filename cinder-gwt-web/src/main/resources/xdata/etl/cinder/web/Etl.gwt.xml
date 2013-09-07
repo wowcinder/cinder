@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='etl'>
+	<inherits name='xdata.etl.cinder.gwt.EtlUi' />
+	<entry-point class='xdata.etl.cinder.web.client.Etl' />
+	<source path='client' />
+	<source path='shared' />
+</module>

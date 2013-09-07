@@ -12,6 +12,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-gwt-ui</artifactId>
+			<version>${cinder.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-service</artifactId>
 			<version>${cinder.version}</version>
 		</dependency>
