@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,7 +28,6 @@ import xdata.etl.cinder.shared.entity.user.User;
  * @author XuehuiHe
  * @date 2013年9月6日
  */
-@Service
 public class AuthorizeServiceImpl implements AuthorizeService {
 	private static final String USER_ID_NAME_IN_SESSION = "USERID";
 	private static final String AUTHORIZES_NAME_IN_SESSION = "AUTHORIZES";

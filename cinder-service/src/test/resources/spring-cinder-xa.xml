@@ -17,6 +17,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath:mysql.properties</value>
+				<value>classpath:app.properties</value>
 			</list>
 		</property>
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
@@ -91,6 +92,12 @@
 			</list>
 		</property>
 
+	</bean>
+
+	<bean class="xdata.etl.cinder.service.AuthorizeServiceImpl">
+		<property name="debug">
+			<value>${app.debug}</value>
+		</property>
 	</bean>
 
 	<bean id="PasswordPersistenceEventListener"
