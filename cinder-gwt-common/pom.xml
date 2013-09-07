@@ -22,5 +22,21 @@
 			<classifier>source</classifier>
 			<version>${cinder.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-business-meta</artifactId>
+			<scope>provided</scope>
+			<classifier>source</classifier>
+			<version>${cinder.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-hbase-meta</artifactId>
+			<scope>provided</scope>
+			<classifier>source</classifier>
+			<version>${cinder.version}</version>
+		</dependency>
 	</dependencies>
 </project>

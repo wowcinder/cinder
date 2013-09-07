@@ -89,6 +89,7 @@
 			<list>
 				<value>xdata.etl.cinder.shared.entity</value>
 				<value>xdata.etl.cinder.hbasemeta.entity</value>
+				<value>xdata.etl.cinder.businessmeta.entity</value>
 			</list>
 		</property>
 
