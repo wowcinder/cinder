@@ -33,11 +33,9 @@ public class AuthorizeGroup extends EntityHasTimeStampImpl implements
 
 	private Integer id;
 	private String name;
-
 	private Integer displayOrder;
-
 	private List<Authorize> authorizes;
-
+	
 	public AuthorizeGroup() {
 	}
 

@@ -11,14 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import xdata.etl.cinder.common.entity.password.PasswordPersistence;
 import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
 
@@ -28,7 +31,8 @@ import xdata.etl.cinder.shared.entity.authorize.Authorize;
  */
 @Entity
 @Table(name = "user")
-public class User extends EntityHasTimeStampImpl implements Serializable {
+public class User extends EntityHasTimeStampImpl implements Serializable,
+		PasswordPersistence {
 	private static final long serialVersionUID = -1801720788002068921L;
 
 	private Integer id;
@@ -61,12 +65,13 @@ public class User extends EntityHasTimeStampImpl implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "gid")
 	public UserGroup getUserGroup() {
 		return userGroup;
 	}
 
 	@ManyToMany
-	@JoinTable(name = "user_to_extra_authorize")
+	@JoinTable(name = "user_to_extra_authorize", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns = { @JoinColumn(name = "aid") })
 	public List<Authorize> getExtraAuthorizes() {
 		return extraAuthorizes;
 	}
@@ -91,4 +96,9 @@ public class User extends EntityHasTimeStampImpl implements Serializable {
 		this.extraAuthorizes = extraAuthorizes;
 	}
 
+	@Override
+	@Transient
+	public String getPasswordPropertyName() {
+		return "password";
+	}
 }

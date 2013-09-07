@@ -76,7 +76,11 @@
 		</property>
 		<property name="eventListeners">
 			<map>
-				<entry key="pre-insert" value-ref="entityHasTimeStampListener">
+				<entry key="pre-insert">
+					<list>
+						<ref bean="entityHasTimeStampListener" />
+						<ref bean="PasswordPersistenceEventListener" />
+					</list>
 				</entry>
 			</map>
 		</property>
@@ -87,6 +91,11 @@
 			</list>
 		</property>
 
+	</bean>
+
+	<bean id="PasswordPersistenceEventListener"
+		class="xdata.etl.cinder.common.entity.listener.PasswordPersistenceEventListener">
+		<property name="passwordEncryptor" ref="SimplePasswordEncryptor"></property>
 	</bean>
 
 	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"

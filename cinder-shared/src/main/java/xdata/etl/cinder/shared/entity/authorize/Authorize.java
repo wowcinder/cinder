@@ -6,7 +6,6 @@ package xdata.etl.cinder.shared.entity.authorize;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +39,6 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 	private String name;
 	private Integer displayOrder;
 	private AuthorizeGroup group;
-	private Boolean isOpen = false;
 	private Set<Menu> menus;
 	private Set<User> users;
 	private Set<UserGroup> userGroups;
@@ -68,6 +66,7 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 		return name;
 	}
 
+	@Column(name = "display_order")
 	public Integer getDisplayOrder() {
 		return displayOrder;
 	}
@@ -78,24 +77,17 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 		return group;
 	}
 
-	@Column(columnDefinition = "boolean")
-	public Boolean getIsOpen() {
-		return isOpen;
-	}
-
-	@OneToMany(mappedBy = "requireAuthorize", cascade = { CascadeType.REMOVE,
-			CascadeType.DETACH })
+	@OneToMany(mappedBy = "requireAuthorize")
 	public Set<Menu> getMenus() {
 		return menus;
 	}
 
-	@ManyToMany(mappedBy = "extraAuthorizes", cascade = { CascadeType.MERGE })
+	@ManyToMany(mappedBy = "extraAuthorizes")
 	public Set<User> getUsers() {
 		return users;
 	}
 
-	@ManyToMany(mappedBy = "authorizes", cascade = { CascadeType.REMOVE,
-			CascadeType.DETACH })
+	@ManyToMany(mappedBy = "authorizes")
 	public Set<UserGroup> getUserGroups() {
 		return userGroups;
 	}
@@ -118,10 +110,6 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 
 	public void setGroup(AuthorizeGroup group) {
 		this.group = group;
-	}
-
-	public void setIsOpen(Boolean isOpen) {
-		this.isOpen = isOpen;
 	}
 
 	public void setMenus(Set<Menu> menus) {

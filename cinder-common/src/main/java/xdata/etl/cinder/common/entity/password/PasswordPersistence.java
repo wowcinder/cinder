@@ -8,7 +8,7 @@ package xdata.etl.cinder.common.entity.password;
  * @date 2013年9月6日
  */
 public interface PasswordPersistence {
-	String getPasswrod();
+	String getPassword();
 
 	void setPassword(String password);
 

@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -58,7 +59,7 @@ public class UserGroup extends EntityHasTimeStampImpl implements Serializable {
 	}
 
 	@ManyToMany
-	@JoinTable(name = "user_group_to_authorize")
+	@JoinTable(name = "user_group_to_authorize", joinColumns = { @JoinColumn(name = "gid") }, inverseJoinColumns = { @JoinColumn(name = "aid") })
 	public List<Authorize> getAuthorizes() {
 		return authorizes;
 	}

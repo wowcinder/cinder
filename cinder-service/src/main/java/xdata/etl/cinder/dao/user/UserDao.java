@@ -11,4 +11,6 @@ import xdata.etl.cinder.shared.entity.user.User;
  */
 public interface UserDao {
 	User findUser(String email, String encryptPassword);
+
+	void save(User user);
 }

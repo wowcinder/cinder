@@ -46,14 +46,14 @@ public class PasswordPersistenceEventListener extends
 		if (o instanceof PasswordPersistence) {
 			PasswordPersistence p = (PasswordPersistence) o;
 			String password = null;
-			if (p.getPasswrod() != null) {
+			if (p.getPassword() != null) {
 				password = passwordEncryptor
-						.getEncryptPassword(p.getPasswrod());
+						.getEncryptPassword(p.getPassword());
 			} else {
 				PasswordPersistence old = (PasswordPersistence) event
 						.getPersister().getFactory().openSession()
 						.get(p.getClass(), event.getId());
-				password = old.getPasswrod();
+				password = old.getPassword();
 			}
 			p.setPassword(password);
 			setValue(event.getState(), event.getPersister()
@@ -80,9 +80,9 @@ public class PasswordPersistenceEventListener extends
 		Object o = event.getEntity();
 		if (o instanceof PasswordPersistence) {
 			PasswordPersistence p = (PasswordPersistence) o;
-			if (p != null && p.getPasswrod() != null) {
+			if (p != null && p.getPassword() != null) {
 				String password = passwordEncryptor.getEncryptPassword(p
-						.getPasswrod());
+						.getPassword());
 				p.setPassword(password);
 				setValue(event.getState(), event.getPersister()
 						.getEntityMetamodel().getPropertyNames(),
