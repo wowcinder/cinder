@@ -15,10 +15,29 @@
 			<version>${cinder.version}</version>
 		</dependency>
 
+		<!-- atomikos -->
 		<dependency>
 			<groupId>com.atomikos</groupId>
 			<artifactId>transactions-hibernate3</artifactId>
 		</dependency>
+		<!-- atomikos -->
+		<!-- gwt -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		<!-- /gwt -->
+
+		<!-- gxt -->
+		<dependency>
+			<groupId>com.sencha.gxt</groupId>
+			<artifactId>gxt</artifactId>
+		</dependency>
+		<!-- /gxt -->
 
 		<!-- hibernate -->
 		<dependency>
@@ -38,22 +57,8 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<classifier>sources</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.beanlib</groupId>
-			<artifactId>beanlib-hibernate</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.beanlib</groupId>
-			<artifactId>beanlib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
@@ -64,6 +69,36 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 		<!-- /hibernate -->
+
+		<!-- java source generte api -->
+		<dependency>
+			<groupId>com.sun.codemodel</groupId>
+			<artifactId>codemodel</artifactId>
+		</dependency>
+		<!-- /java source generte api -->
+
+
+		<!-- hadoop -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+
+			<exclusions>
+				<exclusion>
+					<groupId>hsqldb</groupId>
+					<artifactId>hsqldb</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- /hadoop -->
+
+		<!-- hbase -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase</artifactId>
+		</dependency>
+
+		<!-- /hbase -->
 
 		<!-- spring -->
 		<dependency>
@@ -138,6 +173,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+
 		<!-- /others -->
 
 		<!-- log -->
@@ -173,16 +209,14 @@
 		<!-- /provided -->
 
 		<!-- test -->
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- /test -->
