@@ -6,6 +6,7 @@ package xdata.etl.cinder.service;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +21,9 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.Tuple;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.TupleUtil;
 import xdata.etl.cinder.common.entity.password.PasswordEncryptor;
 import xdata.etl.cinder.dao.authorize.AuthorizeDao;
+import xdata.etl.cinder.dao.menu.MenuDao;
 import xdata.etl.cinder.dao.user.UserDao;
+import xdata.etl.cinder.shared.entity.menu.MenuNode;
 import xdata.etl.cinder.shared.entity.user.User;
 
 /**
@@ -38,6 +41,8 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	private UserDao userDao;
 	@Autowired
 	private AuthorizeDao authorizeDao;
+	@Autowired
+	private MenuDao menuDao;
 	@Autowired
 	private PasswordEncryptor passwordEncryptor;
 
@@ -105,6 +110,9 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
 	@Override
 	public boolean isLogin() {
+		if (isDebug()) {
+			return true;
+		}
 		Integer uid = getUserId();
 		if (uid != null) {
 			return true;
@@ -114,6 +122,9 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
 	@Override
 	public boolean isAdmin() {
+		if (isDebug()) {
+			return true;
+		}
 		Integer uid = getUserId();
 		if (uid != null && uid == 0) {
 			return true;
@@ -156,6 +167,16 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
 	public void setDebug(boolean isDebug) {
 		this.isDebug = isDebug;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<MenuNode> getUserMenus() {
+		Integer uid = getUserId();
+		if (isAdmin()) {
+			uid = 0;
+		}
+		return menuDao.getUserMenus(uid);
 	}
 
 }

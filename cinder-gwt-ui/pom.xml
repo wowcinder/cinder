@@ -10,6 +10,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.sun.codemodel</groupId>
+			<artifactId>codemodel</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-shared</artifactId>
 			<version>${cinder.version}</version>
@@ -22,7 +27,7 @@
 			<scope>provided</scope>
 			<version>${cinder.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-common</artifactId>
@@ -30,7 +35,7 @@
 			<scope>provided</scope>
 			<version>${cinder.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-business-meta</artifactId>
@@ -38,7 +43,7 @@
 			<scope>provided</scope>
 			<version>${cinder.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-hbase-meta</artifactId>

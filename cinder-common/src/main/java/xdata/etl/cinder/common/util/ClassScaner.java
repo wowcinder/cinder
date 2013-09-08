@@ -1,4 +1,4 @@
-package xdata.etl.cinder.util;
+package xdata.etl.cinder.common.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,6 +4,9 @@
 package xdata.etl.cinder.service;
 
 import java.lang.reflect.Method;
+import java.util.List;
+
+import xdata.etl.cinder.shared.entity.menu.MenuNode;
 
 /**
  * 认证，授权服务
@@ -23,4 +26,6 @@ public interface AuthorizeService {
 	boolean isAdmin();
 
 	Integer getUserId();
+
+	List<MenuNode> getUserMenus();
 }
