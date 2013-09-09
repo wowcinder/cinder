@@ -14,7 +14,9 @@ import com.google.gwt.editor.client.Editor.Path;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
+import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sun.codemodel.ClassType;
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
@@ -46,11 +48,14 @@ public class PropertiesGenerator {
 		JDefinedClass dc = getjCodeModel()._class(
 				"xdata.etl.cinder.gwt.client.property." + clazz.getSimpleName()
 						+ "Property", ClassType.INTERFACE);
+		JDefinedClass dc2 = getjCodeModel()._class(
+				"xdata.etl.cinder.gwt.client.gridcolumn."
+						+ clazz.getSimpleName() + "ColumnConfig");
 		dc._extends(getjCodeModel().ref(PropertyAccess.class).narrow(
 				jCodeModelUtil.getJType(clazz)));
 		for (Method method : clazz.getMethods()) {
 			if (isDoGeneratePropertyClass(method)) {
-				generatePropertyMethod(dc, method, clazz);
+				generatePropertyMethod(dc, method, clazz, dc2);
 			}
 		}
 		writeGwtInstance(dc);
@@ -64,7 +69,7 @@ public class PropertiesGenerator {
 	}
 
 	public static void generatePropertyMethod(JDefinedClass dc, Method method,
-			Class<?> clazz) throws ClassNotFoundException {
+			Class<?> clazz, JDefinedClass dc2) throws ClassNotFoundException {
 		String name = method.getName().replace("get", "");
 		name = name.substring(0, 1).toLowerCase() + name.substring(1);
 		if (method.isAnnotationPresent(Id.class)) {
@@ -81,6 +86,16 @@ public class PropertiesGenerator {
 						.narrow(jCodeModelUtil.getJType(clazz))
 						.narrow(jCodeModelUtil.getJType(method
 								.getGenericReturnType())), name);
+		JClass columnConfigClass = getjCodeModel().ref(ColumnConfig.class)
+				.narrow(jCodeModelUtil.getJType(clazz))
+				.narrow(jCodeModelUtil.getJType(method.getGenericReturnType()));
+		JMethod jMethod = dc2.method(JMod.PUBLIC + JMod.STATIC,
+				columnConfigClass, name);
+
+		jMethod.body()._return(
+				JExpr._new(columnConfigClass)
+						.arg(propertyUtils.staticRef(dc.name()).invoke(name))
+						.arg(JExpr.lit(200)).arg(name));
 	}
 
 	private static boolean isDoGeneratePropertyClass(Method method) {

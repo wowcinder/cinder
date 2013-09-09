@@ -11,7 +11,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.TupleUtil;
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
+import xdata.etl.cinder.shared.entity.authorize.AuthorizeGroup;
+import xdata.etl.cinder.shared.exception.SharedException;
+
 @Repository
 public class AuthorizeDaoImpl implements AuthorizeDao {
 	@Resource(name = "cinderSf")
@@ -42,6 +46,53 @@ public class AuthorizeDaoImpl implements AuthorizeDao {
 
 	Session getSession() {
 		return sf.getCurrentSession();
+	}
+
+	@Override
+	public Integer queryAuthorizeGroupIdByName(String group) {
+		Session s = getSession();
+		AuthorizeGroup ag = (AuthorizeGroup) s
+				.createCriteria(AuthorizeGroup.class)
+				.add(Restrictions.eq("name", group)).uniqueResult();
+		if (ag != null) {
+			return ag.getId();
+		}
+		return null;
+	}
+
+	@Override
+	public AuthorizeGroup saveAuthorizeGroup(AuthorizeGroup ag) {
+		getSession().save(ag);
+		return ag;
+	}
+
+	@Override
+	public Authorize queryAuthorizeIdByName(Integer agId, String name) {
+		Session s = getSession();
+		Authorize a = (Authorize) s.createCriteria(Authorize.class)
+				.add(Restrictions.eq("name", name)).createAlias("group", "ag")
+				.add(Restrictions.eq("ag.id", agId)).uniqueResult();
+		if (a != null) {
+			return a;
+		}
+		return null;
+	}
+
+	@Override
+	public Authorize saveAuthorize(Authorize authority) {
+		refreshToken(authority);
+		getSession().save(authority);
+		return authority;
+	}
+
+	private void refreshToken(Authorize v) {
+		Session sesion = getSession();
+		if (v.getGroup() == null || v.getGroup().getId() == null) {
+			throw new SharedException("AuthorityGroup can't be null");
+		}
+		v.setGroup((AuthorizeGroup) sesion.load(AuthorizeGroup.class, v
+				.getGroup().getId()));
+		v.setToken(TupleUtil.getToken(v.getGroup().getName(), v.getName()));
 	}
 
 }

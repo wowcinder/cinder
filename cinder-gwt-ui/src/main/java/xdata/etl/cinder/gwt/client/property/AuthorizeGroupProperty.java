@@ -3,11 +3,9 @@ package xdata.etl.cinder.gwt.client.property;
 
 import java.util.Date;
 import java.util.List;
-
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.authorize.AuthorizeGroup;
 
