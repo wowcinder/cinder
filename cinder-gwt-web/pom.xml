@@ -19,8 +19,8 @@
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-gwt-server</artifactId>
 			<version>${cinder.version}</version>
+			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-gwt-ui</artifactId>
@@ -45,6 +45,7 @@
 			<artifactId>cinder-shared</artifactId>
 			<classifier>sources</classifier>
 			<version>${cinder.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>xdata.etl</groupId>
