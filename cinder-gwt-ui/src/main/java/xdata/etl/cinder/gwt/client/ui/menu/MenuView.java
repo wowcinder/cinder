@@ -37,11 +37,6 @@ public class MenuView extends HorizontalLayoutContainer implements CenterView {
 				return item.getId() + "";
 			}
 		});
-		tree = new MenuTree(store);
-		tree.getElement().getStyle().setTextAlign(TextAlign.LEFT);
-		tree.setWidth(300);
-
-		add(tree, new HorizontalLayoutData(-1, 1, new Margins(10)));
 	}
 
 	@Override
@@ -70,6 +65,11 @@ public class MenuView extends HorizontalLayoutContainer implements CenterView {
 		for (MenuNode menuNode : result) {
 			initData(null, menuNode);
 		}
+		tree = new MenuTree(store);
+		tree.getElement().getStyle().setTextAlign(TextAlign.LEFT);
+		tree.setWidth(300);
+
+		add(tree, new HorizontalLayoutData(-1, 1, new Margins(10)));
 		forceLayout();
 	}
 

@@ -134,7 +134,8 @@
 		<property name="transactionManager" ref="AtomikosTransactionManager" />
 		<property name="userTransaction" ref="AtomikosUserTransaction" />
 	</bean>
-
+	
+	<aop:aspectj-autoproxy />
 	<context:annotation-config />
 	<context:component-scan base-package="xdata.etl.cinder" />
 	<tx:annotation-driven transaction-manager="JtaTransactionManager" />

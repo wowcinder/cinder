@@ -129,8 +129,7 @@ public class GxtMenu extends com.sencha.gxt.widget.core.client.menu.Menu {
 			public void onSelection(SelectionEvent<Item> event) {
 				final MenuNode node = tree.getSelectionModel()
 						.getSelectedItem();
-				RpcServiceUtils.MenuRpcService.deleteMenuNode(
-						node.getId(),
+				RpcServiceUtils.MenuRpcService.deleteMenuNode(node.getId(),
 						new RpcAsyncCallback<Void>() {
 							@Override
 							public void _onSuccess(Void t) {
@@ -208,8 +207,11 @@ public class GxtMenu extends com.sencha.gxt.widget.core.client.menu.Menu {
 
 							@Override
 							protected void _call(MenuGroup t) {
-								MenuGroup parent = (MenuGroup) tree.getStore()
-										.findModel(selectItem.getParent());
+								MenuGroup parent = null;
+								if (selectItem.getParent() != null) {
+									parent = (MenuGroup) tree.getStore()
+											.findModel(selectItem.getParent());
+								}
 								int index = tree.getStore().indexOf(selectItem) + 1;
 								if (parent == null) {
 									tree.getStore().insert(index, t);

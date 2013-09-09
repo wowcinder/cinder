@@ -55,7 +55,7 @@ public class RpcAspect implements Ordered {
 		if (jp.getTarget() instanceof OpenRpcService) {
 			return;
 		}
-		if (authorizeService.isLogin()) {
+		if (!authorizeService.isLogin()) {
 			throw new NoLoginException();
 		}
 		MethodSignature signature = (MethodSignature) jp.getSignature();

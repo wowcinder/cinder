@@ -17,6 +17,7 @@ public class MenuEditor extends CinderEditor<Menu> {
 	}
 
 	TextField name;
+	TextField token;
 
 	public MenuEditor() {
 		super(DRIVER, "菜单");
@@ -38,6 +39,9 @@ public class MenuEditor extends CinderEditor<Menu> {
 	protected void _initView() {
 		name = new TextField();
 		layoutContainer.add(new FieldLabel(name, "name"), vd);
+		
+		token = new TextField();
+		layoutContainer.add(new FieldLabel(token, "token"), vd);
 	}
 
 }

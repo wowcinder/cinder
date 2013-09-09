@@ -80,9 +80,11 @@ public class MenuDaoImpl implements MenuDao {
 		return (T) node;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends MenuNode> T update(MenuNode node) {
-		return save(node);
+		getSession().update(node);
+		return (T) node;
 	}
 
 	@Override
@@ -105,15 +107,17 @@ public class MenuDaoImpl implements MenuDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MenuNode> moveMenuNode(Integer parentId, Integer prevId,
 			List<MenuNode> nodes) {
-		List<MenuNode> result = new ArrayList<MenuNode>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			MenuNode node = nodes.get(i);
-			result.add(update(parentId, prevId, node));
+			update(parentId, prevId, node);
 		}
-		return result;
+		
+		Criteria c = getSession().createCriteria(MenuNode.class);
+		return c.list();
 	}
 
 	private MenuNode update(Integer parentId, Integer prevId, MenuNode node) {

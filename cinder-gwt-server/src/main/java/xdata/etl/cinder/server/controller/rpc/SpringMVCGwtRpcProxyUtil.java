@@ -32,7 +32,7 @@ public class SpringMVCGwtRpcProxyUtil implements
 
 	protected void initPathToClass() {
 		try {
-			ClassScaner scaner = new ClassScaner("xdata.etl.web.shared.service");
+			ClassScaner scaner = new ClassScaner("xdata.etl.cinder.gwt.client.service");
 			for (Class<?> clazz : scaner.getClazzes()) {
 				if (clazz.isAnnotationPresent(RemoteServiceRelativePath.class)) {
 					RemoteServiceRelativePath path = clazz
