@@ -69,36 +69,24 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 		<!-- /hibernate -->
-
-		<!-- java source generte api -->
-		<dependency>
-			<groupId>com.sun.codemodel</groupId>
-			<artifactId>codemodel</artifactId>
-		</dependency>
-		<!-- /java source generte api -->
-
-
-		<!-- hadoop -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-core</artifactId>
-
 			<exclusions>
 				<exclusion>
 					<groupId>hsqldb</groupId>
 					<artifactId>hsqldb</artifactId>
 				</exclusion>
+				<exclusion>
+					<artifactId>core</artifactId>
+					<groupId>org.eclipse.jdt</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- /hadoop -->
-
-		<!-- hbase -->
 		<dependency>
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase</artifactId>
 		</dependency>
-
-		<!-- /hbase -->
 
 		<!-- spring -->
 		<dependency>
