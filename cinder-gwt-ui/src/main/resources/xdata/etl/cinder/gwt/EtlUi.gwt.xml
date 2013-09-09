@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 
-	<!-- <inherits name="org.hibernate.validator.HibernateValidator" /> <generate-with 
-		class="xdata.etl.web.rebind.CenterViewFinderGenerator"> <when-type-assignable 
-		class="xdata.etl.web.client.app.CenterViewFinder" /> </generate-with> -->
+	<inherits name="org.hibernate.validator.HibernateValidator" />
+
 	<inherits name='xdata.etl.cinder.common.Common' />
 	<inherits name='xdata.etl.cinder.Shared' />
 	<inherits name='xdata.etl.cinder.hbasemeta.HbaseMeta' />
-	
+
+	<generate-with class="xdata.etl.cinder.gwt.rebind.CenterViewFinderGenerator">
+		<when-type-assignable
+			class="xdata.etl.cinder.gwt.client.app.CenterViewFinder" />
+	</generate-with>
+
+	<replace-with
+		class="xdata.etl.cinder.gwt.client.common.BeanValidatorFactory">
+		<when-type-is class="javax.validation.ValidatorFactory" />
+	</replace-with>
+
 	<source path='client' />
 	<source path='shared' />
 

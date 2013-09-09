@@ -19,12 +19,6 @@
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-gwt-server</artifactId>
 			<version>${cinder.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-codec</artifactId>
-					<groupId>commons-codec</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>xdata.etl</groupId>
@@ -86,8 +80,6 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
-			<scope>provided</scope> </dependency> -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -138,13 +130,6 @@
 			<groupId>com.sencha.gxt</groupId>
 			<artifactId>uibinder-bridge</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt.inject</groupId>
-			<artifactId>gin</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>

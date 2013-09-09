@@ -1,13 +1,11 @@
-package xdata.etl.cinder.dao.menu;
+package xdata.etl.cinder.service;
 
 import java.util.List;
 
 import xdata.etl.cinder.shared.annotations.MenuToken;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
 
-public interface MenuDao {
-
-	List<MenuNode> getUserMenus(Integer uid);
+public interface MenuService {
 
 	<T extends MenuNode> T save(MenuNode node);
 
@@ -19,5 +17,4 @@ public interface MenuDao {
 			List<MenuNode> menuNodes);
 
 	void insertMenuConfig(List<MenuToken> tokens);
-
 }

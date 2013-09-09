@@ -4,54 +4,45 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class RpcAsyncCallback<T> implements AsyncCallback<T> {
 
+	public static <T> RpcAsyncCallback<T> dealWith(final GwtCallBack<T> deal) {
+		return new RpcAsyncCallback<T>() {
+			@Override
+			public void _onSuccess(T t) {
+				deal.call(t);
+			}
+
+			@Override
+			public void _onFailure(Throwable caught) {
+				super._onFailure(caught);
+				deal.fail();
+			}
+		};
+	}
+
 	public RpcAsyncCallback() {
-		preSend();
+		pre();
 	}
 
-	public void preSend() {
-
-	}
-
-	public void preArrive() {
+	public void pre() {
 
 	}
 
-	public void postArrive() {
-
-	}
-
-	public void preFailure(Throwable caught) {
-
-	}
-
-	public void postFailure(Throwable caught) {
-
-	}
-
-	public void preSuccess(T t) {
-
-	}
-
-	public void postSuccess(T t) {
+	public void post() {
 
 	}
 
 	@Override
 	public void onFailure(Throwable caught) {
-		preArrive();
-		preFailure(caught);
+		pre();
 		_onFailure(caught);
-		postFailure(caught);
-		postArrive();
+		post();
 	}
 
 	@Override
 	public void onSuccess(T t) {
-		preArrive();
-		preSuccess(t);
+		pre();
 		_onSuccess(t);
-		postSuccess(t);
-		postArrive();
+		post();
 	}
 
 	public void _onFailure(Throwable caught) {

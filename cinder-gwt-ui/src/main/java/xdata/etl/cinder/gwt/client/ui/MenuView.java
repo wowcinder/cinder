@@ -109,8 +109,6 @@ public class MenuView extends Tree<MenuNode, MenuNode> {
 		setCell(cell);
 		setWidth(300);
 		getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-		init();
 	}
 
 	@Override

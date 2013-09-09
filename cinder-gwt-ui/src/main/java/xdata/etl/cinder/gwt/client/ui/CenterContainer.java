@@ -8,7 +8,7 @@ import xdata.etl.cinder.gwt.client.app.EtlView;
 import xdata.etl.cinder.gwt.client.event.CenterViewCloseEvent;
 import xdata.etl.cinder.gwt.client.ui.CenterView.CenterViewConfig;
 
-import com.google.gwt.core.shared.GWT;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
@@ -23,9 +23,8 @@ public class CenterContainer extends TabPanel {
 
 	private EtlView etlView;
 
-	private static  CenterViewFinder viewFinder ;
-//	= GWT
-//			.create(CenterViewFinder.class);
+	private static CenterViewFinder viewFinder = GWT
+			.create(CenterViewFinder.class);
 
 	public CenterContainer(EtlView etlView) {
 		this.etlView = etlView;

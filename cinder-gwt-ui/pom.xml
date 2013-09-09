@@ -61,8 +61,11 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
-			<scope>provided</scope> </dependency> -->
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -112,12 +115,6 @@
 		<dependency>
 			<groupId>com.sencha.gxt</groupId>
 			<artifactId>uibinder-bridge</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.gwt.inject</groupId>
-			<artifactId>gin</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

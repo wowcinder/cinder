@@ -38,23 +38,7 @@ public interface CenterView extends IsWidget {
 			this.token = token;
 		}
 	}
-
 	public CenterViewConfig getCenterViewConfig();
 
 	public void setCenterViewConfig(CenterViewConfig centerViewConfig);
-
-	// protected void doAddAttachHandler() {
-	// this.addAttachHandler(new Handler() {
-	// @Override
-	// public void onAttachOrDetach(AttachEvent event) {
-	// if (event.isAttached()) {
-	// getEventBus().fireEvent(
-	// new CenterVievChangeEvent(
-	// CenterVievChangeEvent.From.RIGHT,
-	// getToken()));
-	// }
-	// }
-	// });
-	// }
-
 }
