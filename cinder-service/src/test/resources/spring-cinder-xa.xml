@@ -83,6 +83,12 @@
 						<ref bean="PasswordPersistenceEventListener" />
 					</list>
 				</entry>
+
+				<entry key="pre-update">
+					<list>
+						<ref bean="PasswordPersistenceEventListener" />
+					</list>
+				</entry>
 			</map>
 		</property>
 		<property name="packagesToScan">

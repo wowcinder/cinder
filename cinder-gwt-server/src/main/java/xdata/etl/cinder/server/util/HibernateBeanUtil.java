@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -87,6 +88,7 @@ public class HibernateBeanUtil {
 							// TODO
 						}
 						dealBean(field.get(t));
+
 					} else {
 						dealBean(o);
 					}
@@ -119,6 +121,7 @@ public class HibernateBeanUtil {
 		ret.add(Double.class);
 		ret.add(Void.class);
 		ret.add(String.class);
+		ret.add(Date.class);
 		return ret;
 	}
 

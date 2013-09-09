@@ -16,13 +16,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
 import xdata.etl.cinder.common.shared.entity.password.PasswordPersistence;
-import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
+import xdata.etl.cinder.common.shared.entity.password.PasswordPersistenceImplHasTimeStamp;
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
 
 /**
@@ -31,13 +30,12 @@ import xdata.etl.cinder.shared.entity.authorize.Authorize;
  */
 @Entity
 @Table(name = "user")
-public class User extends EntityHasTimeStampImpl implements Serializable,
-		PasswordPersistence {
+public class User extends PasswordPersistenceImplHasTimeStamp implements
+		Serializable, PasswordPersistence {
 	private static final long serialVersionUID = -1801720788002068921L;
 
 	private Integer id;
 	private String email;
-	private String password;
 	private UserGroup userGroup;
 	private List<Authorize> extraAuthorizes;
 
@@ -55,13 +53,6 @@ public class User extends EntityHasTimeStampImpl implements Serializable,
 	@Length(min = 1, max = 50)
 	public String getEmail() {
 		return email;
-	}
-
-	@Column(length = 32)
-	@NotNull
-	@Length(min = 32, max = 32)
-	public String getPassword() {
-		return password;
 	}
 
 	@ManyToOne
@@ -84,10 +75,6 @@ public class User extends EntityHasTimeStampImpl implements Serializable,
 		this.email = email;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public void setUserGroup(UserGroup userGroup) {
 		this.userGroup = userGroup;
 	}
@@ -96,9 +83,4 @@ public class User extends EntityHasTimeStampImpl implements Serializable,
 		this.extraAuthorizes = extraAuthorizes;
 	}
 
-	@Override
-	@Transient
-	public String getPasswordPropertyName() {
-		return "password";
-	}
 }

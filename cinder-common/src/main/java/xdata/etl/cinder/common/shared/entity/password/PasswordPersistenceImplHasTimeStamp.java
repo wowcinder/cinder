@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.common.shared.entity.timestamp;
+package xdata.etl.cinder.common.shared.entity.password;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,17 +14,20 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.AccessType;
 
+import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStamp;
+
 /**
  * @author XuehuiHe
- * @date 2013年9月5日
+ * @date 2013年9月9日
  */
 @MappedSuperclass
-public class EntityHasTimeStampImpl implements EntityHasTimeStamp, Serializable {
-	private static final long serialVersionUID = 8015695606291655333L;
+public class PasswordPersistenceImplHasTimeStamp extends
+		PasswordPersistenceImpl implements Serializable, EntityHasTimeStamp {
+	private static final long serialVersionUID = 3750991196000295395L;
 	private Date createTime;
 	private Date lastUpdateTimeStamp;
 
-	public EntityHasTimeStampImpl() {
+	public PasswordPersistenceImplHasTimeStamp() {
 	}
 
 	@Override
@@ -58,5 +61,4 @@ public class EntityHasTimeStampImpl implements EntityHasTimeStamp, Serializable 
 	public String getCreateTimePropertyName() {
 		return "createTime";
 	}
-
 }

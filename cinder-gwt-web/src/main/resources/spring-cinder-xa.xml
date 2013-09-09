@@ -83,6 +83,12 @@
 						<ref bean="PasswordPersistenceEventListener" />
 					</list>
 				</entry>
+
+				<entry key="pre-update">
+					<list>
+						<ref bean="PasswordPersistenceEventListener" />
+					</list>
+				</entry>
 			</map>
 		</property>
 		<property name="packagesToScan">
@@ -134,7 +140,7 @@
 		<property name="transactionManager" ref="AtomikosTransactionManager" />
 		<property name="userTransaction" ref="AtomikosUserTransaction" />
 	</bean>
-	
+
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
 	<context:component-scan base-package="xdata.etl.cinder" />

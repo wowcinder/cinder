@@ -3,10 +3,6 @@
  */
 package xdata.etl.cinder.common.hibernate.listener;
 
-import org.hibernate.event.PostInsertEvent;
-import org.hibernate.event.PostInsertEventListener;
-import org.hibernate.event.PostUpdateEvent;
-import org.hibernate.event.PostUpdateEventListener;
 import org.hibernate.event.PreInsertEvent;
 import org.hibernate.event.PreInsertEventListener;
 import org.hibernate.event.PreUpdateEvent;
@@ -21,24 +17,11 @@ import xdata.etl.cinder.common.shared.entity.password.PasswordPersistence;
  */
 public class PasswordPersistenceEventListener extends
 		AbstractHibernateEventListener implements PreInsertEventListener,
-		PostInsertEventListener, PreUpdateEventListener,
-		PostUpdateEventListener {
+		PreUpdateEventListener {
 
 	private static final long serialVersionUID = 1010463485417784456L;
 
 	private PasswordEncryptor passwordEncryptor;
-
-	@Override
-	public void onPostUpdate(PostUpdateEvent event) {
-		Object o = event.getEntity();
-		if (o instanceof PasswordPersistence) {
-			PasswordPersistence p = (PasswordPersistence) o;
-			p.setPassword(null);
-			setValue(event.getState(), event.getPersister()
-					.getEntityMetamodel().getPropertyNames(),
-					p.getPasswordPropertyName(), null, p);
-		}
-	}
 
 	@Override
 	public boolean onPreUpdate(PreUpdateEvent event) {
@@ -61,18 +44,6 @@ public class PasswordPersistenceEventListener extends
 					p.getPasswordPropertyName(), password, p);
 		}
 		return false;
-	}
-
-	@Override
-	public void onPostInsert(PostInsertEvent event) {
-		Object o = event.getEntity();
-		if (o instanceof PasswordPersistence) {
-			PasswordPersistence p = (PasswordPersistence) o;
-			p.setPassword(null);
-			setValue(event.getState(), event.getPersister()
-					.getEntityMetamodel().getPropertyNames(),
-					p.getPasswordPropertyName(), null, p);
-		}
 	}
 
 	@Override

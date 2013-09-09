@@ -1,0 +1,87 @@
+/*
+ * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
+ */
+package xdata.etl.cinder.gwt.client.common.grid;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import xdata.etl.cinder.gwt.client.common.paging.EtlPagingLoader;
+import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.sencha.gxt.core.client.IdentityValueProvider;
+import com.sencha.gxt.core.client.Style.SelectionMode;
+import com.sencha.gxt.data.client.loader.RpcProxy;
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.loader.LoadResultListStoreBinding;
+import com.sencha.gxt.data.shared.loader.PagingLoadResult;
+import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
+import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
+import com.sencha.gxt.widget.core.client.grid.Grid;
+
+/**
+ * @author XuehuiHe
+ * @date 2013年9月9日
+ */
+public abstract class GridConfigProvider<M> implements RpcProxyLoad<M> {
+
+	protected final List<ColumnConfig<M, ?>> columns;
+	protected final CheckBoxSelectionModel<M> sm;
+
+	public GridConfigProvider() {
+		columns = new ArrayList<ColumnConfig<M, ?>>();
+
+		IdentityValueProvider<M> identity = new IdentityValueProvider<M>();
+		sm = new CheckBoxSelectionModel<M>(identity);
+		sm.setSelectionMode(SelectionMode.MULTI);
+		initColumnConfig();
+	}
+
+	protected abstract void initColumnConfig();
+
+	public List<ColumnConfig<M, ?>> getColumns(boolean isMultiSelect) {
+		List<ColumnConfig<M, ?>> columns = new ArrayList<ColumnConfig<M, ?>>();
+		if (isMultiSelect) {
+			columns.add(sm.getColumn());
+		}
+		columns.addAll(this.columns);
+		return columns;
+	}
+
+	public void initSelectModel(Grid<M> grid, boolean isMultiSelect) {
+		if (isMultiSelect) {
+			grid.setSelectionModel(sm);
+		}
+	}
+
+	public void initPaging(Grid<M> grid, GridConfig gridConfig) {
+		if (gridConfig.isPaging()) {
+			grid.setLoader(getPagingLoader(grid.getStore()));
+		}
+	}
+
+	public RpcProxyLoad<M> getLoader() {
+		return this;
+	}
+
+	public RpcProxy<EtlPagingLoadConfigBean, PagingLoadResult<M>> getProxy() {
+		return new RpcProxy<EtlPagingLoadConfigBean, PagingLoadResult<M>>() {
+			@Override
+			public void load(EtlPagingLoadConfigBean loadConfig,
+					AsyncCallback<PagingLoadResult<M>> callback) {
+				getLoader().load(loadConfig, callback);
+			}
+		};
+	}
+
+	public EtlPagingLoader<M> getPagingLoader(ListStore<M> store) {
+		EtlPagingLoader<M> loader = new EtlPagingLoader<M>(getProxy());
+		loader.setRemoteSort(true);
+		if (store != null) {
+			loader.addLoadHandler(new LoadResultListStoreBinding<EtlPagingLoadConfigBean, M, PagingLoadResult<M>>(
+					store));
+		}
+		return loader;
+	}
+}

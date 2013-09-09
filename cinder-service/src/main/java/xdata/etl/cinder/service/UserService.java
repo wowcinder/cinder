@@ -1,26 +1,22 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.dao.user;
+package xdata.etl.cinder.service;
 
 import java.util.List;
-
-import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
+import com.sencha.gxt.data.shared.loader.PagingLoadResult;
+
 /**
  * @author XuehuiHe
- * @date 2013年9月6日
+ * @date 2013年9月9日
  */
-public interface UserDao {
-	User findUser(String email, String encryptPassword);
-
-	void save(User user);
-	
+public interface UserService {
 	User saveUser(User user);
 
 	User updateUser(User user);
