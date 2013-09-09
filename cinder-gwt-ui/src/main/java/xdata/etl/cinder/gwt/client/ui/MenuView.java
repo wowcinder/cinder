@@ -88,7 +88,7 @@ public class MenuView extends Tree<MenuNode, MenuNode> {
 						getEtlView().fireEvent(
 								new MenuClickEvent(((Menu) value).getToken()));
 					} else if (value instanceof LogoutMenu) {
-						RpcServiceUtils.AuthorizeRpcService
+						RpcServiceUtils.OpenAuthorizeRpcService
 								.logout(new AsyncCallback<Void>() {
 
 									@Override
@@ -177,7 +177,7 @@ public class MenuView extends Tree<MenuNode, MenuNode> {
 	}
 
 	private void getData() {
-		RpcServiceUtils.AuthorizeRpcService
+		RpcServiceUtils.OpenAuthorizeRpcService
 				.getUserMenus(new RpcAsyncCallback<List<MenuNode>>() {
 					@Override
 					public void _onSuccess(List<MenuNode> t) {

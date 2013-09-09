@@ -1,5 +1,6 @@
 package xdata.etl.cinder.dao.authorize;
 
+import java.util.List;
 import java.util.Set;
 
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
@@ -31,4 +32,9 @@ public interface AuthorizeDao {
 	 * @param authority
 	 */
 	Authorize saveAuthorize(Authorize authority);
+
+	/**
+	 * @return
+	 */
+	List<Authorize> getAllocatenbeAuthorizes();
 }

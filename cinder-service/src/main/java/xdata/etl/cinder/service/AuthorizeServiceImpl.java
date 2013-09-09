@@ -217,4 +217,10 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			}
 		}
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Authorize> getAllocatenbeAuthorizes() {
+		return authorizeDao.getAllocatenbeAuthorizes();
+	}
 }

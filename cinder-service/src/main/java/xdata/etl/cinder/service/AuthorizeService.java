@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import xdata.etl.cinder.bean.ScanedAccessAuthority;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
 
 /**
@@ -32,4 +33,9 @@ public interface AuthorizeService {
 	List<MenuNode> getUserMenus();
 
 	void deal(Set<ScanedAccessAuthority> list);
+
+	/**
+	 * @return
+	 */
+	List<Authorize> getAllocatenbeAuthorizes();
 }

@@ -88,7 +88,7 @@ public class MenuTree extends Tree<MenuNode, String> {
 	}
 
 	public void reset() {
-		RpcServiceUtils.AuthorizeRpcService
+		RpcServiceUtils.OpenAuthorizeRpcService
 				.getUserMenus(new RpcAsyncCallback<List<MenuNode>>() {
 
 					@Override

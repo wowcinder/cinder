@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -93,6 +94,14 @@ public class AuthorizeDaoImpl implements AuthorizeDao {
 		v.setGroup((AuthorizeGroup) sesion.load(AuthorizeGroup.class, v
 				.getGroup().getId()));
 		v.setToken(TupleUtil.getToken(v.getGroup().getName(), v.getName()));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Authorize> getAllocatenbeAuthorizes() {
+		return getSession().createCriteria(Authorize.class)
+				.createAlias("group", "group").addOrder(Order.asc("group.id"))
+				.addOrder(Order.asc("id")).list();
 	}
 
 }
