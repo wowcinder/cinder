@@ -6,7 +6,7 @@ package xdata.etl.cinder.gwt.client.ui.menu;
 import java.util.List;
 
 import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
-import xdata.etl.cinder.gwt.client.ui.SimpleCenterView;
+import xdata.etl.cinder.gwt.client.ui.CenterView;
 import xdata.etl.cinder.gwt.client.ui.menu.tree.MenuTree;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.shared.annotations.MenuToken;
@@ -19,13 +19,14 @@ import com.google.gwt.dom.client.Style.TextAlign;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.TreeStore;
+import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 
 /**
  * @author XuehuiHe
  * @date 2013年8月9日
  */
 @MenuToken(name = "菜单管理", token = "menu_manager", group = "菜单管理")
-public class MenuView extends SimpleCenterView {
+public class MenuView extends HorizontalLayoutContainer implements CenterView {
 	private MenuTree tree;
 	private final TreeStore<MenuNode> store;
 
@@ -90,6 +91,18 @@ public class MenuView extends SimpleCenterView {
 				initData(menuNode, node);
 			}
 		}
+	}
+
+	private CenterViewConfig centerViewConfig;
+
+	@Override
+	public CenterViewConfig getCenterViewConfig() {
+		return centerViewConfig;
+	}
+
+	@Override
+	public void setCenterViewConfig(CenterViewConfig centerViewConfig) {
+		this.centerViewConfig = centerViewConfig;
 	}
 
 }

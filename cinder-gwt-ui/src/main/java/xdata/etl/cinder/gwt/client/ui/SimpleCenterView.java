@@ -3,14 +3,18 @@
  */
 package xdata.etl.cinder.gwt.client.ui;
 
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 /**
  * @author XuehuiHe
  * @date 2013年9月9日
  */
-public class SimpleCenterView extends HorizontalLayoutContainer implements
+public class SimpleCenterView extends VerticalLayoutContainer implements
 		CenterView {
+
+	protected static final VerticalLayoutData vd = new VerticalLayoutData(1, -1);
+	protected static final VerticalLayoutData mainVd = new VerticalLayoutData(
+			1, 1);
 
 	private CenterViewConfig centerViewConfig;
 
