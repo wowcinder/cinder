@@ -5,7 +5,9 @@ package xdata.etl.cinder.service;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Set;
 
+import xdata.etl.cinder.bean.ScanedAccessAuthority;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
 
 /**
@@ -28,4 +30,6 @@ public interface AuthorizeService {
 	Integer getUserId();
 
 	List<MenuNode> getUserMenus();
+
+	void deal(Set<ScanedAccessAuthority> list);
 }

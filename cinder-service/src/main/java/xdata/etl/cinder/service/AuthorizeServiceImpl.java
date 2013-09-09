@@ -4,6 +4,7 @@
 package xdata.etl.cinder.service;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +20,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.Tuple;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.TupleUtil;
+import xdata.etl.cinder.bean.ScanedAccessAuthority;
 import xdata.etl.cinder.common.shared.entity.password.PasswordEncryptor;
 import xdata.etl.cinder.dao.authorize.AuthorizeDao;
 import xdata.etl.cinder.dao.menu.MenuDao;
 import xdata.etl.cinder.dao.user.UserDao;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
+import xdata.etl.cinder.shared.entity.authorize.AuthorizeGroup;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
 import xdata.etl.cinder.shared.entity.user.User;
 
@@ -179,4 +183,38 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 		return menuDao.getUserMenus(uid);
 	}
 
+	@Override
+	@Transactional
+	public void deal(Set<ScanedAccessAuthority> list) {
+		HashMap<String, List<ScanedAccessAuthority>> map = new HashMap<String, List<ScanedAccessAuthority>>();
+		for (ScanedAccessAuthority scanedAccessAuthority : list) {
+			String group = scanedAccessAuthority.getGroup();
+			if (!map.containsKey(group)) {
+				map.put(group, new ArrayList<ScanedAccessAuthority>());
+			}
+			map.get(group).add(scanedAccessAuthority);
+		}
+		for (String group : map.keySet()) {
+			List<ScanedAccessAuthority> items = map.get(group);
+			Integer gid = authorizeDao.queryAuthorizeGroupIdByName(group);
+			AuthorizeGroup ag = new AuthorizeGroup();
+			ag.setName(group);
+			if (gid != null) {
+				ag.setId(gid);
+			} else {
+				authorizeDao.saveAuthorizeGroup(ag);
+			}
+
+			for (ScanedAccessAuthority scanedAccessAuthority : items) {
+				Authorize old = authorizeDao.queryAuthorizeIdByName(ag.getId(),
+						scanedAccessAuthority.getValue());
+				if (old == null) {
+					Authorize authority = new Authorize();
+					authority.setGroup(ag);
+					authority.setName(scanedAccessAuthority.getValue());
+					authorizeDao.saveAuthorize(authority);
+				}
+			}
+		}
+	}
 }
