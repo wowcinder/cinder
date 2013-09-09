@@ -31,8 +31,8 @@ public class PropertiesGenerator {
 		propertyUtils = getjCodeModel()._class(PropertyUtils.class.getName());
 
 		ClassScaner scaner = new ClassScaner("xdata.etl.cinder.shared.entity",
-				"xdata.etl.cinder.hbasemeta.entity",
-				"xdata.etl.cinder.businessmeta.entity");
+				"xdata.etl.cinder.hbasemeta.shared.entity",
+				"xdata.etl.cinder.businessmeta.shared.entity");
 		for (Class<?> clazz : scaner.getClazzes()) {
 			if (clazz.isAnnotationPresent(Entity.class)) {
 				generatePropertyClass(clazz);

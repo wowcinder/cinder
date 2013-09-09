@@ -3,11 +3,13 @@ package xdata.etl.cinder.gwt.client.property;
 
 import java.util.Date;
 import java.util.List;
+
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import xdata.etl.cinder.hbasemeta.entity.base.HbaseTable;
-import xdata.etl.cinder.hbasemeta.entity.base.HbaseTableVersion;
+
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 
 public interface HbaseTableProperty
     extends PropertyAccess<HbaseTable>

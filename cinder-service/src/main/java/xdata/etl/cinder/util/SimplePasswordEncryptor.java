@@ -3,7 +3,7 @@ package xdata.etl.cinder.util;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
-import xdata.etl.cinder.common.entity.password.PasswordEncryptor;
+import xdata.etl.cinder.common.shared.entity.password.PasswordEncryptor;
 
 @Service("SimplePasswordEncryptor")
 public class SimplePasswordEncryptor implements PasswordEncryptor {

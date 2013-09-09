@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import xdata.etl.cinder.common.entity.timestamp.EntityHasTimeStampImpl;
+import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
 
 /**
  * @author XuehuiHe

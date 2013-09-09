@@ -23,8 +23,9 @@ public class CenterContainer extends TabPanel {
 
 	private EtlView etlView;
 
-	private static final CenterViewFinder viewFinder = GWT
-			.create(CenterViewFinder.class);
+	private static  CenterViewFinder viewFinder ;
+//	= GWT
+//			.create(CenterViewFinder.class);
 
 	public CenterContainer(EtlView etlView) {
 		this.etlView = etlView;

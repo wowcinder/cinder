@@ -19,7 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.Tuple;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.TupleUtil;
-import xdata.etl.cinder.common.entity.password.PasswordEncryptor;
+import xdata.etl.cinder.common.shared.entity.password.PasswordEncryptor;
 import xdata.etl.cinder.dao.authorize.AuthorizeDao;
 import xdata.etl.cinder.dao.menu.MenuDao;
 import xdata.etl.cinder.dao.user.UserDao;

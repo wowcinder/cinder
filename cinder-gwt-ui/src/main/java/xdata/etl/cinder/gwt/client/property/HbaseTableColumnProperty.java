@@ -2,11 +2,13 @@
 package xdata.etl.cinder.gwt.client.property;
 
 import java.util.Date;
+
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import xdata.etl.cinder.hbasemeta.entity.base.HbaseTableColumn;
-import xdata.etl.cinder.hbasemeta.entity.base.HbaseTableVersion;
+
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 
 public interface HbaseTableColumnProperty
     extends PropertyAccess<HbaseTableColumn>

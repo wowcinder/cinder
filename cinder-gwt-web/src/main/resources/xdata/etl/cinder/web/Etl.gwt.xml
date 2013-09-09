@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='etl'>
+
+
+
+
+	<inherits name='com.google.gwt.user.User' />
+	<!-- <inherits name='com.google.gwt.activity.Activity' />
+	<inherits name='com.google.gwt.place.Place' />
+	<inherits name="com.google.gwt.inject.Inject" /> -->
+	<inherits name="com.google.gwt.editor.Editor" />
+
+
+
+	<inherits name='com.sencha.gxt.ui.GXT' />
+	<inherits name='com.sencha.gxt.theme.blue.Blue' />
+	
+	
 	<inherits name='xdata.etl.cinder.gwt.EtlUi' />
+<!-- 
+	<add-linker name="xsiframe" />
+	<set-configuration-property name="devModeRedirectEnabled"
+		value="true" /> -->
+
 	<entry-point class='xdata.etl.cinder.web.client.Etl' />
+
+
 	<source path='client' />
 	<source path='shared' />
 </module>

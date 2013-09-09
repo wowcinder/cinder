@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xdata.etl.cinder.TestBase;
-import xdata.etl.cinder.common.entity.password.PasswordEncryptor;
+import xdata.etl.cinder.common.shared.entity.password.PasswordEncryptor;
 import xdata.etl.cinder.dao.user.UserDao;
 import xdata.etl.cinder.shared.entity.user.User;
 

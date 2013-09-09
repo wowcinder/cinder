@@ -24,7 +24,6 @@
 			<groupId>xdata.etl</groupId>
 			<artifactId>cinder-shared</artifactId>
 			<classifier>sources</classifier>
-			<scope>provided</scope>
 			<version>${cinder.version}</version>
 		</dependency>
 
