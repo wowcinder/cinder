@@ -13,39 +13,66 @@ public class UserColumnConfig {
 
 
     public static ColumnConfig<User, String> email() {
-        return new ColumnConfig<User, String>(PropertyUtils.UserProperty.email(), 200, "email");
+        ColumnConfig<User, String> email = new ColumnConfig<User, String>(PropertyUtils.UserProperty.email(), 200, "email");
+        email.setSortable(false);
+        email.setMenuDisabled(true);
+        return email;
     }
 
     public static ColumnConfig<User, UserGroup> userGroup() {
-        return new ColumnConfig<User, UserGroup>(PropertyUtils.UserProperty.userGroup(), 200, "userGroup");
+        ColumnConfig<User, UserGroup> userGroup = new ColumnConfig<User, UserGroup>(PropertyUtils.UserProperty.userGroup(), 200, "userGroup");
+        userGroup.setSortable(false);
+        userGroup.setMenuDisabled(true);
+        return userGroup;
     }
 
     public static ColumnConfig<User, List<Authorize>> extraAuthorizes() {
-        return new ColumnConfig<User, List<Authorize>>(PropertyUtils.UserProperty.extraAuthorizes(), 200, "extraAuthorizes");
-    }
-
-    public static ColumnConfig<User, String> passwordPropertyName() {
-        return new ColumnConfig<User, String>(PropertyUtils.UserProperty.passwordPropertyName(), 200, "passwordPropertyName");
+        ColumnConfig<User, List<Authorize>> extraAuthorizes = new ColumnConfig<User, List<Authorize>>(PropertyUtils.UserProperty.extraAuthorizes(), 200, "extraAuthorizes");
+        extraAuthorizes.setSortable(false);
+        extraAuthorizes.setMenuDisabled(true);
+        return extraAuthorizes;
     }
 
     public static ColumnConfig<User, Integer> id() {
-        return new ColumnConfig<User, Integer>(PropertyUtils.UserProperty.id(), 200, "id");
-    }
-
-    public static ColumnConfig<User, String> password() {
-        return new ColumnConfig<User, String>(PropertyUtils.UserProperty.password(), 200, "password");
+        ColumnConfig<User, Integer> id = new ColumnConfig<User, Integer>(PropertyUtils.UserProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<User, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<User, Date>(PropertyUtils.UserProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<User, Date> lastUpdateTimeStamp = new ColumnConfig<User, Date>(PropertyUtils.UserProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<User, Date> createTime() {
-        return new ColumnConfig<User, Date>(PropertyUtils.UserProperty.createTime(), 200, "createTime");
+        ColumnConfig<User, Date> createTime = new ColumnConfig<User, Date>(PropertyUtils.UserProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<User, String> createTimePropertyName() {
-        return new ColumnConfig<User, String>(PropertyUtils.UserProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<User, String> createTimePropertyName = new ColumnConfig<User, String>(PropertyUtils.UserProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
+    }
+
+    public static ColumnConfig<User, String> passwordPropertyName() {
+        ColumnConfig<User, String> passwordPropertyName = new ColumnConfig<User, String>(PropertyUtils.UserProperty.passwordPropertyName(), 200, "passwordPropertyName");
+        passwordPropertyName.setSortable(false);
+        passwordPropertyName.setMenuDisabled(true);
+        return passwordPropertyName;
+    }
+
+    public static ColumnConfig<User, String> password() {
+        ColumnConfig<User, String> password = new ColumnConfig<User, String>(PropertyUtils.UserProperty.password(), 200, "password");
+        password.setSortable(false);
+        password.setMenuDisabled(true);
+        return password;
     }
 
 }

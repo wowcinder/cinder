@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserGroup updateUserGroup(UserGroup userGroup) {
-		return userDao.saveUserGroup(userGroup);
+		return userDao.updateUserGroup(userGroup);
 	}
 
 	@Override
@@ -58,9 +58,28 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public PagingLoadResult<User> paging(EtlPagingLoadConfigBean config)
+	public PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
 			throws SharedException {
-		return userDao.paging(config);
+		return userDao.pagingUser(config);
+	}
+
+	@Override
+	@Transactional
+	public void deleteUsers(List<Integer> ids) throws SharedException {
+		userDao.deleteUsers(ids);
+	}
+
+	@Override
+	@Transactional
+	public void deleteUserGroups(List<Integer> ids) throws SharedException {
+		userDao.deleteUserGroups(ids);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public PagingLoadResult<UserGroup> pagingUserGroup(
+			EtlPagingLoadConfigBean config) throws SharedException {
+		return userDao.pagingUserGroup(config);
 	}
 
 }

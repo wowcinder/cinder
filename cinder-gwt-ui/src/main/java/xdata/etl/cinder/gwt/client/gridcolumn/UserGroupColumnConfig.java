@@ -13,31 +13,52 @@ public class UserGroupColumnConfig {
 
 
     public static ColumnConfig<UserGroup, List<User>> users() {
-        return new ColumnConfig<UserGroup, List<User>>(PropertyUtils.UserGroupProperty.users(), 200, "users");
+        ColumnConfig<UserGroup, List<User>> users = new ColumnConfig<UserGroup, List<User>>(PropertyUtils.UserGroupProperty.users(), 200, "users");
+        users.setSortable(false);
+        users.setMenuDisabled(true);
+        return users;
     }
 
     public static ColumnConfig<UserGroup, List<Authorize>> authorizes() {
-        return new ColumnConfig<UserGroup, List<Authorize>>(PropertyUtils.UserGroupProperty.authorizes(), 200, "authorizes");
+        ColumnConfig<UserGroup, List<Authorize>> authorizes = new ColumnConfig<UserGroup, List<Authorize>>(PropertyUtils.UserGroupProperty.authorizes(), 200, "authorizes");
+        authorizes.setSortable(false);
+        authorizes.setMenuDisabled(true);
+        return authorizes;
     }
 
     public static ColumnConfig<UserGroup, String> name() {
-        return new ColumnConfig<UserGroup, String>(PropertyUtils.UserGroupProperty.name(), 200, "name");
+        ColumnConfig<UserGroup, String> name = new ColumnConfig<UserGroup, String>(PropertyUtils.UserGroupProperty.name(), 200, "name");
+        name.setSortable(false);
+        name.setMenuDisabled(true);
+        return name;
     }
 
     public static ColumnConfig<UserGroup, Integer> id() {
-        return new ColumnConfig<UserGroup, Integer>(PropertyUtils.UserGroupProperty.id(), 200, "id");
+        ColumnConfig<UserGroup, Integer> id = new ColumnConfig<UserGroup, Integer>(PropertyUtils.UserGroupProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<UserGroup, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<UserGroup, Date>(PropertyUtils.UserGroupProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<UserGroup, Date> lastUpdateTimeStamp = new ColumnConfig<UserGroup, Date>(PropertyUtils.UserGroupProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<UserGroup, Date> createTime() {
-        return new ColumnConfig<UserGroup, Date>(PropertyUtils.UserGroupProperty.createTime(), 200, "createTime");
+        ColumnConfig<UserGroup, Date> createTime = new ColumnConfig<UserGroup, Date>(PropertyUtils.UserGroupProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<UserGroup, String> createTimePropertyName() {
-        return new ColumnConfig<UserGroup, String>(PropertyUtils.UserGroupProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<UserGroup, String> createTimePropertyName = new ColumnConfig<UserGroup, String>(PropertyUtils.UserGroupProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
     }
 
 }

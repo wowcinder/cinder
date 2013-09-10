@@ -15,47 +15,80 @@ public class AuthorizeColumnConfig {
 
 
     public static ColumnConfig<Authorize, String> token() {
-        return new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.token(), 200, "token");
+        ColumnConfig<Authorize, String> token = new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.token(), 200, "token");
+        token.setSortable(false);
+        token.setMenuDisabled(true);
+        return token;
     }
 
     public static ColumnConfig<Authorize, Integer> displayOrder() {
-        return new ColumnConfig<Authorize, Integer>(PropertyUtils.AuthorizeProperty.displayOrder(), 200, "displayOrder");
+        ColumnConfig<Authorize, Integer> displayOrder = new ColumnConfig<Authorize, Integer>(PropertyUtils.AuthorizeProperty.displayOrder(), 200, "displayOrder");
+        displayOrder.setSortable(false);
+        displayOrder.setMenuDisabled(true);
+        return displayOrder;
     }
 
     public static ColumnConfig<Authorize, Set<Menu>> menus() {
-        return new ColumnConfig<Authorize, Set<Menu>>(PropertyUtils.AuthorizeProperty.menus(), 200, "menus");
+        ColumnConfig<Authorize, Set<Menu>> menus = new ColumnConfig<Authorize, Set<Menu>>(PropertyUtils.AuthorizeProperty.menus(), 200, "menus");
+        menus.setSortable(false);
+        menus.setMenuDisabled(true);
+        return menus;
     }
 
     public static ColumnConfig<Authorize, Set<User>> users() {
-        return new ColumnConfig<Authorize, Set<User>>(PropertyUtils.AuthorizeProperty.users(), 200, "users");
+        ColumnConfig<Authorize, Set<User>> users = new ColumnConfig<Authorize, Set<User>>(PropertyUtils.AuthorizeProperty.users(), 200, "users");
+        users.setSortable(false);
+        users.setMenuDisabled(true);
+        return users;
     }
 
     public static ColumnConfig<Authorize, Set<UserGroup>> userGroups() {
-        return new ColumnConfig<Authorize, Set<UserGroup>>(PropertyUtils.AuthorizeProperty.userGroups(), 200, "userGroups");
+        ColumnConfig<Authorize, Set<UserGroup>> userGroups = new ColumnConfig<Authorize, Set<UserGroup>>(PropertyUtils.AuthorizeProperty.userGroups(), 200, "userGroups");
+        userGroups.setSortable(false);
+        userGroups.setMenuDisabled(true);
+        return userGroups;
     }
 
     public static ColumnConfig<Authorize, String> name() {
-        return new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.name(), 200, "name");
+        ColumnConfig<Authorize, String> name = new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.name(), 200, "name");
+        name.setSortable(false);
+        name.setMenuDisabled(true);
+        return name;
     }
 
     public static ColumnConfig<Authorize, Integer> id() {
-        return new ColumnConfig<Authorize, Integer>(PropertyUtils.AuthorizeProperty.id(), 200, "id");
+        ColumnConfig<Authorize, Integer> id = new ColumnConfig<Authorize, Integer>(PropertyUtils.AuthorizeProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<Authorize, AuthorizeGroup> group() {
-        return new ColumnConfig<Authorize, AuthorizeGroup>(PropertyUtils.AuthorizeProperty.group(), 200, "group");
+        ColumnConfig<Authorize, AuthorizeGroup> group = new ColumnConfig<Authorize, AuthorizeGroup>(PropertyUtils.AuthorizeProperty.group(), 200, "group");
+        group.setSortable(false);
+        group.setMenuDisabled(true);
+        return group;
     }
 
     public static ColumnConfig<Authorize, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<Authorize, Date>(PropertyUtils.AuthorizeProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<Authorize, Date> lastUpdateTimeStamp = new ColumnConfig<Authorize, Date>(PropertyUtils.AuthorizeProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<Authorize, Date> createTime() {
-        return new ColumnConfig<Authorize, Date>(PropertyUtils.AuthorizeProperty.createTime(), 200, "createTime");
+        ColumnConfig<Authorize, Date> createTime = new ColumnConfig<Authorize, Date>(PropertyUtils.AuthorizeProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<Authorize, String> createTimePropertyName() {
-        return new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<Authorize, String> createTimePropertyName = new ColumnConfig<Authorize, String>(PropertyUtils.AuthorizeProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
     }
 
 }

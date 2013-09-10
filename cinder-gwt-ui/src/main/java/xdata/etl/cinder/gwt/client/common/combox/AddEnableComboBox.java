@@ -43,10 +43,10 @@ public abstract class AddEnableComboBox<T> extends ComboBox<T> {
 
 	protected abstract boolean isAddItem(T selectItem);
 
-	protected abstract T newInstance();
+	protected abstract T newComboxInstance();
 
 	protected EditEvent<T> getEditEvent() {
-		return new EditEvent<T>(newInstance(), getCreateItemCallback());
+		return new EditEvent<T>(newComboxInstance(), getCreateItemCallback());
 	}
 
 	protected GwtCallBack<T> getCreateItemCallback() {

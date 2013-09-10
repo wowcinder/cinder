@@ -13,39 +13,66 @@ public class MenuColumnConfig {
 
 
     public static ColumnConfig<Menu, String> token() {
-        return new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.token(), 200, "token");
+        ColumnConfig<Menu, String> token = new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.token(), 200, "token");
+        token.setSortable(false);
+        token.setMenuDisabled(true);
+        return token;
     }
 
     public static ColumnConfig<Menu, Authorize> requireAuthorize() {
-        return new ColumnConfig<Menu, Authorize>(PropertyUtils.MenuProperty.requireAuthorize(), 200, "requireAuthorize");
+        ColumnConfig<Menu, Authorize> requireAuthorize = new ColumnConfig<Menu, Authorize>(PropertyUtils.MenuProperty.requireAuthorize(), 200, "requireAuthorize");
+        requireAuthorize.setSortable(false);
+        requireAuthorize.setMenuDisabled(true);
+        return requireAuthorize;
     }
 
     public static ColumnConfig<Menu, MenuNode> prev() {
-        return new ColumnConfig<Menu, MenuNode>(PropertyUtils.MenuProperty.prev(), 200, "prev");
+        ColumnConfig<Menu, MenuNode> prev = new ColumnConfig<Menu, MenuNode>(PropertyUtils.MenuProperty.prev(), 200, "prev");
+        prev.setSortable(false);
+        prev.setMenuDisabled(true);
+        return prev;
     }
 
     public static ColumnConfig<Menu, String> name() {
-        return new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.name(), 200, "name");
+        ColumnConfig<Menu, String> name = new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.name(), 200, "name");
+        name.setSortable(false);
+        name.setMenuDisabled(true);
+        return name;
     }
 
     public static ColumnConfig<Menu, MenuGroup> parent() {
-        return new ColumnConfig<Menu, MenuGroup>(PropertyUtils.MenuProperty.parent(), 200, "parent");
+        ColumnConfig<Menu, MenuGroup> parent = new ColumnConfig<Menu, MenuGroup>(PropertyUtils.MenuProperty.parent(), 200, "parent");
+        parent.setSortable(false);
+        parent.setMenuDisabled(true);
+        return parent;
     }
 
     public static ColumnConfig<Menu, Integer> id() {
-        return new ColumnConfig<Menu, Integer>(PropertyUtils.MenuProperty.id(), 200, "id");
+        ColumnConfig<Menu, Integer> id = new ColumnConfig<Menu, Integer>(PropertyUtils.MenuProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<Menu, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<Menu, Date>(PropertyUtils.MenuProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<Menu, Date> lastUpdateTimeStamp = new ColumnConfig<Menu, Date>(PropertyUtils.MenuProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<Menu, Date> createTime() {
-        return new ColumnConfig<Menu, Date>(PropertyUtils.MenuProperty.createTime(), 200, "createTime");
+        ColumnConfig<Menu, Date> createTime = new ColumnConfig<Menu, Date>(PropertyUtils.MenuProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<Menu, String> createTimePropertyName() {
-        return new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<Menu, String> createTimePropertyName = new ColumnConfig<Menu, String>(PropertyUtils.MenuProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
     }
 
 }

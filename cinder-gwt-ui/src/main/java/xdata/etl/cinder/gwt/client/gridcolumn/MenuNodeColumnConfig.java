@@ -11,31 +11,52 @@ public class MenuNodeColumnConfig {
 
 
     public static ColumnConfig<MenuNode, MenuNode> prev() {
-        return new ColumnConfig<MenuNode, MenuNode>(PropertyUtils.MenuNodeProperty.prev(), 200, "prev");
+        ColumnConfig<MenuNode, MenuNode> prev = new ColumnConfig<MenuNode, MenuNode>(PropertyUtils.MenuNodeProperty.prev(), 200, "prev");
+        prev.setSortable(false);
+        prev.setMenuDisabled(true);
+        return prev;
     }
 
     public static ColumnConfig<MenuNode, String> name() {
-        return new ColumnConfig<MenuNode, String>(PropertyUtils.MenuNodeProperty.name(), 200, "name");
+        ColumnConfig<MenuNode, String> name = new ColumnConfig<MenuNode, String>(PropertyUtils.MenuNodeProperty.name(), 200, "name");
+        name.setSortable(false);
+        name.setMenuDisabled(true);
+        return name;
     }
 
     public static ColumnConfig<MenuNode, MenuGroup> parent() {
-        return new ColumnConfig<MenuNode, MenuGroup>(PropertyUtils.MenuNodeProperty.parent(), 200, "parent");
+        ColumnConfig<MenuNode, MenuGroup> parent = new ColumnConfig<MenuNode, MenuGroup>(PropertyUtils.MenuNodeProperty.parent(), 200, "parent");
+        parent.setSortable(false);
+        parent.setMenuDisabled(true);
+        return parent;
     }
 
     public static ColumnConfig<MenuNode, Integer> id() {
-        return new ColumnConfig<MenuNode, Integer>(PropertyUtils.MenuNodeProperty.id(), 200, "id");
+        ColumnConfig<MenuNode, Integer> id = new ColumnConfig<MenuNode, Integer>(PropertyUtils.MenuNodeProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<MenuNode, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<MenuNode, Date>(PropertyUtils.MenuNodeProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<MenuNode, Date> lastUpdateTimeStamp = new ColumnConfig<MenuNode, Date>(PropertyUtils.MenuNodeProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<MenuNode, Date> createTime() {
-        return new ColumnConfig<MenuNode, Date>(PropertyUtils.MenuNodeProperty.createTime(), 200, "createTime");
+        ColumnConfig<MenuNode, Date> createTime = new ColumnConfig<MenuNode, Date>(PropertyUtils.MenuNodeProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<MenuNode, String> createTimePropertyName() {
-        return new ColumnConfig<MenuNode, String>(PropertyUtils.MenuNodeProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<MenuNode, String> createTimePropertyName = new ColumnConfig<MenuNode, String>(PropertyUtils.MenuNodeProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
     }
 
 }

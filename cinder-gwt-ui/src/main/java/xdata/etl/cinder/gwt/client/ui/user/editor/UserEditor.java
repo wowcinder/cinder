@@ -40,13 +40,13 @@ public class UserEditor extends CinderEditor<User> {
 
 	@Override
 	protected void _update(User t) {
-		RpcServiceUtils.UserRpcService.updateUser(t,
+		RpcServiceUtils.UserRpcService.updateUser(t, t.getPassword(),
 				getSaveOrUpdateAsyncCallback());
 	}
 
 	@Override
 	protected void _add(User t) {
-		RpcServiceUtils.UserRpcService.saveUser(t,
+		RpcServiceUtils.UserRpcService.saveUser(t, t.getPassword(),
 				getSaveOrUpdateAsyncCallback());
 	}
 
@@ -55,7 +55,7 @@ public class UserEditor extends CinderEditor<User> {
 		email = new TextField();
 		layoutContainer.add(new FieldLabel(email, "email"), vd);
 		password = new TextField();
-		layoutContainer.add(new FieldLabel(password, "name"), vd);
+		layoutContainer.add(new FieldLabel(password, "password"), vd);
 		userGroup = new UserGroupCombox();
 		layoutContainer.add(new FieldLabel(userGroup, "group"), vd);
 	}

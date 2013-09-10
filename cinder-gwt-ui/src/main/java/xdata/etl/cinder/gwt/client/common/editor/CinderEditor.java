@@ -101,6 +101,7 @@ public abstract class CinderEditor<T> extends Widget implements Editor<T>,
 	protected void update(T t) {
 		if (!SimpleCinderValidator.Instance.validate(t)) {
 			postSaveOrUpdate();
+			return;
 		}
 		_update(t);
 	}
@@ -108,6 +109,7 @@ public abstract class CinderEditor<T> extends Widget implements Editor<T>,
 	protected void add(T t) {
 		if (!SimpleCinderValidator.Instance.validate(t)) {
 			postSaveOrUpdate();
+			return;
 		}
 		_add(t);
 	}

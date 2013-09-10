@@ -21,19 +21,19 @@ public interface UserProperty
 
     public ValueProvider<User, List<Authorize>> extraAuthorizes();
 
-    public ValueProvider<User, String> passwordPropertyName();
-
     @com.google.gwt.editor.client.Editor.Path("id")
     public ModelKeyProvider<User> key();
 
     public ValueProvider<User, Integer> id();
-
-    public ValueProvider<User, String> password();
 
     public ValueProvider<User, Date> lastUpdateTimeStamp();
 
     public ValueProvider<User, Date> createTime();
 
     public ValueProvider<User, String> createTimePropertyName();
+
+    public ValueProvider<User, String> passwordPropertyName();
+
+    public ValueProvider<User, String> password();
 
 }

@@ -3,15 +3,16 @@
  */
 package xdata.etl.cinder.server.rpc;
 
-import java.util.Date;
 import java.util.List;
 
+import org.hibernate.validator.engine.ValidationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.UserRpcService;
+import xdata.etl.cinder.server.CinderValidator;
 import xdata.etl.cinder.service.UserService;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
@@ -32,13 +33,17 @@ public class UserRpcServiceImpl implements UserRpcService {
 
 	@Override
 	@AuthorizeAnnotation("添加用户")
-	public User saveUser(User user) {
+	public User saveUser(User user, String password) {
+		user.setPassword(password);
+		CinderValidator.validate(user);
 		return userService.saveUser(user);
 	}
 
 	@Override
 	@AuthorizeAnnotation("修改用户")
-	public User updateUser(User user) {
+	public User updateUser(User user, String password) {
+		user.setPassword(password);
+		CinderValidator.validate(user);
 		return userService.updateUser(user);
 	}
 
@@ -62,13 +67,32 @@ public class UserRpcServiceImpl implements UserRpcService {
 
 	@Override
 	@AuthorizeAnnotation("查询用户")
-	public PagingLoadResult<User> paging(EtlPagingLoadConfigBean config)
+	public PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
 			throws SharedException {
-		return userService.paging(config);
+		return userService.pagingUser(config);
 	}
 
 	@Override
-	public Date dummyDate() {
+	public ValidationSupport dummy() {
 		return null;
+	}
+
+	@Override
+	@AuthorizeAnnotation("删除用户")
+	public void deleteUsers(List<Integer> ids) throws SharedException {
+		userService.deleteUsers(ids);
+	}
+
+	@Override
+	@AuthorizeAnnotation("删除用户组")
+	public void deleteUserGroups(List<Integer> ids) throws SharedException {
+		userService.deleteUserGroups(ids);
+	}
+
+	@Override
+	@AuthorizeAnnotation("查询用户组")
+	public PagingLoadResult<UserGroup> pagingUserGroup(
+			EtlPagingLoadConfigBean config) throws SharedException {
+		return userService.pagingUserGroup(config);
 	}
 }

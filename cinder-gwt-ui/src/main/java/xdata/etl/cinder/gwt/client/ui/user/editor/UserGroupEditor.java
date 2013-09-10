@@ -17,8 +17,6 @@ import com.sencha.gxt.widget.core.client.form.TextField;
  * @date 2013年9月9日
  */
 public class UserGroupEditor extends CinderEditor<UserGroup> {
-	private static final Driver DRIVER = GWT.create(Driver.class);
-
 	public interface Driver extends
 			SimpleBeanEditorDriver<UserGroup, UserGroupEditor> {
 
@@ -31,7 +29,7 @@ public class UserGroupEditor extends CinderEditor<UserGroup> {
 	 * @param baseHeadingText
 	 */
 	public UserGroupEditor() {
-		super(DRIVER, "用户组");
+		super(GWT.<Driver> create(Driver.class), "用户组");
 	}
 
 	@Override

@@ -27,6 +27,13 @@ public interface UserService {
 
 	List<UserGroup> getUserGroupListForCombox();
 
-	PagingLoadResult<User> paging(EtlPagingLoadConfigBean config)
+	PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
+			throws SharedException;
+
+	void deleteUsers(List<Integer> ids) throws SharedException;
+
+	void deleteUserGroups(List<Integer> ids) throws SharedException;
+
+	PagingLoadResult<UserGroup> pagingUserGroup(EtlPagingLoadConfigBean config)
 			throws SharedException;
 }

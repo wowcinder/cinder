@@ -3,12 +3,17 @@
  */
 package xdata.etl.cinder.gwt.client.ui.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xdata.etl.cinder.gwt.client.common.GwtCallBack;
+import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
 import xdata.etl.cinder.gwt.client.common.event.EditEvent;
 import xdata.etl.cinder.gwt.client.common.grid.HeaderBar;
 import xdata.etl.cinder.gwt.client.ui.SimpleCenterView;
 import xdata.etl.cinder.gwt.client.ui.user.editor.UserEditor;
 import xdata.etl.cinder.gwt.client.ui.user.grid.UserGrid;
+import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.shared.annotations.MenuToken;
 import xdata.etl.cinder.shared.entity.user.User;
 
@@ -53,10 +58,31 @@ public class UserView extends SimpleCenterView {
 			@Override
 			public void onSelect(SelectEvent event) {
 				headerBar.getDelBt().disable();
+				final List<User> list = getGrid().getSelectionModel()
+						.getSelectedItems();
+				if (list.size() == 0) {
+					headerBar.getDelBt().enable();
+				} else {
+					List<Integer> ids = new ArrayList<Integer>();
+					for (User user : list) {
+						ids.add(user.getId());
+					}
+					RpcServiceUtils.UserRpcService.deleteUserGroups(ids,
+							RpcAsyncCallback.dealWith(new GwtCallBack<Void>() {
+								@Override
+								protected void _call(Void t) {
+									for (User user : list) {
+										getGrid().getStore().remove(user);
+									}
+								}
 
-				// TODO
-
-				headerBar.getDelBt().enable();
+								@Override
+								protected void post() {
+									super.post();
+									headerBar.getDelBt().enable();
+								}
+							}));
+				}
 			}
 		});
 
@@ -69,9 +95,9 @@ public class UserView extends SimpleCenterView {
 
 							@Override
 							protected void _call(User t) {
-								getGrid().getStore().commitChanges();
+								getGrid().getStore().update(t);
 							}
-						}));
+						}, true));
 			}
 		});
 	}

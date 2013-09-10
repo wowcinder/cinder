@@ -23,6 +23,7 @@ import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JVar;
 
 public class PropertiesGenerator {
 	private static JCodeModelUtil jCodeModelUtil;
@@ -91,11 +92,15 @@ public class PropertiesGenerator {
 				.narrow(jCodeModelUtil.getJType(method.getGenericReturnType()));
 		JMethod jMethod = dc2.method(JMod.PUBLIC + JMod.STATIC,
 				columnConfigClass, name);
-
-		jMethod.body()._return(
+		JVar jVar = jMethod.body().decl(
+				columnConfigClass,
+				name,
 				JExpr._new(columnConfigClass)
 						.arg(propertyUtils.staticRef(dc.name()).invoke(name))
 						.arg(JExpr.lit(200)).arg(name));
+		jMethod.body().invoke(jVar, "setSortable").arg(JExpr.lit(false));
+		jMethod.body().invoke(jVar, "setMenuDisabled").arg(JExpr.lit(true));
+		jMethod.body()._return(jVar);
 	}
 
 	private static boolean isDoGeneratePropertyClass(Method method) {

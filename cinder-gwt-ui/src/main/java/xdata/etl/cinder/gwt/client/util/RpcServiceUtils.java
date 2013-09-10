@@ -1,12 +1,11 @@
 
 package xdata.etl.cinder.gwt.client.util;
 
+import com.google.gwt.core.client.GWT;
 import xdata.etl.cinder.gwt.client.service.AuthorizeRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.MenuRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.OpenAuthorizeRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.UserRpcServiceAsync;
-
-import com.google.gwt.core.client.GWT;
 
 public class RpcServiceUtils {
 

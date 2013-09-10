@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
- */
 package xdata.etl.cinder.gwt.client.ui.user.grid;
 
 import java.util.Date;
@@ -8,10 +5,9 @@ import java.util.Date;
 import xdata.etl.cinder.gwt.client.common.cell.SimpleSafeHtmlRenderer;
 import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfigProvider;
-import xdata.etl.cinder.gwt.client.gridcolumn.UserColumnConfig;
+import xdata.etl.cinder.gwt.client.gridcolumn.UserGroupColumnConfig;
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
-import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -21,49 +17,40 @@ import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 
-/**
- * @author XuehuiHe
- * @date 2013年9月9日
- */
-public class UserGrid extends CinderGrid<User> {
-
+public class UserGroupGrid extends CinderGrid<UserGroup> {
 	public static final DateTimeFormat DF = DateTimeFormat
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
-	public static final GridConfigProvider<User> CONFIG_PROVIDER = new GridConfigProvider<User>() {
+	public static final GridConfigProvider<UserGroup> CONFIG_PROVIDER = new GridConfigProvider<UserGroup>() {
+
+		@Override
+		public void load(EtlPagingLoadConfigBean loadConfig,
+				AsyncCallback<PagingLoadResult<UserGroup>> callback) {
+			RpcServiceUtils.UserRpcService
+					.pagingUserGroup(loadConfig, callback);
+		}
 
 		@Override
 		protected void initColumnConfig() {
-			ColumnConfig<User, String> email = UserColumnConfig.email();
-			ColumnConfig<User, UserGroup> userGroup = UserColumnConfig
-					.userGroup();
-			userGroup.setCell(new SimpleSafeHtmlRenderer<UserGroup>() {
-				@Override
-				protected String _getLabel(UserGroup c) {
-					return c.getName();
-				}
-			}.getCell());
-			ColumnConfig<User, Date> createTime = UserColumnConfig.createTime();
+
+			ColumnConfig<UserGroup, String> name = UserGroupColumnConfig.name();
+			ColumnConfig<UserGroup, Date> createTime = UserGroupColumnConfig
+					.createTime();
 			createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
 				@Override
 				protected String _getLabel(Date c) {
 					return DF.format(c);
 				}
 			}.getCell());
-			columns.add(email);
-			columns.add(userGroup);
+			columns.add(name);
 			columns.add(createTime);
-		}
 
-		@Override
-		public void load(EtlPagingLoadConfigBean loadConfig,
-				AsyncCallback<PagingLoadResult<User>> callback) {
-			RpcServiceUtils.UserRpcService.pagingUser(loadConfig, callback);
 		}
 	};
 
-	public UserGrid() {
-		super(CONFIG_PROVIDER, new ListStore<User>(
-				PropertyUtils.UserProperty.key()));
+	public UserGroupGrid() {
+		super(CONFIG_PROVIDER, new ListStore<UserGroup>(
+				PropertyUtils.UserGroupProperty.key()));
 	}
+
 }

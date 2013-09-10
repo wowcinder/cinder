@@ -22,7 +22,7 @@ public class PasswordPersistenceImpl implements PasswordPersistence {
 
 	@Column(length = 32)
 	@NotNull
-	@Length(min = 32, max = 32)
+	@Length(min = 5, max = 32)
 	@Override
 	public String getPassword() {
 		return password;

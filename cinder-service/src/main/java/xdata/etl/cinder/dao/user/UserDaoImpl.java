@@ -74,12 +74,51 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public PagingLoadResult<User> paging(EtlPagingLoadConfigBean config)
+	public PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
 			throws SharedException {
 		PagingLoadResultBean<User> pr = new PagingLoadResultBean<User>();
 		pr.setOffset(config.getOffset());
 
 		Criteria criteria = getSession().createCriteria(User.class);
+
+		long rowCount = (Long) criteria.setProjection(Projections.rowCount())
+				.uniqueResult();
+		pr.setTotalLength((int) rowCount);
+
+		criteria.setProjection(null);
+		criteria.setFirstResult(config.getOffset());
+		criteria.setMaxResults(config.getLimit());
+		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+
+		pr.setData(criteria.list());
+
+		return pr;
+	}
+
+	@Override
+	public void deleteUsers(List<Integer> ids) throws SharedException {
+		for (Integer id : ids) {
+			User u = (User) getSession().load(User.class, id);
+			getSession().delete(u);
+		}
+	}
+
+	@Override
+	public void deleteUserGroups(List<Integer> ids) throws SharedException {
+		for (Integer id : ids) {
+			UserGroup u = (UserGroup) getSession().load(UserGroup.class, id);
+			getSession().delete(u);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public PagingLoadResult<UserGroup> pagingUserGroup(
+			EtlPagingLoadConfigBean config) throws SharedException {
+		PagingLoadResultBean<UserGroup> pr = new PagingLoadResultBean<UserGroup>();
+		pr.setOffset(config.getOffset());
+
+		Criteria criteria = getSession().createCriteria(UserGroup.class);
 
 		long rowCount = (Long) criteria.setProjection(Projections.rowCount())
 				.uniqueResult();

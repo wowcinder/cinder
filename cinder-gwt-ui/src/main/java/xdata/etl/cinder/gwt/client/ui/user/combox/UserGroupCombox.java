@@ -74,7 +74,7 @@ public class UserGroupCombox extends AddEnableComboBox<UserGroup> {
 	}
 
 	@Override
-	protected UserGroup newInstance() {
+	protected UserGroup newComboxInstance() {
 		return new UserGroup();
 	}
 

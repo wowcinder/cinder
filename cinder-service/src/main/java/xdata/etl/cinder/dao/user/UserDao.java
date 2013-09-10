@@ -20,7 +20,7 @@ public interface UserDao {
 	User findUser(String email, String encryptPassword);
 
 	void save(User user);
-	
+
 	User saveUser(User user);
 
 	User updateUser(User user);
@@ -31,6 +31,13 @@ public interface UserDao {
 
 	List<UserGroup> getUserGroupListForCombox();
 
-	PagingLoadResult<User> paging(EtlPagingLoadConfigBean config)
+	PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
 			throws SharedException;
+
+	PagingLoadResult<UserGroup> pagingUserGroup(EtlPagingLoadConfigBean config)
+			throws SharedException;
+
+	void deleteUsers(List<Integer> ids) throws SharedException;
+
+	void deleteUserGroups(List<Integer> ids) throws SharedException;
 }

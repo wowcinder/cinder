@@ -13,35 +13,59 @@ public class HbaseTableVersionColumnConfig {
 
 
     public static ColumnConfig<HbaseTableVersion, Integer> id() {
-        return new ColumnConfig<HbaseTableVersion, Integer>(PropertyUtils.HbaseTableVersionProperty.id(), 200, "id");
+        ColumnConfig<HbaseTableVersion, Integer> id = new ColumnConfig<HbaseTableVersion, Integer>(PropertyUtils.HbaseTableVersionProperty.id(), 200, "id");
+        id.setSortable(false);
+        id.setMenuDisabled(true);
+        return id;
     }
 
     public static ColumnConfig<HbaseTableVersion, HbaseTable> table() {
-        return new ColumnConfig<HbaseTableVersion, HbaseTable>(PropertyUtils.HbaseTableVersionProperty.table(), 200, "table");
+        ColumnConfig<HbaseTableVersion, HbaseTable> table = new ColumnConfig<HbaseTableVersion, HbaseTable>(PropertyUtils.HbaseTableVersionProperty.table(), 200, "table");
+        table.setSortable(false);
+        table.setMenuDisabled(true);
+        return table;
     }
 
     public static ColumnConfig<HbaseTableVersion, String> desc() {
-        return new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.desc(), 200, "desc");
+        ColumnConfig<HbaseTableVersion, String> desc = new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.desc(), 200, "desc");
+        desc.setSortable(false);
+        desc.setMenuDisabled(true);
+        return desc;
     }
 
     public static ColumnConfig<HbaseTableVersion, String> version() {
-        return new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.version(), 200, "version");
+        ColumnConfig<HbaseTableVersion, String> version = new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.version(), 200, "version");
+        version.setSortable(false);
+        version.setMenuDisabled(true);
+        return version;
     }
 
     public static ColumnConfig<HbaseTableVersion, List<HbaseTableColumn>> columns() {
-        return new ColumnConfig<HbaseTableVersion, List<HbaseTableColumn>>(PropertyUtils.HbaseTableVersionProperty.columns(), 200, "columns");
+        ColumnConfig<HbaseTableVersion, List<HbaseTableColumn>> columns = new ColumnConfig<HbaseTableVersion, List<HbaseTableColumn>>(PropertyUtils.HbaseTableVersionProperty.columns(), 200, "columns");
+        columns.setSortable(false);
+        columns.setMenuDisabled(true);
+        return columns;
     }
 
     public static ColumnConfig<HbaseTableVersion, Date> lastUpdateTimeStamp() {
-        return new ColumnConfig<HbaseTableVersion, Date>(PropertyUtils.HbaseTableVersionProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        ColumnConfig<HbaseTableVersion, Date> lastUpdateTimeStamp = new ColumnConfig<HbaseTableVersion, Date>(PropertyUtils.HbaseTableVersionProperty.lastUpdateTimeStamp(), 200, "lastUpdateTimeStamp");
+        lastUpdateTimeStamp.setSortable(false);
+        lastUpdateTimeStamp.setMenuDisabled(true);
+        return lastUpdateTimeStamp;
     }
 
     public static ColumnConfig<HbaseTableVersion, Date> createTime() {
-        return new ColumnConfig<HbaseTableVersion, Date>(PropertyUtils.HbaseTableVersionProperty.createTime(), 200, "createTime");
+        ColumnConfig<HbaseTableVersion, Date> createTime = new ColumnConfig<HbaseTableVersion, Date>(PropertyUtils.HbaseTableVersionProperty.createTime(), 200, "createTime");
+        createTime.setSortable(false);
+        createTime.setMenuDisabled(true);
+        return createTime;
     }
 
     public static ColumnConfig<HbaseTableVersion, String> createTimePropertyName() {
-        return new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        ColumnConfig<HbaseTableVersion, String> createTimePropertyName = new ColumnConfig<HbaseTableVersion, String>(PropertyUtils.HbaseTableVersionProperty.createTimePropertyName(), 200, "createTimePropertyName");
+        createTimePropertyName.setSortable(false);
+        createTimePropertyName.setMenuDisabled(true);
+        return createTimePropertyName;
     }
 
 }

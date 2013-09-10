@@ -2,6 +2,8 @@ package xdata.etl.cinder.server.aspect;
 
 import java.lang.reflect.Method;
 
+import javax.validation.ConstraintViolationException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -67,9 +69,13 @@ public class RpcAspect implements Ordered {
 	}
 
 	@AfterThrowing(pointcut = "execution(* xdata.etl.cinder.server.rpc..*(..))", throwing = "ex")
-	public void errorInterceptor(Exception ex) throws SharedException {
+	public void errorInterceptor(Exception ex) throws SharedException,
+			ConstraintViolationException {
 		if (ex instanceof SharedException) {
 			throw (SharedException) ex;
+		}
+		if (ex instanceof ConstraintViolationException) {
+			throw (ConstraintViolationException) ex;
 		}
 		System.out.println("--------------Exception------------");
 		ex.printStackTrace();
