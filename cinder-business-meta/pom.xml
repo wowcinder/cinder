@@ -14,5 +14,11 @@
 			<artifactId>cinder-common</artifactId>
 			<version>${cinder.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-hbase-meta</artifactId>
+			<version>${cinder.version}</version>
+		</dependency>
 	</dependencies>
 </project>
