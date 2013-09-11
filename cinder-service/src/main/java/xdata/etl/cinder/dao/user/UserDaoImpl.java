@@ -12,6 +12,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -132,6 +133,24 @@ public class UserDaoImpl implements UserDao {
 		pr.setData(criteria.list());
 
 		return pr;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Authorize> getUserExtraAuthorizes(Integer uid)
+			throws SharedException {
+		return getSession().createCriteria(Authorize.class)
+				.createAlias("users", "user")
+				.add(Restrictions.eq("user.id", uid)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Authorize> getUserGroupAuthorizes(Integer gid)
+			throws SharedException {
+		return getSession().createCriteria(Authorize.class)
+				.createAlias("userGroups", "userGroup")
+				.add(Restrictions.eq("userGroup.id", gid)).list();
 	}
 
 }

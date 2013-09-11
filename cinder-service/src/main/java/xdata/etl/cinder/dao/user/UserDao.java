@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -40,4 +41,8 @@ public interface UserDao {
 	void deleteUsers(List<Integer> ids) throws SharedException;
 
 	void deleteUserGroups(List<Integer> ids) throws SharedException;
+	
+	List<Authorize> getUserExtraAuthorizes(Integer uid) throws SharedException;
+	
+	List<Authorize> getUserGroupAuthorizes(Integer uid) throws SharedException;
 }

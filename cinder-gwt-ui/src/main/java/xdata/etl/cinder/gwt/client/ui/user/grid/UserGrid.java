@@ -30,40 +30,38 @@ public class UserGrid extends CinderGrid<User> {
 	public static final DateTimeFormat DF = DateTimeFormat
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
-	public static final GridConfigProvider<User> CONFIG_PROVIDER = new GridConfigProvider<User>() {
-
-		@Override
-		protected void initColumnConfig() {
-			ColumnConfig<User, String> email = UserColumnConfig.email();
-			ColumnConfig<User, UserGroup> userGroup = UserColumnConfig
-					.userGroup();
-			userGroup.setCell(new SimpleSafeHtmlRenderer<UserGroup>() {
-				@Override
-				protected String _getLabel(UserGroup c) {
-					return c.getName();
-				}
-			}.getCell());
-			ColumnConfig<User, Date> createTime = UserColumnConfig.createTime();
-			createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
-				@Override
-				protected String _getLabel(Date c) {
-					return DF.format(c);
-				}
-			}.getCell());
-			columns.add(email);
-			columns.add(userGroup);
-			columns.add(createTime);
-		}
-
-		@Override
-		public void load(EtlPagingLoadConfigBean loadConfig,
-				AsyncCallback<PagingLoadResult<User>> callback) {
-			RpcServiceUtils.UserRpcService.pagingUser(loadConfig, callback);
-		}
-	};
-
 	public UserGrid() {
-		super(CONFIG_PROVIDER, new ListStore<User>(
-				PropertyUtils.UserProperty.key()));
+		super(new GridConfigProvider<User>() {
+
+			@Override
+			protected void initColumnConfig() {
+				ColumnConfig<User, String> email = UserColumnConfig.email();
+				ColumnConfig<User, UserGroup> userGroup = UserColumnConfig
+						.userGroup();
+				userGroup.setCell(new SimpleSafeHtmlRenderer<UserGroup>() {
+					@Override
+					protected String _getLabel(UserGroup c) {
+						return c.getName();
+					}
+				}.getCell());
+				ColumnConfig<User, Date> createTime = UserColumnConfig
+						.createTime();
+				createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
+					@Override
+					protected String _getLabel(Date c) {
+						return DF.format(c);
+					}
+				}.getCell());
+				columns.add(email);
+				columns.add(userGroup);
+				columns.add(createTime);
+			}
+
+			@Override
+			public void load(EtlPagingLoadConfigBean loadConfig,
+					AsyncCallback<PagingLoadResult<User>> callback) {
+				RpcServiceUtils.UserRpcService.pagingUser(loadConfig, callback);
+			}
+		}, new ListStore<User>(PropertyUtils.UserProperty.key()));
 	}
 }

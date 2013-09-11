@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xdata.etl.cinder.dao.user.UserDao;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -80,6 +81,20 @@ public class UserServiceImpl implements UserService {
 	public PagingLoadResult<UserGroup> pagingUserGroup(
 			EtlPagingLoadConfigBean config) throws SharedException {
 		return userDao.pagingUserGroup(config);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Authorize> getUserExtraAuthorizes(Integer uid)
+			throws SharedException {
+		return userDao.getUserExtraAuthorizes(uid);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Authorize> getUserGroupAuthorizes(Integer uid)
+			throws SharedException {
+		return userDao.getUserGroupAuthorizes(uid);
 	}
 
 }

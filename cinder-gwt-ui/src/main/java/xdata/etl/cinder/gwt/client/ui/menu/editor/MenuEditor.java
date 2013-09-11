@@ -20,8 +20,6 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 
 public class MenuEditor extends CinderEditor<Menu> {
-	private static final Driver DRIVER = GWT.create(Driver.class);
-
 	public interface Driver extends SimpleBeanEditorDriver<Menu, MenuEditor> {
 
 	}
@@ -33,7 +31,7 @@ public class MenuEditor extends CinderEditor<Menu> {
 	private AuthorizeGridWindow authorizeGridWindow;
 
 	public MenuEditor() {
-		super(DRIVER, "菜单");
+		super(GWT.<Driver> create(Driver.class), "菜单");
 		authorizeGridWindow = new AuthorizeGridWindow(
 				new GwtCallBack<Authorize>() {
 

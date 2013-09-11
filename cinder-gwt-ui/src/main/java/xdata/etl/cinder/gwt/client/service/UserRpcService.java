@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.engine.ValidationSupport;
 
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -47,6 +48,10 @@ public interface UserRpcService extends RemoteService {
 
 	PagingLoadResult<UserGroup> pagingUserGroup(EtlPagingLoadConfigBean config)
 			throws SharedException;
+
+	List<Authorize> getUserExtraAuthorizes(Integer uid) throws SharedException;
+	
+	List<Authorize> getUserGroupAuthorizes(Integer uid) throws SharedException;
 
 	ValidationSupport dummy();
 }

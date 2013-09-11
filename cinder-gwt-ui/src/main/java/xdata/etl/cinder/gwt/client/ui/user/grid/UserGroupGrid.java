@@ -21,36 +21,34 @@ public class UserGroupGrid extends CinderGrid<UserGroup> {
 	public static final DateTimeFormat DF = DateTimeFormat
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
-	public static final GridConfigProvider<UserGroup> CONFIG_PROVIDER = new GridConfigProvider<UserGroup>() {
-
-		@Override
-		public void load(EtlPagingLoadConfigBean loadConfig,
-				AsyncCallback<PagingLoadResult<UserGroup>> callback) {
-			RpcServiceUtils.UserRpcService
-					.pagingUserGroup(loadConfig, callback);
-		}
-
-		@Override
-		protected void initColumnConfig() {
-
-			ColumnConfig<UserGroup, String> name = UserGroupColumnConfig.name();
-			ColumnConfig<UserGroup, Date> createTime = UserGroupColumnConfig
-					.createTime();
-			createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
-				@Override
-				protected String _getLabel(Date c) {
-					return DF.format(c);
-				}
-			}.getCell());
-			columns.add(name);
-			columns.add(createTime);
-
-		}
-	};
-
 	public UserGroupGrid() {
-		super(CONFIG_PROVIDER, new ListStore<UserGroup>(
-				PropertyUtils.UserGroupProperty.key()));
+		super(new GridConfigProvider<UserGroup>() {
+
+			@Override
+			public void load(EtlPagingLoadConfigBean loadConfig,
+					AsyncCallback<PagingLoadResult<UserGroup>> callback) {
+				RpcServiceUtils.UserRpcService.pagingUserGroup(loadConfig,
+						callback);
+			}
+
+			@Override
+			protected void initColumnConfig() {
+
+				ColumnConfig<UserGroup, String> name = UserGroupColumnConfig
+						.name();
+				ColumnConfig<UserGroup, Date> createTime = UserGroupColumnConfig
+						.createTime();
+				createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
+					@Override
+					protected String _getLabel(Date c) {
+						return DF.format(c);
+					}
+				}.getCell());
+				columns.add(name);
+				columns.add(createTime);
+
+			}
+		}, new ListStore<UserGroup>(PropertyUtils.UserGroupProperty.key()));
 	}
 
 }

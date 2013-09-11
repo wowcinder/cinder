@@ -7,6 +7,7 @@ import xdata.etl.cinder.gwt.client.common.GwtCallBack;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.Window;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.event.ShowEvent;
@@ -18,6 +19,10 @@ import com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler;
  * 
  */
 public class FixedWindow extends Window {
+
+	protected static final VerticalLayoutData vd = new VerticalLayoutData(1, -1);
+	protected static final VerticalLayoutData mainVd = new VerticalLayoutData(
+			1, 1);
 
 	private GwtCallBack<SelectEvent> cancelBack;
 
@@ -32,6 +37,7 @@ public class FixedWindow extends Window {
 						.getHeight(true));
 			}
 		});
+		setModal(true);
 	}
 
 	public FixedWindow(GwtCallBack<SelectEvent> cancelBack) {

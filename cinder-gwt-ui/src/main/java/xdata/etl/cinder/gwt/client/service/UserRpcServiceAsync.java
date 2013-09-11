@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import org.hibernate.validator.engine.ValidationSupport;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
@@ -29,6 +30,10 @@ public interface UserRpcServiceAsync {
     public void pagingUser(EtlPagingLoadConfigBean arg0, AsyncCallback<PagingLoadResult<User>> callback);
 
     public void pagingUserGroup(EtlPagingLoadConfigBean arg0, AsyncCallback<PagingLoadResult<UserGroup>> callback);
+
+    public void getUserExtraAuthorizes(Integer arg0, AsyncCallback<List<Authorize>> callback);
+
+    public void getUserGroupAuthorizes(Integer arg0, AsyncCallback<List<Authorize>> callback);
 
     public void dummy(AsyncCallback<ValidationSupport> callback);
 

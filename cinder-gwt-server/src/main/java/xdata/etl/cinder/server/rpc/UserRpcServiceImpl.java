@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
+import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotations;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.UserRpcService;
 import xdata.etl.cinder.server.CinderValidator;
 import xdata.etl.cinder.service.UserService;
+import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -94,5 +96,20 @@ public class UserRpcServiceImpl implements UserRpcService {
 	public PagingLoadResult<UserGroup> pagingUserGroup(
 			EtlPagingLoadConfigBean config) throws SharedException {
 		return userService.pagingUserGroup(config);
+	}
+
+	@Override
+	@AuthorizeAnnotation("查询用户")
+	@AuthorizeAnnotations({ @AuthorizeAnnotation("修改用户") })
+	public List<Authorize> getUserExtraAuthorizes(Integer uid) {
+		return userService.getUserExtraAuthorizes(uid);
+	}
+
+	@Override
+	@AuthorizeAnnotation("查询用户组")
+	@AuthorizeAnnotations({ @AuthorizeAnnotation("修改用户组") })
+	public List<Authorize> getUserGroupAuthorizes(Integer uid)
+			throws SharedException {
+		return userService.getUserGroupAuthorizes(uid);
 	}
 }
