@@ -36,4 +36,9 @@ public class CTypeBusinessColumn extends BusinessColumn<BusinessCType> {
 	public BusinessCType createBusinessType() {
 		return new BusinessCType();
 	}
+
+	@Override
+	public CTypeBusinessToHbaseTableMapping getMapping() {
+		return (CTypeBusinessToHbaseTableMapping) super.getMapping();
+	}
 }

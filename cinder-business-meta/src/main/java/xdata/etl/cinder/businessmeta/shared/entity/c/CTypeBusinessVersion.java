@@ -24,4 +24,9 @@ public class CTypeBusinessVersion extends BusinessVersion<BusinessCType> {
 		return new BusinessCType();
 	}
 
+	@Override
+	public CTypeBusiness getBusiness() {
+		return (CTypeBusiness) super.getBusiness();
+	}
+
 }

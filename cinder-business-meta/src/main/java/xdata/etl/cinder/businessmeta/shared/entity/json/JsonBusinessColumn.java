@@ -41,4 +41,9 @@ public class JsonBusinessColumn extends BusinessColumn<BusinessJsonType> {
 	public BusinessJsonType createBusinessType() {
 		return new BusinessJsonType();
 	}
+
+	@Override
+	public JsonBusinessToHbaseTableMapping getMapping() {
+		return (JsonBusinessToHbaseTableMapping) super.getMapping();
+	}
 }

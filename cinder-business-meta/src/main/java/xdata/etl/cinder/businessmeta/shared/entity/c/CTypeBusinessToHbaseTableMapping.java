@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.businessmeta.shared.entity.c;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -24,6 +26,12 @@ public class CTypeBusinessToHbaseTableMapping extends
 	@Override
 	public BusinessCType createBusinessType() {
 		return new BusinessCType();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CTypeBusinessColumn> getColumns() {
+		return (List<CTypeBusinessColumn>) super.getColumns();
 	}
 
 }

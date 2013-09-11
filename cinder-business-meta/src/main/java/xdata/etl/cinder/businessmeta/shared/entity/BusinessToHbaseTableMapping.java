@@ -50,7 +50,7 @@ public abstract class BusinessToHbaseTableMapping<T extends BusinessType>
 		return hbaseTableVersion;
 	}
 
-	public List<BusinessColumn<T>> getColumns() {
+	public List<? extends BusinessColumn<T>> getColumns() {
 		return columns;
 	}
 

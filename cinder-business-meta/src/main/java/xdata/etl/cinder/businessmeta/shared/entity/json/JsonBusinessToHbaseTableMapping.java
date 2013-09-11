@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.businessmeta.shared.entity.json;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -23,5 +25,11 @@ public class JsonBusinessToHbaseTableMapping extends
 	@Override
 	public BusinessJsonType createBusinessType() {
 		return new BusinessJsonType();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<JsonBusinessColumn> getColumns() {
+		return (List<JsonBusinessColumn>)super.getColumns();
 	}
 }
