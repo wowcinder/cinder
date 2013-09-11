@@ -13,6 +13,8 @@ import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 public interface UserRpcServiceAsync {
 
 
+    public void dummy(AsyncCallback<ValidationSupport> callback);
+
     public void saveUser(User arg0, String arg1, AsyncCallback<User> callback);
 
     public void updateUser(User arg0, String arg1, AsyncCallback<User> callback);
@@ -34,7 +36,5 @@ public interface UserRpcServiceAsync {
     public void getUserExtraAuthorizes(Integer arg0, AsyncCallback<List<Authorize>> callback);
 
     public void getUserGroupAuthorizes(Integer arg0, AsyncCallback<List<Authorize>> callback);
-
-    public void dummy(AsyncCallback<ValidationSupport> callback);
 
 }

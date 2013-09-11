@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
+import org.hibernate.validator.engine.ValidationSupport;
+
 import xdata.etl.cinder.shared.entity.menu.Menu;
 import xdata.etl.cinder.shared.entity.menu.MenuGroup;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
@@ -34,4 +36,5 @@ public interface MenuRpcService extends RemoteService {
 			List<MenuNode> menuNodes) throws SharedException,
 			ConstraintViolationException;
 
+	ValidationSupport dummy();
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
+import org.hibernate.validator.engine.ValidationSupport;
+
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
@@ -67,5 +69,12 @@ public interface HbaseMetaRpcService extends RemoteService {
 	public List<HbaseTable> getHbaseTablesForCombox() throws SharedException,
 			ConstraintViolationException;
 
-	public List<HbaseTableColumn> getColumnsByVersionId(Integer id);
+	public List<HbaseTableColumn> getColumnsByVersionId(Integer id)
+			throws SharedException, ConstraintViolationException;
+
+	public List<HbaseTableColumn> getTableAllColumns(String table,
+			String[] versions) throws SharedException,
+			ConstraintViolationException;
+
+	ValidationSupport dummy();
 }

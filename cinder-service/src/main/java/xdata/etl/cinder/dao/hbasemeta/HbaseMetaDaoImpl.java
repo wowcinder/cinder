@@ -1,13 +1,20 @@
 package xdata.etl.cinder.dao.hbasemeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolationException;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -149,6 +156,62 @@ public class HbaseMetaDaoImpl implements HbaseMetaDao {
 		return getSession().createCriteria(HbaseTableColumn.class)
 				.createAlias("version", "version")
 				.add(Restrictions.eq("version.id", id)).list();
+	}
+
+	@Override
+	public List<HbaseTableColumn> getTableAllColumns(String table,
+			String[] versions) throws SharedException,
+			ConstraintViolationException {
+		Session s = getSession();
+		Criteria criteria = s
+				.createCriteria(HbaseTableColumn.class)
+				.createAlias("version", "v")
+				.createAlias("v.table", "t")
+				.add(Restrictions.eq("t.name", table))
+				.setResultTransformer(
+						CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+				.addOrder(Order.desc("v.version")).addOrder(Order.asc("pos"));
+		if (versions != null && versions.length > 0) {
+			criteria.add(Restrictions.in("v.version", versions));
+		}
+		@SuppressWarnings("unchecked")
+		List<HbaseTableColumn> list = criteria.list();
+		List<HbaseTableColumn> result = new ArrayList<HbaseTableColumn>();
+		Set<String> names = new HashSet<String>();
+		for (HbaseTableColumn column : list) {
+			if (!names.contains(column.getName())) {
+				result.add(column);
+				names.add(column.getName());
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public Map<String, Set<HbaseTableColumn>> getMetaForQuery(String tableName,
+			String[] versions) {
+		Map<String, Set<HbaseTableColumn>> map = new HashMap<String, Set<HbaseTableColumn>>();
+		Session s = getSession();
+		Criteria criteria = s
+				.createCriteria(HbaseTableVersion.class)
+				.createAlias("table", "t")
+				.add(Restrictions.eq("t.name", tableName))
+				.setResultTransformer(
+						CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		if (versions == null || versions.length == 0) {// 所有
+		} else {
+			criteria.add(Restrictions.in("version", versions));
+		}
+		@SuppressWarnings("unchecked")
+		List<HbaseTableVersion> tableVersions = criteria.list();
+		for (HbaseTableVersion hbaseTableVersion : tableVersions) {
+			Set<HbaseTableColumn> set = new HashSet<HbaseTableColumn>();
+			set.addAll(hbaseTableVersion.getColumns());
+			map.put(hbaseTableVersion.getVersion(), set);
+		}
+
+		return map;
 	}
 
 }

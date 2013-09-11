@@ -54,8 +54,8 @@ public class HbaseTableVersionGrid extends CinderGrid<HbaseTableVersion> {
 				}.getCell());
 				ColumnConfig<HbaseTableVersion, String> desc = HbaseTableVersionColumnConfig
 						.desc();
-				columns.add(version);
 				columns.add(table);
+				columns.add(version);
 				columns.add(desc);
 			}
 		}, new ListStore<HbaseTableVersion>(

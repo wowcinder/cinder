@@ -4,6 +4,7 @@ package xdata.etl.cinder.gwt.client.service;
 import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
+import org.hibernate.validator.engine.ValidationSupport;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
@@ -45,5 +46,9 @@ public interface HbaseMetaRpcServiceAsync {
     public void getHbaseTablesForCombox(AsyncCallback<List<HbaseTable>> callback);
 
     public void getColumnsByVersionId(Integer arg0, AsyncCallback<List<HbaseTableColumn>> callback);
+
+    public void getTableAllColumns(String arg0, String[] arg1, AsyncCallback<List<HbaseTableColumn>> callback);
+
+    public void dummy(AsyncCallback<ValidationSupport> callback);
 
 }

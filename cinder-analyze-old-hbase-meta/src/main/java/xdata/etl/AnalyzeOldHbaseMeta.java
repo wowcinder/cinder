@@ -55,8 +55,8 @@ public class AnalyzeOldHbaseMeta {
 
 		HbaseTableVersion v = new HbaseTableVersion();
 		v.setTable(table);
-		v.setDesc("");
-		v.setVersion("");
+		v.setDesc("0.0");
+		v.setVersion("0.0");
 		service.saveHbaseTableVersion(v);
 
 		saveColumns(v, clazz);

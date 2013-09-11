@@ -1,6 +1,10 @@
 package xdata.etl.cinder.dao.hbasemeta;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.validation.ConstraintViolationException;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
@@ -46,4 +50,11 @@ public interface HbaseMetaDao {
 	 * @return
 	 */
 	List<HbaseTableColumn> getColumnsByVersionId(Integer id);
+	
+	public List<HbaseTableColumn> getTableAllColumns(String table,
+			String[] versions) throws SharedException,
+			ConstraintViolationException;
+	
+	public Map<String, Set<HbaseTableColumn>> getMetaForQuery(String tableName,
+			String[] versions);
 }

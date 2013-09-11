@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
+import org.hibernate.validator.engine.ValidationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -153,6 +154,19 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 			@AuthorizeAnnotation("查询table_version") })
 	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
 		return hbaseMetaService.getColumnsByVersionId(id);
+	}
+
+	@Override
+	public ValidationSupport dummy() {
+		return null;
+	}
+
+	@Override
+	@AuthorizeAnnotation(group = "hbase", value = "查询")
+	public List<HbaseTableColumn> getTableAllColumns(String table,
+			String[] versions) throws SharedException,
+			ConstraintViolationException {
+		return getService().getTableAllColumns(table, versions);
 	}
 
 }

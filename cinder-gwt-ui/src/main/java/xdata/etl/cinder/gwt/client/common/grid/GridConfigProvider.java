@@ -43,11 +43,9 @@ public abstract class GridConfigProvider<M> implements RpcProxyLoad<M> {
 	protected abstract void initColumnConfig();
 
 	public List<ColumnConfig<M, ?>> getColumns(boolean isMultiSelect) {
-		List<ColumnConfig<M, ?>> columns = new ArrayList<ColumnConfig<M, ?>>();
 		if (isMultiSelect) {
-			columns.add(sm.getColumn());
+			columns.add(0, sm.getColumn());
 		}
-		columns.addAll(this.columns);
 		return columns;
 	}
 

@@ -25,7 +25,7 @@ public class AuthorizeRpcServiceImpl implements AuthorizeRpcService {
 	private AuthorizeService authorizeService;
 
 	@Override
-	@AuthorizeAnnotation(group = "菜单", value = "修改")
+	@AuthorizeAnnotation(group = "菜单", value = "菜单管理")
 	public List<Authorize> getAllocatenbeAuthorizes() {
 		return authorizeService.getAllocatenbeAuthorizes();
 	}

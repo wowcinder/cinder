@@ -1,6 +1,8 @@
 package xdata.etl.cinder.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.validation.ConstraintViolationException;
 
@@ -122,6 +124,19 @@ public class HbaseMetaServiceImpl implements HbaseMetaService {
 	@Override
 	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
 		return getDao().getColumnsByVersionId(id);
+	}
+
+	@Override
+	public List<HbaseTableColumn> getTableAllColumns(String table,
+			String[] versions) throws SharedException,
+			ConstraintViolationException {
+		return getDao().getTableAllColumns(table, versions);
+	}
+
+	@Override
+	public Map<String, Set<HbaseTableColumn>> getMetaForQuery(String tableName,
+			String[] versions) {
+		return getDao().getMetaForQuery(tableName, versions);
 	}
 
 }
