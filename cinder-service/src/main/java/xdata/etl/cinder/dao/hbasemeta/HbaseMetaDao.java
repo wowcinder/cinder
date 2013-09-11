@@ -40,4 +40,10 @@ public interface HbaseMetaDao {
 			EtlPagingLoadConfigBean config) throws SharedException;
 
 	<T> void delete(Class<T> clazz, List<Integer> ids);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<HbaseTableColumn> getColumnsByVersionId(Integer id);
 }

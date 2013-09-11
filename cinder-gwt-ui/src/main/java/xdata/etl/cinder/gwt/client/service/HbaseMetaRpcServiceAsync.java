@@ -42,4 +42,8 @@ public interface HbaseMetaRpcServiceAsync {
 
     public void deleteHbaseTableColumns(List<Integer> arg0, AsyncCallback<Void> callback);
 
+    public void getHbaseTablesForCombox(AsyncCallback<List<HbaseTable>> callback);
+
+    public void getColumnsByVersionId(Integer arg0, AsyncCallback<List<HbaseTableColumn>> callback);
+
 }

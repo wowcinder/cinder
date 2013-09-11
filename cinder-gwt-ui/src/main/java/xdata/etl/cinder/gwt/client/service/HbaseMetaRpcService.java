@@ -54,8 +54,18 @@ public interface HbaseMetaRpcService extends RemoteService {
 	PagingLoadResult<HbaseTableColumn> pagingHbaseTableColumn(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException;
-	
-	void deleteHbaseTables(List<Integer> ids);
-	void deleteHbaseTableVersions(List<Integer> ids);
-	void deleteHbaseTableColumns(List<Integer> ids);
+
+	void deleteHbaseTables(List<Integer> ids) throws SharedException,
+			ConstraintViolationException;
+
+	void deleteHbaseTableVersions(List<Integer> ids) throws SharedException,
+			ConstraintViolationException;
+
+	void deleteHbaseTableColumns(List<Integer> ids) throws SharedException,
+			ConstraintViolationException;
+
+	public List<HbaseTable> getHbaseTablesForCombox() throws SharedException,
+			ConstraintViolationException;
+
+	public List<HbaseTableColumn> getColumnsByVersionId(Integer id);
 }

@@ -38,6 +38,14 @@ public interface HbaseMetaService {
 
 	PagingLoadResult<HbaseTableColumn> pagingHbaseTableColumn(
 			EtlPagingLoadConfigBean config) throws SharedException;
-	
+
 	<T> void delete(Class<T> clazz, List<Integer> ids);
+
+	public List<HbaseTable> getHbaseTablesForCombox();
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<HbaseTableColumn> getColumnsByVersionId(Integer id);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
+import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotations;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.HbaseMetaRpcService;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
@@ -136,6 +137,22 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 	@AuthorizeAnnotation("删除table_column")
 	public void deleteHbaseTableColumns(List<Integer> ids) {
 		getService().delete(HbaseTableColumn.class, ids);
+	}
+
+	@Override
+	@AuthorizeAnnotations({ @AuthorizeAnnotation("添加table_version"),
+			@AuthorizeAnnotation("修改table_version"),
+			@AuthorizeAnnotation("查询table_version") })
+	public List<HbaseTable> getHbaseTablesForCombox() {
+		return getService().getHbaseTablesForCombox();
+	}
+
+	@Override
+	@AuthorizeAnnotations({ @AuthorizeAnnotation("添加table_version"),
+			@AuthorizeAnnotation("修改table_version"),
+			@AuthorizeAnnotation("查询table_version") })
+	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
+		return hbaseMetaService.getColumnsByVersionId(id);
 	}
 
 }

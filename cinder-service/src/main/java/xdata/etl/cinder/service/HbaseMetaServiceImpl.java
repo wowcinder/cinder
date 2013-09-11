@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import xdata.etl.cinder.dao.SimpleDao;
 import xdata.etl.cinder.dao.hbasemeta.HbaseMetaDao;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
@@ -22,6 +23,8 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 public class HbaseMetaServiceImpl implements HbaseMetaService {
 	@Autowired
 	private HbaseMetaDao hbaseMetaDao;
+	@Autowired
+	private SimpleDao simpleDao;
 
 	@Override
 	public HbaseTable saveHbaseTable(HbaseTable hbaseTable)
@@ -109,6 +112,16 @@ public class HbaseMetaServiceImpl implements HbaseMetaService {
 	@Override
 	public <T> void delete(Class<T> clazz, List<Integer> ids) {
 		getDao().delete(clazz, ids);
+	}
+
+	@Override
+	public List<HbaseTable> getHbaseTablesForCombox() {
+		return simpleDao.get(HbaseTable.class);
+	}
+
+	@Override
+	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
+		return getDao().getColumnsByVersionId(id);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
@@ -140,6 +141,14 @@ public class HbaseMetaDaoImpl implements HbaseMetaDao {
 		for (Integer id : ids) {
 			delete(clazz, id);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
+		return getSession().createCriteria(HbaseTableColumn.class)
+				.createAlias("version", "version")
+				.add(Restrictions.eq("version.id", id)).list();
 	}
 
 }
