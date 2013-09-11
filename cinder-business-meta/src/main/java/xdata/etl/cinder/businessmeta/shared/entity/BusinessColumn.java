@@ -9,9 +9,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.entity.ref.BusinessColumnRef;
 
 /**
  * @author XuehuiHe
@@ -21,11 +23,14 @@ import xdata.etl.cinder.businessmeta.shared.BusinessType;
 @Table(name = "business_column")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class BusinessColumn<T extends BusinessType> extends
-		BusinessCommon<T> {
+		BusinessSuperclass<T> {
 	private static final long serialVersionUID = 1930104423164074284L;
 	@ManyToOne
 	@JoinColumn(name = "mapping_id")
 	private BusinessToHbaseTableMapping<T> mapping;
+	@OneToOne
+	@JoinColumn(name = "ref_id", nullable = false)
+	private BusinessColumnRef columnRef;
 	@Column(name = "description", columnDefinition = "text")
 	private String desc;
 
@@ -47,4 +52,13 @@ public abstract class BusinessColumn<T extends BusinessType> extends
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+
+	public BusinessColumnRef getColumnRef() {
+		return columnRef;
+	}
+
+	public void setColumnRef(BusinessColumnRef columnRef) {
+		this.columnRef = columnRef;
+	}
+
 }

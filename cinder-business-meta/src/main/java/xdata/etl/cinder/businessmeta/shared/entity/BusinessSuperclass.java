@@ -18,7 +18,7 @@ import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
  * @date 2013年9月11日
  */
 @MappedSuperclass
-public abstract class BusinessCommon<T extends BusinessType> extends
+public abstract class BusinessSuperclass<T extends BusinessType> extends
 		EntityHasTimeStampImpl {
 	private static final long serialVersionUID = 5876578611327859795L;
 	@Id

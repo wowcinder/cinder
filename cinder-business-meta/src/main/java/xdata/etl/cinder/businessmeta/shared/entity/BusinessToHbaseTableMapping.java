@@ -30,7 +30,7 @@ import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "btype", length = 20)
 public abstract class BusinessToHbaseTableMapping<T extends BusinessType>
-		extends BusinessCommon<T> {
+		extends BusinessSuperclass<T> {
 	private static final long serialVersionUID = 6554099088661273243L;
 	@ManyToOne
 	@JoinColumn(name = "hbase_table_version_id")

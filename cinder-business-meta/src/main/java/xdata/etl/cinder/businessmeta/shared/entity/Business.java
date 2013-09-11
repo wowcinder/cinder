@@ -30,7 +30,7 @@ import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessTypeEnum;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "btype", length = 20)
 public abstract class Business<T extends BusinessType> extends
-		BusinessCommon<T> {
+		BusinessSuperclass<T> {
 	private static final long serialVersionUID = -5376450072498870497L;
 	@NotNull
 	@Column(nullable = false, unique = true, length = 40)
