@@ -7,6 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessJsonType;
 import xdata.etl.cinder.businessmeta.shared.entity.BusinessVersion;
 
 /**
@@ -15,10 +16,16 @@ import xdata.etl.cinder.businessmeta.shared.entity.BusinessVersion;
  */
 @Entity
 @DiscriminatorValue(BusinessType.Names.JSON_TYPE)
-public class JsonBusinessVersion extends BusinessVersion {
+public class JsonBusinessVersion extends BusinessVersion<BusinessJsonType> {
 	private static final long serialVersionUID = 7191018783459845393L;
 
+	@Override
+	public BusinessJsonType createBusinessType() {
+		return new BusinessJsonType();
+	}
+
+	@Override
 	public JsonBusiness getBusiness() {
-		return (JsonBusiness) business;
+		return (JsonBusiness) super.getBusiness();
 	}
 }

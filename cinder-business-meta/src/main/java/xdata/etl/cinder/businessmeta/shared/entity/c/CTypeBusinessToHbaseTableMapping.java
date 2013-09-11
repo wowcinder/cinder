@@ -3,12 +3,11 @@
  */
 package xdata.etl.cinder.businessmeta.shared.entity.c;
 
-import java.util.List;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessCType;
 import xdata.etl.cinder.businessmeta.shared.entity.BusinessToHbaseTableMapping;
 
 /**
@@ -18,12 +17,13 @@ import xdata.etl.cinder.businessmeta.shared.entity.BusinessToHbaseTableMapping;
 @Entity
 @DiscriminatorValue(BusinessType.Names.C_TYPE)
 public class CTypeBusinessToHbaseTableMapping extends
-		BusinessToHbaseTableMapping {
+		BusinessToHbaseTableMapping<BusinessCType> {
 
 	private static final long serialVersionUID = 3254709662221405450L;
 
-	@SuppressWarnings("unchecked")
-	public List<CTypeBusinessColumn> getColumns() {
-		return (List<CTypeBusinessColumn>) super.getColumns();
+	@Override
+	public BusinessCType createBusinessType() {
+		return new BusinessCType();
 	}
+
 }

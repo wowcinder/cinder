@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessJsonType;
 import xdata.etl.cinder.businessmeta.shared.entity.BusinessColumn;
 
 /**
@@ -19,7 +19,7 @@ import xdata.etl.cinder.businessmeta.shared.entity.BusinessColumn;
  */
 @Entity
 @Table(name = "business_column_json")
-public abstract class JsonBusinessColumn extends BusinessColumn {
+public class JsonBusinessColumn extends BusinessColumn<BusinessJsonType> {
 	private static final long serialVersionUID = -3446438138303892156L;
 	@Column(length = 200, nullable = false)
 	@NotNull
@@ -38,11 +38,7 @@ public abstract class JsonBusinessColumn extends BusinessColumn {
 	}
 
 	@Override
-	public BusinessType getBusinessType() {
-		return BusinessType.JSON_TYPE;
-	}
-
-	public JsonBusinessColumn getSelf() {
-		return this;
+	public BusinessJsonType createBusinessType() {
+		return new BusinessJsonType();
 	}
 }

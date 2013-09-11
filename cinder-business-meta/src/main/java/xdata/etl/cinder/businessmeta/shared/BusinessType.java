@@ -3,59 +3,39 @@
  */
 package xdata.etl.cinder.businessmeta.shared;
 
-import xdata.etl.cinder.businessmeta.shared.entity.Business;
-import xdata.etl.cinder.businessmeta.shared.entity.BusinessToHbaseTableMapping;
-import xdata.etl.cinder.businessmeta.shared.entity.c.CTypeBusiness;
-import xdata.etl.cinder.businessmeta.shared.entity.c.CTypeBusinessToHbaseTableMapping;
-import xdata.etl.cinder.businessmeta.shared.entity.json.JsonBusiness;
-import xdata.etl.cinder.businessmeta.shared.entity.json.JsonBusinessToHbaseTableMapping;
-
-
 /**
  * @author XuehuiHe
  * @date 2013年9月3日
  */
-public enum BusinessType {
-	C_TYPE() {
-		@Override
-		public Business createBusiness() {
-			return new CTypeBusiness();
-		}
-
-		@Override
-		public BusinessToHbaseTableMapping createBusinessToHbaseTableMapping() {
-			return new CTypeBusinessToHbaseTableMapping();
-		}
-
-	},
-	JSON_TYPE() {
-		@Override
-		public Business createBusiness() {
-			return new JsonBusiness();
-		}
-
-		@Override
-		public BusinessToHbaseTableMapping createBusinessToHbaseTableMapping() {
-			return new JsonBusinessToHbaseTableMapping();
-		}
-
-	};
-
-	public abstract Business createBusiness();
-
-	public abstract BusinessToHbaseTableMapping createBusinessToHbaseTableMapping();
+public interface BusinessType {
 
 	public static class Names {
 		public static final String C_TYPE = "C_TYPE";
 		public static final String JSON_TYPE = "JSON_TYPE";
 	}
 
-	public static enum BusinessColumnType {
-		SIMPLE, SUB_MAPPING;
-
-		public static class Names {
-			public static final String SIMPLE = "SIMPLE";
-			public static final String SUB_MAPPING = "SUB_MAPPING";
-		}
+	public enum BusinessTypeEnum {
+		C_TYPE, JSON_TYPE;
 	}
+
+	BusinessTypeEnum getType();
+
+	public static class BusinessCType implements BusinessType {
+
+		@Override
+		public BusinessTypeEnum getType() {
+			return BusinessTypeEnum.C_TYPE;
+		}
+
+	}
+
+	public static class BusinessJsonType implements BusinessType {
+
+		@Override
+		public BusinessTypeEnum getType() {
+			return BusinessTypeEnum.JSON_TYPE;
+		}
+
+	}
+
 }

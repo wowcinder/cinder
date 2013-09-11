@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessCType;
 import xdata.etl.cinder.businessmeta.shared.entity.BusinessColumn;
 
 /**
@@ -16,7 +16,7 @@ import xdata.etl.cinder.businessmeta.shared.entity.BusinessColumn;
  */
 @Entity
 @Table(name = "business_column_c")
-public abstract class CTypeBusinessColumn extends BusinessColumn {
+public class CTypeBusinessColumn extends BusinessColumn<BusinessCType> {
 	private static final long serialVersionUID = -8540826006059877751L;
 	@Column(nullable = false)
 	private int pos;
@@ -31,13 +31,9 @@ public abstract class CTypeBusinessColumn extends BusinessColumn {
 	public void setPos(int pos) {
 		this.pos = pos;
 	}
-	
-	@Override
-	public BusinessType getBusinessType() {
-		return BusinessType.C_TYPE;
-	}
 
-	public CTypeBusinessColumn getSelf() {
-		return this;
+	@Override
+	public BusinessCType createBusinessType() {
+		return new BusinessCType();
 	}
 }

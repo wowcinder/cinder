@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
-import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessColumnType;
-import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
 
 /**
  * @author XuehuiHe
@@ -22,37 +20,31 @@ import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
 @Entity
 @Table(name = "business_column")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class BusinessColumn extends EntityHasTimeStampImpl {
+public abstract class BusinessColumn<T extends BusinessType> extends
+		BusinessCommon<T> {
 	private static final long serialVersionUID = 1930104423164074284L;
-
 	@ManyToOne
 	@JoinColumn(name = "mapping_id")
-	private BusinessToHbaseTableMapping mapping;
-
+	private BusinessToHbaseTableMapping<T> mapping;
 	@Column(name = "description", columnDefinition = "text")
 	private String desc;
 
 	public BusinessColumn() {
 	}
 
-	public BusinessToHbaseTableMapping getMapping() {
+	public BusinessToHbaseTableMapping<T> getMapping() {
 		return mapping;
-	}
-
-	public void setMapping(BusinessToHbaseTableMapping mapping) {
-		this.mapping = mapping;
 	}
 
 	public String getDesc() {
 		return desc;
 	}
 
+	public void setMapping(BusinessToHbaseTableMapping<T> mapping) {
+		this.mapping = mapping;
+	}
+
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-	public abstract BusinessColumnType getColumnType();
-
-	public abstract BusinessType getBusinessType();
-
 }

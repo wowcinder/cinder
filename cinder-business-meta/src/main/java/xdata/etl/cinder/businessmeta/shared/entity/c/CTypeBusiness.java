@@ -9,6 +9,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessCType;
 import xdata.etl.cinder.businessmeta.shared.entity.Business;
 
 /**
@@ -17,11 +18,21 @@ import xdata.etl.cinder.businessmeta.shared.entity.Business;
  */
 @Entity
 @DiscriminatorValue(BusinessType.Names.C_TYPE)
-public class CTypeBusiness extends Business {
+public class CTypeBusiness extends Business<BusinessCType> {
 	private static final long serialVersionUID = 6485751341866927907L;
 
+	public CTypeBusiness() {
+	}
+
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<CTypeBusinessVersion> getVersions() {
 		return (List<CTypeBusinessVersion>) super.getVersions();
 	}
+
+	@Override
+	public BusinessCType createBusinessType() {
+		return new BusinessCType();
+	}
+
 }

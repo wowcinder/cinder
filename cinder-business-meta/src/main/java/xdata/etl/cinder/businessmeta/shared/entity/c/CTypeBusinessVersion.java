@@ -7,19 +7,21 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import xdata.etl.cinder.businessmeta.shared.BusinessType;
+import xdata.etl.cinder.businessmeta.shared.BusinessType.BusinessCType;
 import xdata.etl.cinder.businessmeta.shared.entity.BusinessVersion;
 
 /**
  * @author XuehuiHe
- * @date 2013年9月3日
+ * @date 2013年9月11日
  */
 @Entity
 @DiscriminatorValue(BusinessType.Names.C_TYPE)
-public class CTypeBusinessVersion extends BusinessVersion {
-	private static final long serialVersionUID = -8334018254059047467L;
+public class CTypeBusinessVersion extends BusinessVersion<BusinessCType> {
+	private static final long serialVersionUID = -4030622326728311903L;
 
-	public CTypeBusiness getBusiness() {
-		return (CTypeBusiness) business;
+	@Override
+	public BusinessCType createBusinessType() {
+		return new BusinessCType();
 	}
 
 }
