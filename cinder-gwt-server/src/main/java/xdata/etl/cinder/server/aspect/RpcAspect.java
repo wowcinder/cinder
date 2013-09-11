@@ -50,7 +50,7 @@ public class RpcAspect implements Ordered {
 		return retVal;
 	}
 
-	public void doAccessCheck(JoinPoint jp) {
+	public void doAccessCheck(JoinPoint jp) throws SecurityException, NoSuchMethodException {
 		if (RequestContextHolder.getRequestAttributes() == null) {
 			return;
 		}
@@ -63,6 +63,7 @@ public class RpcAspect implements Ordered {
 		MethodSignature signature = (MethodSignature) jp.getSignature();
 		Method invokeMethod = signature.getMethod();
 		Class<?> targetClass = jp.getTarget().getClass();
+		invokeMethod = targetClass.getMethod(invokeMethod.getName(), invokeMethod.getParameterTypes());
 		if (!authorizeService.verify(targetClass, invokeMethod)) {
 			throw new PermissionException();
 		}

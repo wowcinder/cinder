@@ -13,4 +13,8 @@ public interface OpenAuthorizeRpcService extends RemoteService {
 	void logout();
 
 	List<MenuNode> getUserMenus() throws SharedException;
+
+	Boolean login(String email, String password);
+
+	Boolean isLogin();
 }

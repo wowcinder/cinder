@@ -12,4 +12,8 @@ public interface OpenAuthorizeRpcServiceAsync {
 
     public void getUserMenus(AsyncCallback<List<MenuNode>> callback);
 
+    public void login(String arg0, String arg1, AsyncCallback<Boolean> callback);
+
+    public void isLogin(AsyncCallback<Boolean> callback);
+
 }

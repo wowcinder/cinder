@@ -1,7 +1,10 @@
 package xdata.etl.cinder.web.client;
 
-
 import xdata.etl.cinder.gwt.client.app.EtlApp;
+import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
+import xdata.etl.cinder.gwt.client.ui.LoginWindow;
+import xdata.etl.cinder.gwt.client.ui.LoginWindow.LoginSucessCallBack;
+import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.Scheduler;
@@ -19,17 +22,39 @@ public class Etl implements EntryPoint {
 			public void execute() {
 				StateManager.get().setProvider(
 						new CookieProvider("/", null, null, GXT.isSecure()));
-
-				EtlApp app = new EtlApp();
-				app.run();
-//				Menu menu = new Menu();
+				
+				initView();
+//
+//				RpcServiceUtils.OpenAuthorizeRpcService
+//						.isLogin(new RpcAsyncCallback<Boolean>() {
+//							@Override
+//							public void _onSuccess(Boolean t) {
+//								if (t) {
+//									initView();
+//								} else {
+//									LoginWindow window = new LoginWindow();
+//									window.setCallback(new LoginSucessCallBack() {
+//										@Override
+//										public void logined() {
+//											initView();
+//										}
+//									});
+//									window.show();
+//								}
+//							}
+//						});
 
 				onReady();
-				
+
 			}
 
 		});
 
+	}
+
+	public void initView() {
+		EtlApp app = new EtlApp();
+		app.run();
 	}
 
 	private native void onReady() /*-{

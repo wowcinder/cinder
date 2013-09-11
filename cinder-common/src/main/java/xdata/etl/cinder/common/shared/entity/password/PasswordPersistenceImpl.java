@@ -6,7 +6,6 @@ package xdata.etl.cinder.common.shared.entity.password;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -21,7 +20,7 @@ public class PasswordPersistenceImpl implements PasswordPersistence {
 	private String password;
 
 	@Column(length = 32)
-	@NotNull
+//	@NotNull
 	@Length(min = 5, max = 32)
 	@Override
 	public String getPassword() {

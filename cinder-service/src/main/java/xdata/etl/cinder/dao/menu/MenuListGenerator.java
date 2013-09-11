@@ -35,9 +35,14 @@ public class MenuListGenerator {
 		List<MenuNode> needDeleteMenus = new ArrayList<MenuNode>();
 		for (MenuNode menuNode : nodes) {
 			if (menuNode instanceof Menu) {
-				Integer aId = ((Menu) menuNode).getRequireAuthorize().getId();
-				if (!aIds.contains(aId)) {
+				if (((Menu) menuNode).getRequireAuthorize() == null) {
 					needDeleteMenus.add(menuNode);
+				} else {
+					Integer aId = ((Menu) menuNode).getRequireAuthorize()
+							.getId();
+					if (!aIds.contains(aId)) {
+						needDeleteMenus.add(menuNode);
+					}
 				}
 			} else if (menuNode instanceof MenuGroup) {
 				clear(((MenuGroup) menuNode).getNodes(), aIds);

@@ -26,4 +26,14 @@ public class OpenAuthorizeRpcServiceImpl implements OpenAuthorizeRpcService,
 		return authorizeService.getUserMenus();
 	}
 
+	@Override
+	public Boolean login(String email, String password) {
+		return authorizeService.login(email, password);
+	}
+
+	@Override
+	public Boolean isLogin() {
+		return authorizeService.isLogin();
+	}
+
 }
