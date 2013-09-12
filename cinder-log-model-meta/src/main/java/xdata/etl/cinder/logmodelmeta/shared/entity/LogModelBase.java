@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 import xdata.etl.cinder.common.shared.entity.timestamp.EntityHasTimeStampImpl;
 import xdata.etl.cinder.logmodelmeta.shared.entity.type.LogModelType;
@@ -27,7 +28,8 @@ public abstract class LogModelBase extends EntityHasTimeStampImpl {
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "mtype", updatable = false, length = 20)
+	@Column(name = "mtype", updatable = false, length = 20, nullable = false)
+	@NotNull
 	private LogModelType mtype;
 
 	public Integer getId() {

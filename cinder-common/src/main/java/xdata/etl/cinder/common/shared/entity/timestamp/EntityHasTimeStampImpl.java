@@ -19,6 +19,7 @@ import org.hibernate.annotations.AccessType;
  * @date 2013年9月5日
  */
 @MappedSuperclass
+@AccessType("property")
 public class EntityHasTimeStampImpl implements EntityHasTimeStamp, Serializable {
 	private static final long serialVersionUID = 8015695606291655333L;
 	private Date createTime;

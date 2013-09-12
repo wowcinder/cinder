@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumnContent;
+import xdata.etl.cinder.logmodelmeta.shared.entity.type.LogModelType;
 
 /**
  * @author XuehuiHe
@@ -15,6 +16,11 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumnCon
 @Entity
 public class LogModelColumnContentCType extends LogModelColumnContent {
 	private static final long serialVersionUID = 7210341887275945510L;
+
+	public LogModelColumnContentCType() {
+		setMtype(LogModelType.C_TYPE);
+	}
+
 	@Column(nullable = false)
 	private Integer pos;
 

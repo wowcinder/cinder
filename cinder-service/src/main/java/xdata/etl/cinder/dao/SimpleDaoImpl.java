@@ -44,7 +44,7 @@ public class SimpleDaoImpl implements SimpleDao {
 
 	@Override
 	public <T> T save(T t) {
-		getSession().save(t);
+		getSession().persist(t);
 		return t;
 	}
 

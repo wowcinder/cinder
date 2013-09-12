@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumnContent;
+import xdata.etl.cinder.logmodelmeta.shared.entity.type.LogModelType;
 
 /**
  * @author XuehuiHe
@@ -18,6 +19,14 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumnCon
 @Entity
 public class LogModelColumnContentJson extends LogModelColumnContent {
 	private static final long serialVersionUID = 7210341887275945510L;
+
+	/**
+	 * 
+	 */
+	public LogModelColumnContentJson() {
+		setMtype(LogModelType.JSON_TYPE);
+	}
+
 	@Column(nullable = false, length = 150)
 	@NotNull
 	@Length(min = 1, max = 150)

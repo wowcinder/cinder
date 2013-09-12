@@ -3,6 +3,7 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.entity.base.column;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -19,7 +20,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelBase;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class LogModelSuperColumn extends LogModelBase {
 	private static final long serialVersionUID = 9032934534578162445L;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn
 	private LogModelColumnContent content;
 

@@ -27,7 +27,7 @@ public class ValidatorGenerator {
 
 		ClassScaner scaner = new ClassScaner("xdata.etl.cinder.shared.entity",
 				"xdata.etl.cinder.hbasemeta.shared.entity",
-				"xdata.etl.cinder.businessmeta.shared.entity");
+				"xdata.etl.cinder.logmodelmeta.shared.entity");
 
 		for (Class<?> clazz : scaner.getClazzes()) {
 			if (clazz.isAnnotationPresent(Entity.class)

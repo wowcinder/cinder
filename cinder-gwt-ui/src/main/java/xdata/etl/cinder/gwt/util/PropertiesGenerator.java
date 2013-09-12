@@ -1,5 +1,6 @@
 package xdata.etl.cinder.gwt.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import javax.persistence.Entity;
@@ -35,9 +36,10 @@ public class PropertiesGenerator {
 
 		ClassScaner scaner = new ClassScaner("xdata.etl.cinder.shared.entity",
 				"xdata.etl.cinder.hbasemeta.shared.entity",
-				"xdata.etl.cinder.businessmeta.shared.entity");
+				"xdata.etl.cinder.logmodelmeta.shared.entity");
 		for (Class<?> clazz : scaner.getClazzes()) {
 			if (clazz.isAnnotationPresent(Entity.class)) {
+				System.out.println(clazz.getName());
 				generatePropertyClass(clazz);
 			}
 		}
@@ -45,7 +47,8 @@ public class PropertiesGenerator {
 	}
 
 	private static void generatePropertyClass(Class<?> clazz)
-			throws JClassAlreadyExistsException, ClassNotFoundException {
+			throws JClassAlreadyExistsException, ClassNotFoundException,
+			SecurityException, NoSuchFieldException {
 		JDefinedClass dc = getjCodeModel()._class(
 				"xdata.etl.cinder.gwt.client.property." + clazz.getSimpleName()
 						+ "Property", ClassType.INTERFACE);
@@ -69,11 +72,36 @@ public class PropertiesGenerator {
 						.staticInvoke("create").arg(JExpr.dotclass(dc)));
 	}
 
+	public static boolean isId(Method method, String name, Class<?> clazz) {
+		if (method.isAnnotationPresent(Id.class)) {
+			return true;
+		}
+		Field field = getField(name, clazz);
+		if (field!=null && field.isAnnotationPresent(Id.class)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static Field getField(String name, Class<?> clazz) {
+		Field field = null;
+		try {
+			field = clazz.getDeclaredField(name);
+		} catch (SecurityException e) {
+		} catch (NoSuchFieldException e) {
+		}
+		if (field == null && !Object.class.equals(clazz.getSuperclass())) {
+			field = getField(name, clazz.getSuperclass());
+		}
+		return field;
+	}
+
 	public static void generatePropertyMethod(JDefinedClass dc, Method method,
-			Class<?> clazz, JDefinedClass dc2) throws ClassNotFoundException {
+			Class<?> clazz, JDefinedClass dc2) throws ClassNotFoundException,
+			SecurityException, NoSuchFieldException {
 		String name = method.getName().replace("get", "");
 		name = name.substring(0, 1).toLowerCase() + name.substring(1);
-		if (method.isAnnotationPresent(Id.class)) {
+		if (isId(method, name, clazz)) {
 			JMethod jMethod = dc.method(
 					JMod.PUBLIC,
 					getjCodeModel().ref(ModelKeyProvider.class).narrow(

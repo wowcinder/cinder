@@ -5,6 +5,7 @@ package xdata.etl.cinder.logmodelmeta.shared.entity.base;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -36,7 +37,7 @@ public class LogModelVersion extends LogModelBase {
 	private String version;
 	@Column(name = "description", columnDefinition = "text")
 	private String desc;
-	@OneToMany(mappedBy = "version")
+	@OneToMany(mappedBy = "version", cascade = CascadeType.ALL)
 	private List<LogModelColumn> columns;
 
 	public LogModel getModel() {

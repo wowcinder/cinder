@@ -12,6 +12,6 @@
 		<module>../cinder-shared</module>
 		<module>../cinder-gwt-server</module>
 		<module>../cinder-gwt-ui</module>
-		<module>../cinder-kafka-meta</module>
+		<module>../cinder-log-model-meta</module>
 	</modules>
 </project>

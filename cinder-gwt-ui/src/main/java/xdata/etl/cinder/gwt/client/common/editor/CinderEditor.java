@@ -24,7 +24,8 @@ import com.sencha.gxt.widget.core.client.form.FormPanel;
 public abstract class CinderEditor<T> extends Widget implements Editor<T>,
 		EditHanlder<T> {
 	protected static final VerticalLayoutData vd = new VerticalLayoutData(1, -1);
-	protected static final VerticalLayoutData mainVd = new VerticalLayoutData(1, 1);
+	protected static final VerticalLayoutData mainVd = new VerticalLayoutData(
+			1, 1);
 
 	@Ignore
 	private final FixedWindow root;
@@ -121,8 +122,12 @@ public abstract class CinderEditor<T> extends Widget implements Editor<T>,
 
 	protected abstract void _initView();
 
+	protected T flush() {
+		return getDriver().flush();
+	}
+
 	protected void saveOrUpdate() {
-		T t = getDriver().flush();
+		T t = flush();
 		if (getCurrEditEvent().isUpdate()) {
 			update(t);
 		} else {

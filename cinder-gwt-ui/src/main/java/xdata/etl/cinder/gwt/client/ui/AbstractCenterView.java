@@ -1,5 +1,6 @@
 package xdata.etl.cinder.gwt.client.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xdata.etl.cinder.gwt.client.common.GwtCallBack;
@@ -35,6 +36,18 @@ public abstract class AbstractCenterView<M> extends SimpleCenterView {
 	protected abstract M newViewInstance();
 
 	protected abstract void delete(List<M> list);
+
+	protected <T> List<T> getIds(List<M> list, EntityToKey<M, T> entityToKey) {
+		List<T> ids = new ArrayList<T>();
+		for (M m : list) {
+			ids.add(entityToKey.getId(m));
+		}
+		return ids;
+	}
+
+	public interface EntityToKey<M, T> {
+		T getId(M m);
+	}
 
 	protected void initUpdateHandler() {
 		getGrid().addCellDoubleClickHandler(new CellDoubleClickHandler() {
