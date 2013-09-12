@@ -95,7 +95,9 @@
 			<list>
 				<value>xdata.etl.cinder.shared.entity</value>
 				<value>xdata.etl.cinder.hbasemeta.shared.entity</value>
-				<value>xdata.etl.cinder.businessmeta.shared.entity</value>
+				<!-- <value>xdata.etl.cinder.businessmeta.shared.entity</value> -->
+				<value>xdata.etl.cinder.logmodelmeta.shared.entity</value>
+				
 			</list>
 		</property>
 

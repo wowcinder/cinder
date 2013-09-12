@@ -14,6 +14,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>xdata.etl</groupId>
+			<artifactId>cinder-log-model-meta</artifactId>
+			<version>${cinder.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>xdata.etl</groupId>
@@ -56,7 +61,7 @@
 
 		<dependency>
 			<groupId>xdata.etl</groupId>
-			<artifactId>cinder-business-meta</artifactId>
+			<artifactId>cinder-log-model-meta</artifactId>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
 			<version>${cinder.version}</version>

@@ -6,6 +6,7 @@
 	<inherits name='xdata.etl.cinder.common.Common' />
 	<inherits name='xdata.etl.cinder.Shared' />
 	<inherits name='xdata.etl.cinder.hbasemeta.HbaseMeta' />
+	<inherits name='xdata.etl.cinder.logmodelmeta.LogModelMeta' />
 
 	<generate-with class="xdata.etl.cinder.gwt.rebind.CenterViewFinderGenerator">
 		<when-type-assignable
