@@ -72,6 +72,9 @@ public interface HbaseMetaRpcService extends RemoteService {
 	public List<HbaseTableColumn> getColumnsByVersionId(Integer id)
 			throws SharedException, ConstraintViolationException;
 
+	public List<HbaseTableVersion> getHbaseTableVersionsForCombox()
+			throws SharedException, ConstraintViolationException;
+
 	public List<HbaseTableColumn> getTableAllColumns(String table,
 			String[] versions) throws SharedException,
 			ConstraintViolationException;

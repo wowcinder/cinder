@@ -13,6 +13,8 @@ import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 public interface HbaseMetaRpcServiceAsync {
 
 
+    public void dummy(AsyncCallback<ValidationSupport> callback);
+
     public void saveHbaseTable(HbaseTable arg0, AsyncCallback<HbaseTable> callback);
 
     public void deleteHbaseTable(Integer arg0, AsyncCallback<Void> callback);
@@ -47,8 +49,8 @@ public interface HbaseMetaRpcServiceAsync {
 
     public void getColumnsByVersionId(Integer arg0, AsyncCallback<List<HbaseTableColumn>> callback);
 
-    public void getTableAllColumns(String arg0, String[] arg1, AsyncCallback<List<HbaseTableColumn>> callback);
+    public void getHbaseTableVersionsForCombox(AsyncCallback<List<HbaseTableVersion>> callback);
 
-    public void dummy(AsyncCallback<ValidationSupport> callback);
+    public void getTableAllColumns(String arg0, String[] arg1, AsyncCallback<List<HbaseTableColumn>> callback);
 
 }

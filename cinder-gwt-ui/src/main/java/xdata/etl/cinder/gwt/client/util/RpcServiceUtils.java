@@ -3,9 +3,9 @@ package xdata.etl.cinder.gwt.client.util;
 
 import com.google.gwt.core.client.GWT;
 import xdata.etl.cinder.gwt.client.service.AuthorizeRpcServiceAsync;
+import xdata.etl.cinder.gwt.client.service.CTypeLogModelMetaRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.HbaseMetaRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.HbaseQueryRpcServiceAsync;
-import xdata.etl.cinder.gwt.client.service.LogModelMetaRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.MenuRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.OpenAuthorizeRpcServiceAsync;
 import xdata.etl.cinder.gwt.client.service.UserRpcServiceAsync;
@@ -13,9 +13,9 @@ import xdata.etl.cinder.gwt.client.service.UserRpcServiceAsync;
 public class RpcServiceUtils {
 
     public final static AuthorizeRpcServiceAsync AuthorizeRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.AuthorizeRpcService.class);
+    public final static CTypeLogModelMetaRpcServiceAsync CTypeLogModelMetaRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.CTypeLogModelMetaRpcService.class);
     public final static HbaseMetaRpcServiceAsync HbaseMetaRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.HbaseMetaRpcService.class);
     public final static HbaseQueryRpcServiceAsync HbaseQueryRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.HbaseQueryRpcService.class);
-    public final static LogModelMetaRpcServiceAsync LogModelMetaRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.LogModelMetaRpcService.class);
     public final static MenuRpcServiceAsync MenuRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.MenuRpcService.class);
     public final static OpenAuthorizeRpcServiceAsync OpenAuthorizeRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.OpenAuthorizeRpcService.class);
     public final static UserRpcServiceAsync UserRpcService = GWT.create(xdata.etl.cinder.gwt.client.service.UserRpcService.class);

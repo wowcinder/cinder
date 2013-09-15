@@ -16,6 +16,7 @@ import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 import xdata.etl.cinder.service.HbaseMetaService;
+import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -26,6 +27,8 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 	@Autowired
 	private HbaseMetaService hbaseMetaService;
+	@Autowired
+	private SimpleService simpleService;
 
 	@Override
 	@AuthorizeAnnotation("添加table")
@@ -151,7 +154,10 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 	@Override
 	@AuthorizeAnnotations({ @AuthorizeAnnotation("添加table_version"),
 			@AuthorizeAnnotation("修改table_version"),
-			@AuthorizeAnnotation("查询table_version") })
+			@AuthorizeAnnotation("查询table_version"),
+			@AuthorizeAnnotation(group = "CType日志模型", value = "查询日志模型版本"),
+			@AuthorizeAnnotation(group = "CType日志模型", value = "修改日志模型版本"),
+			@AuthorizeAnnotation(group = "CType日志模型", value = "添加日志模型版本") })
 	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
 		return hbaseMetaService.getColumnsByVersionId(id);
 	}
@@ -167,6 +173,16 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 			String[] versions) throws SharedException,
 			ConstraintViolationException {
 		return getService().getTableAllColumns(table, versions);
+	}
+
+	@Override
+	@AuthorizeAnnotations({
+			@AuthorizeAnnotation(group = "CType日志模型", value = "查询日志模型版本"),
+			@AuthorizeAnnotation(group = "CType日志模型", value = "修改日志模型版本"),
+			@AuthorizeAnnotation(group = "CType日志模型", value = "添加日志模型版本") })
+	public List<HbaseTableVersion> getHbaseTableVersionsForCombox()
+			throws SharedException, ConstraintViolationException {
+		return simpleService.get(HbaseTableVersion.class);
 	}
 
 }

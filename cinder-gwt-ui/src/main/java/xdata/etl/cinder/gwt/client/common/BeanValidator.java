@@ -15,15 +15,11 @@ import com.google.gwt.validation.client.GwtValidation;
     xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable.class,
     xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn.class,
     xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumn.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelColumnContent.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelPackageColumn.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelSubColumn.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.column.LogModelSuperColumn.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.LogModel.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.base.LogModelVersion.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.c.LogModelColumnContentCType.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.json.LogModelColumnContentJson.class
+    xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion.class
 })
 public interface BeanValidator
     extends Validator
