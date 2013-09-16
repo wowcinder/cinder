@@ -9,6 +9,9 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
+
+import xdata.etl.cinder.common.shared.groups.GWTChecks;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.validation.client.AbstractGwtValidatorFactory;
@@ -37,7 +40,8 @@ public final class BeanValidatorFactory extends AbstractGwtValidatorFactory {
 	}
 
 	public static <T> Set<ConstraintViolation<T>> validate(T t) {
-		return getCannaValidator().validate(t);
+		return getCannaValidator().validate(t,
+				new Class<?>[] { Default.class, GWTChecks.class });
 	}
 
 }

@@ -41,7 +41,7 @@ public class HbaseTableVersionCombox extends
 	}
 
 	@Override
-	protected boolean isAddItem(HbaseTableVersion selectItem) {
+	public boolean isAddItem(HbaseTableVersion selectItem) {
 		return selectItem.getId() == -1;
 	}
 

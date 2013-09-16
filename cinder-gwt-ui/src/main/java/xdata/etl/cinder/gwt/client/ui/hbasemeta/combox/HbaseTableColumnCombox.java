@@ -40,7 +40,7 @@ public class HbaseTableColumnCombox extends AddEnableComboBox<HbaseTableColumn>
 	}
 
 	@Override
-	protected boolean isAddItem(HbaseTableColumn selectItem) {
+	public boolean isAddItem(HbaseTableColumn selectItem) {
 		return selectItem.getId() == -1;
 	}
 

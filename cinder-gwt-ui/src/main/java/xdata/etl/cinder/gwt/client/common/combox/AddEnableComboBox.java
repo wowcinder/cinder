@@ -25,7 +25,7 @@ public abstract class AddEnableComboBox<T> extends ComboBox<T> {
 		setTriggerAction(TriggerAction.ALL);
 
 		this.editor = editor;
-
+		
 		this.addSelectionHandler(new SelectionHandler<T>() {
 			@Override
 			public void onSelection(SelectionEvent<T> event) {
@@ -54,19 +54,21 @@ public abstract class AddEnableComboBox<T> extends ComboBox<T> {
 			@Override
 			protected void _call(T t) {
 				getStore().add(0, t);
-				setValue(t);
+				setValue(t,true);
 			}
 
 			@Override
 			protected void _cancel() {
 				super._cancel();
-				setValue(getLastSelectItem());
+//				select(getLastSelectItem());
+				setValue(getLastSelectItem(),true);
 			}
 
 			@Override
 			protected void _fail() {
 				super._fail();
-				setValue(getLastSelectItem());
+//				select(getLastSelectItem());
+				setValue(getLastSelectItem(),true);
 			}
 		};
 	}

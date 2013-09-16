@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import xdata.etl.cinder.common.shared.groups.RpcChecks;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelBase;
 
 @Entity
@@ -29,7 +30,7 @@ public class CTypeLogModelColumn extends LogModelBase {
 		return groupColumn;
 	}
 
-	@NotNull
+	@NotNull(groups = RpcChecks.class)
 	@Column(nullable = false)
 	public Integer getPos() {
 		return pos;
