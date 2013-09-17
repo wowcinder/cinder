@@ -11,23 +11,20 @@ import xdata.etl.cinder.gwt.client.common.editor.CinderEditor;
 import xdata.etl.cinder.gwt.client.common.event.EditEvent;
 import xdata.etl.cinder.gwt.client.ui.hbasemeta.combox.HbaseTableVersionCombox;
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.combox.CTypeLogModelCombox;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.combox.GroupColumnHbaseTableVersionCombox;
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.CTypeLogModelColumnTree;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.HbaseTableVersionChangeEvent;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.HbaseTableVersionChangeEvent.HbaseTableVersionChangeHanlder;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.messages.client.DefaultMessages;
@@ -41,7 +38,8 @@ import com.sencha.gxt.widget.core.client.form.TextField;
  * @date 2013年9月12日
  */
 public class CTypeLogModelVersionEditor extends
-		CinderEditor<CTypeLogModelVersion> {
+		CinderEditor<CTypeLogModelVersion> implements
+		HbaseTableVersionChangeHanlder {
 	interface Driver
 			extends
 			SimpleBeanEditorDriver<CTypeLogModelVersion, CTypeLogModelVersionEditor> {
@@ -54,6 +52,7 @@ public class CTypeLogModelVersionEditor extends
 	 */
 	public CTypeLogModelVersionEditor() {
 		super(GWT.<Driver> create(Driver.class), "日志模型版本");
+		addHandler(this, HbaseTableVersionChangeEvent.TYPE);
 	}
 
 	@Override
@@ -83,7 +82,15 @@ public class CTypeLogModelVersionEditor extends
 	protected void _initView() {
 		model = new CTypeLogModelCombox();
 		version = new TextField();
-		hbaseTableVersion = new RootNodeHbaseTableVersionCombox();
+		hbaseTableVersion = new GroupColumnHbaseTableVersionCombox() {
+			@Override
+			protected void checkHbaseTableColumn(HbaseTableVersion currVersion) {
+				rootNode.setHbaseTableVersion(currVersion);
+				HbaseTableVersionChangeEvent event = new HbaseTableVersionChangeEvent(
+						rootNode);
+				getParent().fireEvent(event);
+			}
+		};
 		desc = new TextArea();
 		layoutContainer.add(new FieldLabel(model, "model"), vd);
 		layoutContainer.add(new FieldLabel(version, "version"), vd);
@@ -97,8 +104,8 @@ public class CTypeLogModelVersionEditor extends
 						return getColumnKey(item);
 					}
 				});
-		columnsTree = new CTypeLogModelColumnTree(treeStore, hbaseTableVersion);
-		columnsTree.setHeight(400);
+		columnsTree = new CTypeLogModelColumnTree(treeStore);
+		columnsTree.setHeight(300);
 
 		FieldLabel columnsTreeFieldLabel = new FieldLabel(columnsTree, "字段");
 		columnsTreeFieldLabel.setLabelAlign(LabelAlign.TOP);
@@ -197,54 +204,9 @@ public class CTypeLogModelVersionEditor extends
 		}
 	}
 
-	public class RootNodeHbaseTableVersionCombox extends
-			HbaseTableVersionCombox {
-		private HandlerRegistration valueChangeHr;
-
-		public RootNodeHbaseTableVersionCombox() {
-			super();
-			addSelectionHandler(new SelectionHandler<HbaseTableVersion>() {
-
-				@Override
-				public void onSelection(SelectionEvent<HbaseTableVersion> event) {
-					if (isAddItem(event.getSelectedItem())) {
-						valueChangeHr = addValueChangeHandler(new ValueChangeHandler<HbaseTableVersion>() {
-
-							@Override
-							public void onValueChange(
-									ValueChangeEvent<HbaseTableVersion> event) {
-								if (hbaseTableVersion.isAddItem(event
-										.getValue())) {
-									return;
-								}
-								valueChangeHr.removeHandler();
-								valueChangeHr = null;
-								checkHbaseTableColumn(event.getValue());
-
-							}
-						});
-					} else {
-						checkHbaseTableColumn(event.getSelectedItem());
-					}
-				}
-			});
-		}
-
-		protected void checkHbaseTableColumn(HbaseTableVersion currVersion) {
-			for (CTypeLogModelColumn column : treeStore.getChildren(rootNode)) {
-				if (column instanceof CTypeLogModelSimpleColumn) {
-					CTypeLogModelSimpleColumn simpleColumn = (CTypeLogModelSimpleColumn) column;
-					if (simpleColumn.getHbaseTableColumn() == null) {
-						continue;
-					}
-					HbaseTableVersion oldVersion = simpleColumn
-							.getHbaseTableColumn().getVersion();
-					if (currVersion == null
-							|| currVersion.getId() != oldVersion.getId()) {
-						simpleColumn.setHbaseTableColumn(null);
-					}
-				}
-			}
-		}
+	@Override
+	public void onCheckVersionChange(HbaseTableVersionChangeEvent event) {
+		columnsTree.fireEvent(event);
 	}
+
 }

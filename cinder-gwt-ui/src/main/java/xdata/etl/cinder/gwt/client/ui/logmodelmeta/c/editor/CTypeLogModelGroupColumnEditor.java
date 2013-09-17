@@ -1,7 +1,13 @@
 package xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.editor;
 
+import xdata.etl.cinder.gwt.client.common.GwtCallBack;
+import xdata.etl.cinder.gwt.client.common.LinkGwtCallBack;
 import xdata.etl.cinder.gwt.client.common.editor.CinderEditor;
+import xdata.etl.cinder.gwt.client.common.event.EditEvent;
 import xdata.etl.cinder.gwt.client.ui.hbasemeta.combox.HbaseTableVersionCombox;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.CTypeLogModelColumnTree;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.HbaseTableVersionChangeEvent;
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 
 import com.google.gwt.core.shared.GWT;
@@ -17,22 +23,37 @@ public class CTypeLogModelGroupColumnEditor extends
 
 	}
 
-	public CTypeLogModelGroupColumnEditor() {
+	private final CTypeLogModelColumnTree tree;
+
+	public CTypeLogModelGroupColumnEditor(CTypeLogModelColumnTree tree) {
 		super(GWT.<Driver> create(Driver.class), "group_column");
+		this.tree = tree;
 	}
 
+	private HbaseTableVersion oldVersion;
+
 	@Override
-	protected void update(CTypeLogModelGroupColumn t) {
-		if (getCurrEditEvent().getTarget().getId() == null) {
-			getLinkGwtCallBack().call(t);
-		} else {
-			super.update(t);
-		}
+	public void onEdit(EditEvent<CTypeLogModelGroupColumn> event) {
+		oldVersion = event.getTarget().getHbaseTableVersion();
+		super.onEdit(event);
 	}
 
 	@Override
 	protected void _update(CTypeLogModelGroupColumn t) {
-		// TODO
+		GwtCallBack<CTypeLogModelGroupColumn> callback = new LinkGwtCallBack<CTypeLogModelGroupColumn, CTypeLogModelGroupColumn>(
+				getLinkGwtCallBack()) {
+			@Override
+			protected void _call(CTypeLogModelGroupColumn t) {
+				_swapperCall(t);
+				if (oldVersion != null
+						&& (t.getHbaseTableVersion() == null || !oldVersion
+								.getId().equals(
+										t.getHbaseTableVersion().getId()))) {
+					tree.fireEvent(new HbaseTableVersionChangeEvent(t));
+				}
+			}
+		};
+		callback.call(t);
 	}
 
 	@Override
@@ -61,5 +82,4 @@ public class CTypeLogModelGroupColumnEditor extends
 		layoutContainer.add(new FieldLabel(hbaseTableVersion, "hbase_version"),
 				vd);
 	}
-
 }

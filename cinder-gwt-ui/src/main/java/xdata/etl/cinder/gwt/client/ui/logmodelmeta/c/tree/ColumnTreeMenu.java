@@ -33,7 +33,7 @@ public class ColumnTreeMenu extends Menu {
 	public ColumnTreeMenu(final CTypeLogModelColumnTree owner) {
 		this.tree = owner;
 		simpleEditor = new CTypeLogModelSimpleColumnEditor();
-		groupEditor = new CTypeLogModelGroupColumnEditor();
+		groupEditor = new CTypeLogModelGroupColumnEditor(owner);
 
 		addSimpleColumn = new MenuItem("添加字段");
 		addGroupColumn = new MenuItem("添加字段组");
@@ -143,9 +143,6 @@ public class ColumnTreeMenu extends Menu {
 	protected CTypeLogModelGroupColumn getGroupColumn() {
 		final CTypeLogModelGroupColumn selectItem = (CTypeLogModelGroupColumn) tree
 				.getSelectionModel().getSelectedItem();
-		if (selectItem.getGroupColumn() == null) {
-			selectItem.setHbaseTableVersion(tree.getHbaseTableVersion());
-		}
 		if (selectItem.getHbaseTableVersion() == null) {
 			Info.display("出错", "请先选择hbase_version!");
 			return null;

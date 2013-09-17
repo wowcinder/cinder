@@ -1,9 +1,10 @@
 package xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree;
 
-import xdata.etl.cinder.gwt.client.ui.hbasemeta.combox.HbaseTableVersionCombox;
+import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.HbaseTableVersionChangeEvent.HbaseTableVersionChangeHanlder;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.resources.client.ImageResource;
@@ -17,11 +18,10 @@ import com.sencha.gxt.dnd.core.client.TreeDropTarget;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeStyle;
 
-public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String> {
-	private final HbaseTableVersionCombox hbaseTableVersion;
+public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
+		implements HbaseTableVersionChangeHanlder {
 
-	public CTypeLogModelColumnTree(TreeStore<CTypeLogModelColumn> store,
-			HbaseTableVersionCombox hbaseTableVersion) {
+	public CTypeLogModelColumnTree(TreeStore<CTypeLogModelColumn> store) {
 		super(store, new ValueProvider<CTypeLogModelColumn, String>() {
 
 			@Override
@@ -65,12 +65,13 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String> {
 				return style;
 			}
 		});
-		this.hbaseTableVersion = hbaseTableVersion;
 		initDND();
 		getElement().getStyle().setTextAlign(TextAlign.LEFT);
 		setWidth(300);
 		getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		setContextMenu(new ColumnTreeMenu(this));
+
+		addHandler(this, HbaseTableVersionChangeEvent.TYPE);
 	}
 
 	private void initDND() {
@@ -81,8 +82,23 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String> {
 		target.setFeedback(Feedback.BOTH);
 	}
 
-	public HbaseTableVersion getHbaseTableVersion() {
-		return hbaseTableVersion.getValue();
+	@Override
+	public void onCheckVersionChange(HbaseTableVersionChangeEvent event) {
+		CTypeLogModelGroupColumn owner = event.getColumn();
+		HbaseTableVersion version = owner.getHbaseTableVersion();
+		for (CTypeLogModelColumn column : getStore().getChildren(owner)) {
+			if (column instanceof CTypeLogModelSimpleColumn) {
+				CTypeLogModelSimpleColumn simpleColumn = (CTypeLogModelSimpleColumn) column;
+				if (simpleColumn.getHbaseTableColumn() == null) {
+					continue;
+				}
+				HbaseTableVersion oldVersion = simpleColumn
+						.getHbaseTableColumn().getVersion();
+				if (version == null || version.getId() != oldVersion.getId()) {
+					simpleColumn.setHbaseTableColumn(null);
+				}
+			}
+		}
 	}
 
 }
