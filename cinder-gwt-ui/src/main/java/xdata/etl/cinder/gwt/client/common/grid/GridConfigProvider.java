@@ -30,13 +30,15 @@ public abstract class GridConfigProvider<M> implements RpcProxyLoad<M> {
 
 	protected final List<ColumnConfig<M, ?>> columns;
 	protected final CheckBoxSelectionModel<M> sm;
+	protected final ListStore<M> store;
 
-	public GridConfigProvider() {
+	public GridConfigProvider(ListStore<M> store) {
 		columns = new ArrayList<ColumnConfig<M, ?>>();
 
 		IdentityValueProvider<M> identity = new IdentityValueProvider<M>();
 		sm = new CheckBoxSelectionModel<M>(identity);
 		sm.setSelectionMode(SelectionMode.MULTI);
+		this.store = store;
 		initColumnConfig();
 	}
 
@@ -101,4 +103,9 @@ public abstract class GridConfigProvider<M> implements RpcProxyLoad<M> {
 		}
 
 	}
+
+	public ListStore<M> getStore() {
+		return store;
+	}
+
 }

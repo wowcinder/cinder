@@ -18,32 +18,30 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 public class AuthorizeGrid extends CinderGrid<Authorize> {
 
 	public AuthorizeGrid(GridConfig gridConfig) {
-		super(
-				new GridConfigProvider<Authorize>() {
-					@Override
-					public void load(EtlPagingLoadConfigBean loadConfig,
-							AsyncCallback<PagingLoadResult<Authorize>> callback) {
+		super(new GridConfigProvider<Authorize>(new ListStore<Authorize>(
+				PropertyUtils.AuthorizeProperty.key())) {
+			@Override
+			public void load(EtlPagingLoadConfigBean loadConfig,
+					AsyncCallback<PagingLoadResult<Authorize>> callback) {
 
-						// TODO
-					}
+				// TODO
+			}
 
+			@Override
+			protected void initColumnConfig() {
+				ColumnConfig<Authorize, AuthorizeGroup> group = AuthorizeColumnConfig
+						.group();
+				group.setCell(new SimpleSafeHtmlRenderer<AuthorizeGroup>() {
 					@Override
-					protected void initColumnConfig() {
-						ColumnConfig<Authorize, AuthorizeGroup> group = AuthorizeColumnConfig
-								.group();
-						group.setCell(new SimpleSafeHtmlRenderer<AuthorizeGroup>() {
-							@Override
-							protected String _getLabel(AuthorizeGroup c) {
-								return c.getName();
-							}
-						}.getCell());
-						columns.add(group);
-						ColumnConfig<Authorize, String> name = AuthorizeColumnConfig
-								.name();
-						columns.add(name);
+					protected String _getLabel(AuthorizeGroup c) {
+						return c.getName();
 					}
-				}, new ListStore<Authorize>(
-						PropertyUtils.AuthorizeProperty.key()),
-				gridConfig);
+				}.getCell());
+				columns.add(group);
+				ColumnConfig<Authorize, String> name = AuthorizeColumnConfig
+						.name();
+				columns.add(name);
+			}
+		}, gridConfig);
 	}
 }

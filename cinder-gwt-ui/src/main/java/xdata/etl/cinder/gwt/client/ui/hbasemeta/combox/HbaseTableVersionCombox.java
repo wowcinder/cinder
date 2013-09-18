@@ -30,6 +30,8 @@ public class HbaseTableVersionCombox extends
 								+ item.getVersion();
 					}
 				}, new HbaseTableVersionEditor());
+		setForceSelection(false);
+		setEditable(true);
 	}
 
 	@Override

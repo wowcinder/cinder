@@ -31,7 +31,9 @@ public class HbaseTableVersionGrid extends CinderGrid<HbaseTableVersion> {
 	 * @param gridConfig
 	 */
 	public HbaseTableVersionGrid(GridConfig gridConfig) {
-		super(new GridConfigProvider<HbaseTableVersion>() {
+		super(new GridConfigProvider<HbaseTableVersion>(
+				new ListStore<HbaseTableVersion>(
+						PropertyUtils.HbaseTableVersionProperty.key())) {
 
 			@Override
 			public void load(EtlPagingLoadConfigBean loadConfig,
@@ -58,7 +60,6 @@ public class HbaseTableVersionGrid extends CinderGrid<HbaseTableVersion> {
 				columns.add(version);
 				columns.add(desc);
 			}
-		}, new ListStore<HbaseTableVersion>(
-				PropertyUtils.HbaseTableVersionProperty.key()), gridConfig);
+		}, gridConfig);
 	}
 }

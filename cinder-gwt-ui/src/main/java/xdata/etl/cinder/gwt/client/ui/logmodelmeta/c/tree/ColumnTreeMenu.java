@@ -1,9 +1,11 @@
 package xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree;
 
 import xdata.etl.cinder.gwt.client.common.GwtCallBack;
+import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
 import xdata.etl.cinder.gwt.client.common.event.EditEvent;
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.editor.CTypeLogModelGroupColumnEditor;
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.editor.CTypeLogModelSimpleColumnEditor;
+import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
@@ -14,7 +16,6 @@ import com.sencha.gxt.widget.core.client.event.BeforeShowEvent;
 import com.sencha.gxt.widget.core.client.event.BeforeShowEvent.BeforeShowHandler;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
-import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
@@ -78,8 +79,21 @@ public class ColumnTreeMenu extends Menu {
 	}
 
 	protected void initDelete() {
-		// TODO Auto-generated method stub
+		delete.addSelectionHandler(new SelectionHandler<Item>() {
 
+			@Override
+			public void onSelection(SelectionEvent<Item> event) {
+				final CTypeLogModelColumn column = tree.getSelectionModel()
+						.getSelectedItem();
+				RpcServiceUtils.CTypeLogModelMetaRpcService.deleteLogModelColumn(
+						column.getId(), new RpcAsyncCallback<Void>() {
+							@Override
+							public void _onSuccess(Void t) {
+								tree.getStore().remove(column);
+							}
+						});
+			}
+		});
 	}
 
 	protected void initModify() {
@@ -143,10 +157,6 @@ public class ColumnTreeMenu extends Menu {
 	protected CTypeLogModelGroupColumn getGroupColumn() {
 		final CTypeLogModelGroupColumn selectItem = (CTypeLogModelGroupColumn) tree
 				.getSelectionModel().getSelectedItem();
-		if (selectItem.getHbaseTableVersion() == null) {
-			Info.display("出错", "请先选择hbase_version!");
-			return null;
-		}
 		return selectItem;
 	}
 

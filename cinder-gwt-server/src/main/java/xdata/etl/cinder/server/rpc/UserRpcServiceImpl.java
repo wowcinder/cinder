@@ -13,13 +13,13 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotati
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotations;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.UserRpcService;
-import xdata.etl.cinder.server.CinderValidator;
 import xdata.etl.cinder.service.UserService;
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
 import xdata.etl.cinder.shared.entity.user.User;
 import xdata.etl.cinder.shared.entity.user.UserGroup;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
+import xdata.etl.cinder.util.CinderValidator;
 
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 

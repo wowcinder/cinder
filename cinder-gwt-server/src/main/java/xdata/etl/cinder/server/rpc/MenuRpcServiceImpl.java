@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.MenuRpcService;
-import xdata.etl.cinder.server.CinderValidator;
 import xdata.etl.cinder.service.MenuService;
 import xdata.etl.cinder.shared.entity.menu.Menu;
 import xdata.etl.cinder.shared.entity.menu.MenuGroup;
 import xdata.etl.cinder.shared.entity.menu.MenuNode;
+import xdata.etl.cinder.util.CinderValidator;
 
 @Service
 @AuthorizeGroupAnnotation("菜单")

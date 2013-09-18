@@ -17,6 +17,7 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnn
 import xdata.etl.cinder.gwt.client.service.CTypeLogModelMetaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
 import xdata.etl.cinder.service.CTypeLogModelMetaService;
 import xdata.etl.cinder.service.SimpleService;
@@ -93,7 +94,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	public CTypeLogModelVersion updateLogModelVersion(
 			CTypeLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException {
-		return simpleService.update(LogModelVersion);
+		return cTypeLogModelMetaService.updateLogModelVersion(LogModelVersion);
 	}
 
 	@Override
@@ -124,6 +125,45 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	public CTypeLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
 			throws SharedException, ConstraintViolationException {
 		return cTypeLogModelMetaService.getLogModelVersionRootNode(versionId);
+	}
+
+	@Override
+	@AuthorizeAnnotation("添加日志模型版本")
+	public CTypeLogModelSimpleColumn saveLogModelSimpleColumn(
+			CTypeLogModelSimpleColumn column) throws SharedException,
+			ConstraintViolationException {
+		return cTypeLogModelMetaService.saveLogModelColumn(column);
+	}
+
+	@Override
+	@AuthorizeAnnotation("修改日志模型版本")
+	public CTypeLogModelSimpleColumn updateLogModelSimpleColumn(
+			CTypeLogModelSimpleColumn column) throws SharedException,
+			ConstraintViolationException {
+		return cTypeLogModelMetaService.updateLogModelColumn(column);
+	}
+
+	@Override
+	@AuthorizeAnnotation("添加日志模型版本")
+	public CTypeLogModelGroupColumn saveLogModelGroupColumn(
+			CTypeLogModelGroupColumn column) throws SharedException,
+			ConstraintViolationException {
+		return cTypeLogModelMetaService.saveLogModelColumn(column);
+	}
+
+	@Override
+	@AuthorizeAnnotation("修改日志模型版本")
+	public CTypeLogModelGroupColumn updateLogModelGroupColumn(
+			CTypeLogModelGroupColumn column) throws SharedException,
+			ConstraintViolationException {
+		return cTypeLogModelMetaService.updateLogModelColumn(column);
+	}
+
+	@Override
+	@AuthorizeAnnotation("删除日志模型版本")
+	public void deleteLogModelColumn(Integer id) throws SharedException,
+			ConstraintViolationException {
+		cTypeLogModelMetaService.deleteLogModelColumn(id);
 	}
 
 }

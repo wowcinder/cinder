@@ -2,11 +2,11 @@ package xdata.etl.cinder.logmodelmeta.shared.entity.c;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 
@@ -16,14 +16,13 @@ public class CTypeLogModelGroupColumn extends CTypeLogModelColumn {
 	private List<CTypeLogModelColumn> columns;
 	private HbaseTableVersion hbaseTableVersion;
 
-	@OneToMany(mappedBy = "groupColumn")
+	@OneToMany(mappedBy = "groupColumn", cascade = { CascadeType.REMOVE })
 	public List<CTypeLogModelColumn> getColumns() {
 		return columns;
 	}
 
 	@OneToOne
-	@JoinColumn(name = "hbaseTableVersion_id", nullable = false)
-	@NotNull
+	@JoinColumn(name = "hbaseTableVersion_id")
 	public HbaseTableVersion getHbaseTableVersion() {
 		return hbaseTableVersion;
 	}

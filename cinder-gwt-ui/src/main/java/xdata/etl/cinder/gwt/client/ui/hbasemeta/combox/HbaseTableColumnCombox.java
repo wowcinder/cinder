@@ -54,9 +54,7 @@ public class HbaseTableColumnCombox extends AddEnableComboBox<HbaseTableColumn>
 	@Override
 	public void onAdd(
 			HbaseTableColumnComboxAddEvent hbaseTableColumnComboxAddEvent) {
-		if (getCurrEvent() != null
-				&& getCurrEvent().getVersion().getId() == hbaseTableColumnComboxAddEvent
-						.getVersion().getId()) {
+		if (!isChangeVersion(hbaseTableColumnComboxAddEvent)) {
 			return;
 
 		}
@@ -65,7 +63,30 @@ public class HbaseTableColumnCombox extends AddEnableComboBox<HbaseTableColumn>
 		initCombox();
 	}
 
+	private boolean isChangeVersion(HbaseTableColumnComboxAddEvent e) {
+		if (getCurrEvent() == null) {
+			return true;
+		}
+		if (getCurrEvent().getVersion() == null) {
+			if (e.getVersion() == null) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			if (e.getVersion() == null) {
+				return true;
+			} else {
+				return !e.getVersion().equals(
+						getCurrEvent().getVersion().getId());
+			}
+		}
+	}
+
 	private void initCombox() {
+		if (getCurrEvent().getVersion() == null) {
+			return;
+		}
 		mask(DefaultMessages.getMessages().loadMask_msg());
 		RpcServiceUtils.HbaseMetaRpcService.getColumnsByVersionId(
 				getCurrEvent().getVersion().getId(),

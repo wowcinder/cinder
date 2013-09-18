@@ -5,6 +5,7 @@ import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
+import xdata.etl.cinder.shared.HbaseVersionChangeUtil;
 
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.resources.client.ImageResource;
@@ -94,7 +95,7 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 				}
 				HbaseTableVersion oldVersion = simpleColumn
 						.getHbaseTableColumn().getVersion();
-				if (version == null || version.getId() != oldVersion.getId()) {
+				if (HbaseVersionChangeUtil.isChange(oldVersion, version)) {
 					simpleColumn.setHbaseTableColumn(null);
 				}
 			}

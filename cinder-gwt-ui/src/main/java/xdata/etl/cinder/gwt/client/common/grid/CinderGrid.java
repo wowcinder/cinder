@@ -7,7 +7,6 @@ import xdata.etl.cinder.gwt.client.common.paging.EtlPagingLoader;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.toolbar.PagingToolBar;
@@ -21,13 +20,13 @@ public class CinderGrid<M> extends Grid<M> {
 	private final GridConfigProvider<M> configProvider;
 	private PagingToolBar pagingToolBar;
 
-	public CinderGrid(GridConfigProvider<M> configProvider, ListStore<M> store) {
-		this(configProvider, store, new GridConfig());
+	public CinderGrid(GridConfigProvider<M> configProvider) {
+		this(configProvider, new GridConfig());
 	}
 
-	public CinderGrid(GridConfigProvider<M> configProvider, ListStore<M> store,
+	public CinderGrid(GridConfigProvider<M> configProvider,
 			GridConfig gridConfig) {
-		super(store, new ColumnModel<M>(configProvider.getColumns(gridConfig
+		super(configProvider.getStore(), new ColumnModel<M>(configProvider.getColumns(gridConfig
 				.isMultiSelect())));
 		configProvider.initSelectModel(this, gridConfig.isMultiSelect());
 		configProvider.initPaging(this, gridConfig);

@@ -31,7 +31,8 @@ public class UserGrid extends CinderGrid<User> {
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
 	public UserGrid() {
-		super(new GridConfigProvider<User>() {
+		super(new GridConfigProvider<User>(new ListStore<User>(
+				PropertyUtils.UserProperty.key())) {
 
 			@Override
 			protected void initColumnConfig() {
@@ -62,6 +63,6 @@ public class UserGrid extends CinderGrid<User> {
 					AsyncCallback<PagingLoadResult<User>> callback) {
 				RpcServiceUtils.UserRpcService.pagingUser(loadConfig, callback);
 			}
-		}, new ListStore<User>(PropertyUtils.UserProperty.key()));
+		});
 	}
 }

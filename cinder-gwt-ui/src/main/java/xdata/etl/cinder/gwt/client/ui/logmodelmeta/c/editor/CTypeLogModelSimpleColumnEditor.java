@@ -4,6 +4,7 @@ import xdata.etl.cinder.gwt.client.common.editor.CinderEditor;
 import xdata.etl.cinder.gwt.client.common.event.EditEvent;
 import xdata.etl.cinder.gwt.client.ui.hbasemeta.combox.HbaseTableColumnCombox;
 import xdata.etl.cinder.gwt.client.ui.hbasemeta.combox.HbaseTableColumnComboxAddEvent;
+import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 
 import com.google.gwt.core.shared.GWT;
@@ -24,31 +25,15 @@ public class CTypeLogModelSimpleColumnEditor extends
 	}
 
 	@Override
-	protected void update(CTypeLogModelSimpleColumn t) {
-		if (getCurrEditEvent().getTarget().getId() == null) {
-			getLinkGwtCallBack().call(t);
-		} else {
-			super.update(t);
-		}
-	}
-
-	@Override
 	protected void _update(CTypeLogModelSimpleColumn t) {
-		// TODO
-	}
-
-	@Override
-	protected void add(CTypeLogModelSimpleColumn t) {
-		if (getCurrEditEvent().getTarget().getGroupColumn().getId() == null) {
-			getLinkGwtCallBack().call(t);
-		} else {
-			super.add(t);
-		}
+		RpcServiceUtils.CTypeLogModelMetaRpcService.updateLogModelSimpleColumn(
+				t, getSaveOrUpdateAsyncCallback());
 	}
 
 	@Override
 	protected void _add(CTypeLogModelSimpleColumn t) {
-		// TODO
+		RpcServiceUtils.CTypeLogModelMetaRpcService.saveLogModelSimpleColumn(t,
+				getSaveOrUpdateAsyncCallback());
 	}
 
 	HbaseTableColumnCombox hbaseTableColumn;

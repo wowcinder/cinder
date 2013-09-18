@@ -17,33 +17,31 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 public class HbaseTableGrid extends CinderGrid<HbaseTable> {
 
 	public HbaseTableGrid(GridConfig gridConfig) {
-		super(
-				new GridConfigProvider<HbaseTable>() {
+		super(new GridConfigProvider<HbaseTable>(new ListStore<HbaseTable>(
+				PropertyUtils.HbaseTableProperty.key())) {
 
-					@Override
-					public void load(EtlPagingLoadConfigBean loadConfig,
-							AsyncCallback<PagingLoadResult<HbaseTable>> callback) {
-						RpcServiceUtils.HbaseMetaRpcService.pagingHbaseTable(
-								loadConfig, callback);
-					}
+			@Override
+			public void load(EtlPagingLoadConfigBean loadConfig,
+					AsyncCallback<PagingLoadResult<HbaseTable>> callback) {
+				RpcServiceUtils.HbaseMetaRpcService.pagingHbaseTable(
+						loadConfig, callback);
+			}
 
-					@Override
-					protected void initColumnConfig() {
-						ColumnConfig<HbaseTable, String> name = HbaseTableColumnConfig
-								.name();
-						ColumnConfig<HbaseTable, String> shortname = HbaseTableColumnConfig
-								.shortname();
-						ColumnConfig<HbaseTable, String> desc = HbaseTableColumnConfig
-								.desc();
+			@Override
+			protected void initColumnConfig() {
+				ColumnConfig<HbaseTable, String> name = HbaseTableColumnConfig
+						.name();
+				ColumnConfig<HbaseTable, String> shortname = HbaseTableColumnConfig
+						.shortname();
+				ColumnConfig<HbaseTable, String> desc = HbaseTableColumnConfig
+						.desc();
 
-						columns.add(name);
-						columns.add(shortname);
-						columns.add(desc);
+				columns.add(name);
+				columns.add(shortname);
+				columns.add(desc);
 
-					}
-				}, new ListStore<HbaseTable>(
-						PropertyUtils.HbaseTableProperty.key()),
-				gridConfig);
+			}
+		}, gridConfig);
 	}
 
 }

@@ -30,7 +30,9 @@ public class HbaseTableColumnGrid extends CinderGrid<HbaseTableColumn> {
 	 * @param gridConfig
 	 */
 	public HbaseTableColumnGrid(GridConfig gridConfig) {
-		super(new GridConfigProvider<HbaseTableColumn>() {
+		super(new GridConfigProvider<HbaseTableColumn>(
+				new ListStore<HbaseTableColumn>(
+						PropertyUtils.HbaseTableColumnProperty.key())) {
 
 			@Override
 			public void load(EtlPagingLoadConfigBean loadConfig,
@@ -60,8 +62,7 @@ public class HbaseTableColumnGrid extends CinderGrid<HbaseTableColumn> {
 				columns.add(type);
 				columns.add(desc);
 			}
-		}, new ListStore<HbaseTableColumn>(
-				PropertyUtils.HbaseTableColumnProperty.key()), gridConfig);
+		}, gridConfig);
 	}
 
 }

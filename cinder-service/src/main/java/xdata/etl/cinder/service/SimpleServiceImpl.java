@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xdata.etl.cinder.dao.SimpleDao;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
+import xdata.etl.cinder.util.CinderValidator;
 
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 
@@ -32,6 +33,7 @@ public class SimpleServiceImpl implements SimpleService {
 
 	@Override
 	public <T> T save(T t) {
+		CinderValidator.validate(t);
 		simpleDao.save(t);
 		return t;
 	}
@@ -43,6 +45,7 @@ public class SimpleServiceImpl implements SimpleService {
 
 	@Override
 	public <T> T update(T t) {
+		CinderValidator.validate(t);
 		simpleDao.update(t);
 		return t;
 	}

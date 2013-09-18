@@ -22,7 +22,8 @@ public class UserGroupGrid extends CinderGrid<UserGroup> {
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
 	public UserGroupGrid() {
-		super(new GridConfigProvider<UserGroup>() {
+		super(new GridConfigProvider<UserGroup>(new ListStore<UserGroup>(
+				PropertyUtils.UserGroupProperty.key())) {
 
 			@Override
 			public void load(EtlPagingLoadConfigBean loadConfig,
@@ -48,7 +49,7 @@ public class UserGroupGrid extends CinderGrid<UserGroup> {
 				columns.add(createTime);
 
 			}
-		}, new ListStore<UserGroup>(PropertyUtils.UserGroupProperty.key()));
+		});
 	}
 
 }

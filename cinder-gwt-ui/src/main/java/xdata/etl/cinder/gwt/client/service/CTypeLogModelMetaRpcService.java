@@ -11,6 +11,7 @@ import org.hibernate.validator.engine.ValidationSupport;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
@@ -63,4 +64,23 @@ public interface CTypeLogModelMetaRpcService extends RemoteService {
 
 	CTypeLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
 			throws SharedException, ConstraintViolationException;
+
+	CTypeLogModelSimpleColumn saveLogModelSimpleColumn(
+			CTypeLogModelSimpleColumn column) throws SharedException,
+			ConstraintViolationException;
+
+	CTypeLogModelSimpleColumn updateLogModelSimpleColumn(
+			CTypeLogModelSimpleColumn column) throws SharedException,
+			ConstraintViolationException;
+
+	CTypeLogModelGroupColumn saveLogModelGroupColumn(
+			CTypeLogModelGroupColumn column) throws SharedException,
+			ConstraintViolationException;
+
+	CTypeLogModelGroupColumn updateLogModelGroupColumn(
+			CTypeLogModelGroupColumn column) throws SharedException,
+			ConstraintViolationException;
+
+	void deleteLogModelColumn(Integer id) throws SharedException,
+			ConstraintViolationException;
 }

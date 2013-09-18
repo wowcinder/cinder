@@ -44,6 +44,10 @@ public class HbaseQueryGrid extends CinderGrid<HbaseRecord<String>> implements
 	public static class HbaseQueryGridConfigProvider extends
 			GridConfigProvider<HbaseRecord<String>> {
 
+		public HbaseQueryGridConfigProvider(ListStore<HbaseRecord<String>> store) {
+			super(store);
+		}
+
 		@Override
 		public void load(EtlPagingLoadConfigBean loadConfig,
 				AsyncCallback<PagingLoadResult<HbaseRecord<String>>> callback) {
@@ -113,7 +117,7 @@ public class HbaseQueryGrid extends CinderGrid<HbaseRecord<String>> implements
 	 * @param gridConfig
 	 */
 	public HbaseQueryGrid(String table, int cacheSize, String... versions) {
-		super(new HbaseQueryGridConfigProvider(),
+		super(new HbaseQueryGridConfigProvider(
 				new ListStore<HbaseRecord<String>>(
 						new ModelKeyProvider<HbaseRecord<String>>() {
 
@@ -122,7 +126,7 @@ public class HbaseQueryGrid extends CinderGrid<HbaseRecord<String>> implements
 								return item.getKey().toString();
 							}
 						}) {
-				}, new GridConfig(false, false));
+				}), new GridConfig(false, false));
 		this.tableName = table;
 		this.versions = versions;
 		this.cacheSize = cacheSize;
@@ -206,7 +210,7 @@ public class HbaseQueryGrid extends CinderGrid<HbaseRecord<String>> implements
 	@Override
 	public void onHeaderReady() {
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			
+
 			@Override
 			public void execute() {
 				getLoader().load(0, getCacheSize());

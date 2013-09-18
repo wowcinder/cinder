@@ -44,7 +44,7 @@ public class CTypeLogModelVersion extends LogModelBase {
 	}
 
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.ALL})
 	@JoinColumn(name = "root_node_id", nullable = false)
 	public CTypeLogModelGroupColumn getRootNode() {
 		return rootNode;

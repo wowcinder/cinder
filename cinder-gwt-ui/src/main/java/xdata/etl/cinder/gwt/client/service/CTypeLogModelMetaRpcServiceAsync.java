@@ -7,6 +7,7 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import org.hibernate.validator.engine.ValidationSupport;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -36,5 +37,15 @@ public interface CTypeLogModelMetaRpcServiceAsync {
     public void getLogModelVersions(AsyncCallback<List<CTypeLogModelVersion>> callback);
 
     public void getLogModelVersionRootNode(Integer arg0, AsyncCallback<CTypeLogModelGroupColumn> callback);
+
+    public void saveLogModelSimpleColumn(CTypeLogModelSimpleColumn arg0, AsyncCallback<CTypeLogModelSimpleColumn> callback);
+
+    public void updateLogModelSimpleColumn(CTypeLogModelSimpleColumn arg0, AsyncCallback<CTypeLogModelSimpleColumn> callback);
+
+    public void saveLogModelGroupColumn(CTypeLogModelGroupColumn arg0, AsyncCallback<CTypeLogModelGroupColumn> callback);
+
+    public void updateLogModelGroupColumn(CTypeLogModelGroupColumn arg0, AsyncCallback<CTypeLogModelGroupColumn> callback);
+
+    public void deleteLogModelColumn(Integer arg0, AsyncCallback<Void> callback);
 
 }

@@ -29,7 +29,8 @@ public class CTypeLogModelGrid extends CinderGrid<CTypeLogModel> {
 	 * @param gridConfig
 	 */
 	public CTypeLogModelGrid(GridConfig gridConfig) {
-		super(new GridConfigProvider<CTypeLogModel>() {
+		super(new GridConfigProvider<CTypeLogModel>(new ListStore<CTypeLogModel>(
+				PropertyUtils.CTypeLogModelProperty.key())) {
 
 			@Override
 			public void load(EtlPagingLoadConfigBean loadConfig,
@@ -47,8 +48,7 @@ public class CTypeLogModelGrid extends CinderGrid<CTypeLogModel> {
 				columns.add(name);
 				columns.add(desc);
 			}
-		}, new ListStore<CTypeLogModel>(
-				PropertyUtils.CTypeLogModelProperty.key()), gridConfig);
+		},  gridConfig);
 	}
 
 }
