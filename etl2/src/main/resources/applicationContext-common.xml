@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd ">
+
+
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>${etl.conf}/app.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="xdata.etl.util.ClassScaner" name="entityClassScaner">
+		<constructor-arg>
+			<value>xdata.etl.entity</value>
+		</constructor-arg>
+	</bean>
+
+	<bean class="xdata.etl.hbase.lazy.simple.SimpleHbaseLazySaveContainerFactory"
+		name="lazySaveContainerFactory">
+		<property name="defaultThresholdSize">
+			<value>${lazy.defaultThresholdSize}</value>
+		</property>
+		<property name="defaultTimeout">
+			<value>${lazy.defaultTimeout}</value>
+		</property>
+		<property name="defaultIntervalMs">
+			<value>${lazy.defaultIntervalMs}</value>
+		</property>
+	</bean>
+
+	<bean class="xdata.etl.hbase.HbaseContext" name="hbaseCxt">
+		<property name="hbaseConfigPath">
+			<value>${etl.conf}/hbase-site.xml</value>
+		</property>
+		<property name="entityClassScaner" ref="entityClassScaner" />
+		<property name="lazySaveContainerFactory" ref="lazySaveContainerFactory" />
+	</bean>
+
+
+	<bean class="xdata.etl.kafka.transform.TerminalTransformer" name="terminalTransformer">
+		<constructor-arg>
+			<bean class="xdata.etl.util.ClassScaner" name="terminalClassScaner">
+				<constructor-arg>
+					<list>
+						<value>xdata.etl.entity.terminal</value>
+						<value>xdata.etl.entity.live</value>
+					</list>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="xdata.etl.kafka.transform.CdnTransformer" name="cdnTransformer">
+		<constructor-arg>
+			<bean class="xdata.etl.util.ClassScaner" name="cdnTransformer">
+				<constructor-arg>
+					<list>
+						<value>xdata.etl.entity.cdn</value>
+					</list>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="xdata.etl.kafka.transform.cache.TransformerCache"
+		name="transformerCache">
+		<constructor-arg>
+			<list>
+				<ref bean="terminalTransformer" />
+				<ref bean="cdnTransformer" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean class="xdata.etl.kafka.process.cache.TopicProcessCache"
+		name="topicProcessCache">
+	</bean>
+
+	<bean class="xdata.etl.kafka.KafkaContext" name="kafkaCxt">
+		<constructor-arg>
+			<value>${etl.conf}/kafka.properties</value>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="entityClassScaner" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="transformerCache" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="topicProcessCache" />
+		</constructor-arg>
+
+		<property name="cdnCacheSnapFolderPath">
+			<value>${cdnCacheSnapFolderPath}</value>
+		</property>
+		
+		<property name="cdnCacheSnapProcessThread">
+			<value>${cdnCacheSnapProcessThread}</value>
+		</property>
+	</bean>
+
+	<bean class="xdata.etl.kafka.consumer.ConsumerBuilder">
+		<property name="hbaseCxt" ref="hbaseCxt" />
+		<property name="kafkaCxt" ref="kafkaCxt" />
+		<property name="threadCount">
+			<value>${default_thread_per_topic}</value>
+		</property>
+		<property name="topicFile">
+			<value>${etl.conf}/topic_list.txt</value>
+		</property>
+		<property name="snapTopicFile">
+			<value>${etl.conf}/snap_topic_list.txt</value>
+		</property>
+	</bean>
+
+	<context:annotation-config />
+	<context:component-scan base-package="xdata.etl" />
+</beans>
