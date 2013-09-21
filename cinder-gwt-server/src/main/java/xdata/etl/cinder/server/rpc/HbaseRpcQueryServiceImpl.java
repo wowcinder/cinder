@@ -13,6 +13,7 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotati
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.HbaseQueryRpcService;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
+import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForHbaseQuery;
 import xdata.etl.cinder.service.HbaseQueryService;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
@@ -24,13 +25,13 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  * @date 2013年9月11日
  */
 @Service
-@AuthorizeGroupAnnotation("hbase")
+@AuthorizeGroupAnnotation(AuthorizeAnnotationNamesForHbaseQuery.GROUP)
 public class HbaseRpcQueryServiceImpl implements HbaseQueryRpcService {
 	@Autowired
 	private HbaseQueryService hbaseQueryService;
 
 	@Override
-	@AuthorizeAnnotation("查询")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForHbaseQuery.QUERY)
 	public PagingLoadResult<HbaseRecord<String>> get(
 			EtlPagingLoadConfigBean config) throws SharedException {
 		return hbaseQueryService.get(config);

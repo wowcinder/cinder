@@ -19,6 +19,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForCTypeLogModelMeta;
 import xdata.etl.cinder.service.CTypeLogModelMetaService;
 import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -31,7 +32,7 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  * @date 2013年9月12日
  */
 @Service
-@AuthorizeGroupAnnotation("CType日志模型")
+@AuthorizeGroupAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP)
 public class CTypeLogModelMetaRpcServiceImpl implements
 		CTypeLogModelMetaRpcService {
 	@Autowired
@@ -40,28 +41,28 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	private CTypeLogModelMetaService cTypeLogModelMetaService;
 
 	@Override
-	@AuthorizeAnnotation("添加日志模型")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL)
 	public CTypeLogModel saveLogModel(CTypeLogModel logModel)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.save(logModel);
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改日志模型")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL)
 	public CTypeLogModel updateLogModel(CTypeLogModel logModel)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.update(logModel);
 	}
 
 	@Override
-	@AuthorizeAnnotation("删除日志模型")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.DELETE_LOG_MODEL)
 	public void deleteLogModels(List<Integer> ids) throws SharedException,
 			ConstraintViolationException {
 		simpleService.delete(CTypeLogModel.class, ids);
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询日志模型")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL)
 	public PagingLoadResult<CTypeLogModel> pagingLogModel(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException {
@@ -74,15 +75,17 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotations({ @AuthorizeAnnotation("查询日志模型版本"),
-			@AuthorizeAnnotation("修改日志模型版本"), @AuthorizeAnnotation("添加日志模型版本") })
+	@AuthorizeAnnotations({
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION) })
 	public List<CTypeLogModel> getLogModels() throws SharedException,
 			ConstraintViolationException {
 		return simpleService.get(CTypeLogModel.class);
 	}
 
 	@Override
-	@AuthorizeAnnotation("添加日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION)
 	public CTypeLogModelVersion saveLogModelVersion(
 			CTypeLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException {
@@ -90,7 +93,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION)
 	public CTypeLogModelVersion updateLogModelVersion(
 			CTypeLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException {
@@ -98,14 +101,14 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("删除日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.DELETE_LOG_MODEL_VERSION)
 	public void deleteLogModelVersions(List<Integer> ids)
 			throws SharedException, ConstraintViolationException {
 		simpleService.delete(CTypeLogModelVersion.class, ids);
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION)
 	public PagingLoadResult<CTypeLogModelVersion> pagingLogModelVersion(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException {
@@ -113,22 +116,24 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION)
 	public List<CTypeLogModelVersion> getLogModelVersions()
 			throws SharedException, ConstraintViolationException {
 		return simpleService.get(CTypeLogModelVersion.class);
 	}
 
 	@Override
-	@AuthorizeAnnotations({ @AuthorizeAnnotation("查询日志模型版本"),
-			@AuthorizeAnnotation("修改日志模型版本"), @AuthorizeAnnotation("添加日志模型版本") })
+	@AuthorizeAnnotations({
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION) })
 	public CTypeLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
 			throws SharedException, ConstraintViolationException {
 		return cTypeLogModelMetaService.getLogModelVersionRootNode(versionId);
 	}
 
 	@Override
-	@AuthorizeAnnotation("添加日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION)
 	public CTypeLogModelSimpleColumn saveLogModelSimpleColumn(
 			CTypeLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException {
@@ -136,7 +141,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION)
 	public CTypeLogModelSimpleColumn updateLogModelSimpleColumn(
 			CTypeLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException {
@@ -144,7 +149,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("添加日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION)
 	public CTypeLogModelGroupColumn saveLogModelGroupColumn(
 			CTypeLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException {
@@ -152,7 +157,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION)
 	public CTypeLogModelGroupColumn updateLogModelGroupColumn(
 			CTypeLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException {
@@ -160,7 +165,7 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	}
 
 	@Override
-	@AuthorizeAnnotation("删除日志模型版本")
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.DELETE_LOG_MODEL_VERSION)
 	public void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException {
 		cTypeLogModelMetaService.deleteLogModelColumn(id);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.AuthorizeRpcService;
+import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForMenu;
 import xdata.etl.cinder.service.AuthorizeService;
 import xdata.etl.cinder.shared.entity.authorize.Authorize;
 
@@ -25,7 +26,7 @@ public class AuthorizeRpcServiceImpl implements AuthorizeRpcService {
 	private AuthorizeService authorizeService;
 
 	@Override
-	@AuthorizeAnnotation(group = "菜单", value = "菜单管理")
+	@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForMenu.GROUP, value = AuthorizeAnnotationNamesForMenu.ALL)
 	public List<Authorize> getAllocatenbeAuthorizes() {
 		return authorizeService.getAllocatenbeAuthorizes();
 	}

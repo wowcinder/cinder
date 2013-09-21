@@ -3,6 +3,16 @@
  */
 package xdata.etl.cinder.server.rpc;
 
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.ADD_USER;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.ADD_USER_GROUP;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.DELETE_USER;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.DELETE_USER_GROUP;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.GROUP;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.QUERY_USER;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.QUERY_USER_GROUP;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.UPDATE_USER;
+import static xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForUser.UPDATE_USER_GROUP;
+
 import java.util.List;
 
 import org.hibernate.validator.engine.ValidationSupport;
@@ -28,13 +38,13 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  * @date 2013年9月9日
  */
 @Service
-@AuthorizeGroupAnnotation("用户")
+@AuthorizeGroupAnnotation(GROUP)
 public class UserRpcServiceImpl implements UserRpcService {
 	@Autowired
 	private UserService userService;
 
 	@Override
-	@AuthorizeAnnotation("添加用户")
+	@AuthorizeAnnotation(ADD_USER)
 	public User saveUser(User user, String password) {
 		user.setPassword(password);
 		CinderValidator.validate(user);
@@ -42,7 +52,7 @@ public class UserRpcServiceImpl implements UserRpcService {
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改用户")
+	@AuthorizeAnnotation(UPDATE_USER)
 	public User updateUser(User user, String password) {
 		user.setPassword(password);
 		CinderValidator.validate(user);
@@ -50,25 +60,25 @@ public class UserRpcServiceImpl implements UserRpcService {
 	}
 
 	@Override
-	@AuthorizeAnnotation("添加用户组")
+	@AuthorizeAnnotation(ADD_USER_GROUP)
 	public UserGroup saveUserGroup(UserGroup userGroup) {
 		return userService.saveUserGroup(userGroup);
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改用户组")
+	@AuthorizeAnnotation(UPDATE_USER_GROUP)
 	public UserGroup updateUserGroup(UserGroup userGroup) {
 		return userService.updateUserGroup(userGroup);
 	}
 
 	@Override
-	@AuthorizeAnnotation("修改用户")
+	@AuthorizeAnnotation(UPDATE_USER)
 	public List<UserGroup> getUserGroupListForCombox() {
 		return userService.getUserGroupListForCombox();
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询用户")
+	@AuthorizeAnnotation(QUERY_USER)
 	public PagingLoadResult<User> pagingUser(EtlPagingLoadConfigBean config)
 			throws SharedException {
 		return userService.pagingUser(config);
@@ -80,33 +90,33 @@ public class UserRpcServiceImpl implements UserRpcService {
 	}
 
 	@Override
-	@AuthorizeAnnotation("删除用户")
+	@AuthorizeAnnotation(DELETE_USER)
 	public void deleteUsers(List<Integer> ids) throws SharedException {
 		userService.deleteUsers(ids);
 	}
 
 	@Override
-	@AuthorizeAnnotation("删除用户组")
+	@AuthorizeAnnotation(DELETE_USER_GROUP)
 	public void deleteUserGroups(List<Integer> ids) throws SharedException {
 		userService.deleteUserGroups(ids);
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询用户组")
+	@AuthorizeAnnotation(QUERY_USER_GROUP)
 	public PagingLoadResult<UserGroup> pagingUserGroup(
 			EtlPagingLoadConfigBean config) throws SharedException {
 		return userService.pagingUserGroup(config);
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询用户")
+	@AuthorizeAnnotation(QUERY_USER)
 	@AuthorizeAnnotations({ @AuthorizeAnnotation("修改用户") })
 	public List<Authorize> getUserExtraAuthorizes(Integer uid) {
 		return userService.getUserExtraAuthorizes(uid);
 	}
 
 	@Override
-	@AuthorizeAnnotation("查询用户组")
+	@AuthorizeAnnotation(QUERY_USER_GROUP)
 	@AuthorizeAnnotations({ @AuthorizeAnnotation("修改用户组") })
 	public List<Authorize> getUserGroupAuthorizes(Integer uid)
 			throws SharedException {
