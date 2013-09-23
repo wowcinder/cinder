@@ -16,6 +16,7 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotati
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
 import xdata.etl.cinder.gwt.client.service.CTypeLogModelMetaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
@@ -169,6 +170,14 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	public void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException {
 		cTypeLogModelMetaService.deleteLogModelColumn(id);
+	}
+
+	@Override
+	@AuthorizeAnnotation(AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION)
+	public CTypeLogModelColumn move(CTypeLogModelColumn prev,
+			CTypeLogModelColumn parent, CTypeLogModelColumn curr)
+			throws SharedException, ConstraintViolationException {
+		return cTypeLogModelMetaService.move(prev, parent, curr);
 	}
 
 }

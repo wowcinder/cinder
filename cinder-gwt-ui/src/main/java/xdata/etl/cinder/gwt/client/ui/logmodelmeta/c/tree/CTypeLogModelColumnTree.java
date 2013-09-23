@@ -77,9 +77,10 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 
 	private void initDND() {
 		new TreeDragSource<CTypeLogModelColumn>(this);
-		TreeDropTarget<CTypeLogModelColumn> target = new TreeDropTarget<CTypeLogModelColumn>(
+		TreeDropTarget<CTypeLogModelColumn> target = new CTypeLogModelColumnTreeDropTarget(
 				this);
 		target.setAllowSelfAsSource(true);
+		target.setAllowDropOnLeaf(true);
 		target.setFeedback(Feedback.BOTH);
 	}
 

@@ -23,4 +23,12 @@ public interface CTypeLogModelMetaDao {
 	<T extends CTypeLogModelColumn> T saveLogModelColumn(T column);
 
 	public void deleteLogModelColumn(Integer id);
+
+	/**
+	 * @param prev
+	 * @param curr
+	 * @return
+	 */
+	CTypeLogModelColumn move(CTypeLogModelColumn prev,
+			CTypeLogModelColumn parent, CTypeLogModelColumn curr);
 }

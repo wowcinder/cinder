@@ -24,6 +24,12 @@ public class CTypeLogModelVersion extends LogModelBase {
 	private CTypeLogModel model;
 	private CTypeLogModelGroupColumn rootNode;
 
+	public CTypeLogModelVersion(Integer vid, Integer rootId) {
+		this();
+		setId(vid);
+		rootNode.setId(rootId);
+	}
+
 	public CTypeLogModelVersion() {
 		rootNode = new CTypeLogModelGroupColumn();
 		rootNode.setPos(0);
@@ -44,7 +50,7 @@ public class CTypeLogModelVersion extends LogModelBase {
 	}
 
 	@NotNull
-	@OneToOne(cascade = { CascadeType.ALL})
+	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "root_node_id", nullable = false)
 	public CTypeLogModelGroupColumn getRootNode() {
 		return rootNode;

@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolationException;
 import org.hibernate.validator.engine.ValidationSupport;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
@@ -83,4 +84,8 @@ public interface CTypeLogModelMetaRpcService extends RemoteService {
 
 	void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException;
+
+	CTypeLogModelColumn move(CTypeLogModelColumn prev,
+			CTypeLogModelColumn parent, CTypeLogModelColumn curr)
+			throws SharedException, ConstraintViolationException;
 }

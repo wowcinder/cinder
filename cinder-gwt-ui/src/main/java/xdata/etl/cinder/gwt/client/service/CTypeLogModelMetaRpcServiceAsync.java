@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import org.hibernate.validator.engine.ValidationSupport;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
@@ -47,5 +48,7 @@ public interface CTypeLogModelMetaRpcServiceAsync {
     public void updateLogModelGroupColumn(CTypeLogModelGroupColumn arg0, AsyncCallback<CTypeLogModelGroupColumn> callback);
 
     public void deleteLogModelColumn(Integer arg0, AsyncCallback<Void> callback);
+
+    public void move(CTypeLogModelColumn arg0, CTypeLogModelColumn arg1, CTypeLogModelColumn arg2, AsyncCallback<CTypeLogModelColumn> callback);
 
 }

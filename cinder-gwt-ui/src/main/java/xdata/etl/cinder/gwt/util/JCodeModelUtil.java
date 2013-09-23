@@ -4,10 +4,14 @@ import java.io.File;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
+
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JType;
 
 public class JCodeModelUtil {
@@ -46,11 +50,14 @@ public class JCodeModelUtil {
 			GenericArrayType arrayType = (GenericArrayType) type;
 			return getJType(arrayType.getGenericComponentType()).array();
 		} else if (type instanceof WildcardType) {
-			return jCodeModel.ref(Object.class);
+			return jCodeModel.wildcard();
+//			return jCodeModel.ref(Object.class);
+		} else if (type instanceof TypeVariable) {
+			TypeVariable tv = (TypeVariable) type;
+			return jCodeModel.ref(CTypeLogModelColumn.class);
 		} else {
 			return jCodeModel.parseType(((Class<?>) type).getName());
 		}
 
 	}
-
 }

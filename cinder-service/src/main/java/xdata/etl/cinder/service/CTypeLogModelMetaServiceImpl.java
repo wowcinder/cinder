@@ -45,4 +45,10 @@ public class CTypeLogModelMetaServiceImpl implements CTypeLogModelMetaService {
 		cTypeLogModelMetaDao.deleteLogModelColumn(id);
 	}
 
+	@Override
+	public CTypeLogModelColumn move(CTypeLogModelColumn prev,
+			CTypeLogModelColumn parent, CTypeLogModelColumn curr) {
+		return cTypeLogModelMetaDao.move(prev, parent, curr);
+	}
+
 }
