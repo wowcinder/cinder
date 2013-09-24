@@ -21,7 +21,7 @@ import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 import com.sencha.gxt.widget.core.client.menu.SeparatorMenuItem;
 
-public class ColumnTreeMenu extends Menu {
+public class CTypeColumnTreeMenu extends Menu {
 	private final CTypeLogModelColumnTree tree;
 	private final CTypeLogModelSimpleColumnEditor simpleEditor;
 	private final CTypeLogModelGroupColumnEditor groupEditor;
@@ -31,7 +31,7 @@ public class ColumnTreeMenu extends Menu {
 	private final MenuItem delete;
 	private final MenuItem modify;
 
-	public ColumnTreeMenu(final CTypeLogModelColumnTree owner) {
+	public CTypeColumnTreeMenu(final CTypeLogModelColumnTree owner) {
 		this.tree = owner;
 		simpleEditor = new CTypeLogModelSimpleColumnEditor();
 		groupEditor = new CTypeLogModelGroupColumnEditor(owner);
@@ -58,11 +58,15 @@ public class ColumnTreeMenu extends Menu {
 				CTypeLogModelColumn selectItem = owner.getSelectionModel()
 						.getSelectedItem();
 				if (selectItem == null) {
-					ColumnTreeMenu.this.disable();
+					CTypeColumnTreeMenu.this.disable();
 				}
 				if (selectItem instanceof CTypeLogModelSimpleColumn) {
 					addSimpleColumn.disable();
 					addGroupColumn.disable();
+				}
+				if (selectItem.getGroupColumn() == null) {
+					delete.disable();
+					modify.disable();
 				}
 			}
 		});
@@ -71,9 +75,11 @@ public class ColumnTreeMenu extends Menu {
 
 			@Override
 			public void onHide(HideEvent event) {
-				ColumnTreeMenu.this.enable();
+				CTypeColumnTreeMenu.this.enable();
 				addSimpleColumn.enable();
 				addGroupColumn.enable();
+				delete.enable();
+				modify.enable();
 			}
 		});
 	}
@@ -85,13 +91,14 @@ public class ColumnTreeMenu extends Menu {
 			public void onSelection(SelectionEvent<Item> event) {
 				final CTypeLogModelColumn column = tree.getSelectionModel()
 						.getSelectedItem();
-				RpcServiceUtils.CTypeLogModelMetaRpcService.deleteLogModelColumn(
-						column.getId(), new RpcAsyncCallback<Void>() {
-							@Override
-							public void _onSuccess(Void t) {
-								tree.getStore().remove(column);
-							}
-						});
+				RpcServiceUtils.CTypeLogModelMetaRpcService
+						.deleteLogModelColumn(column.getId(),
+								new RpcAsyncCallback<Void>() {
+									@Override
+									public void _onSuccess(Void t) {
+										tree.getStore().remove(column);
+									}
+								});
 			}
 		});
 	}

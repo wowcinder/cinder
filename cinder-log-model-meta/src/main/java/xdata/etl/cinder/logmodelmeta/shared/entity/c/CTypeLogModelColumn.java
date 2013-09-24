@@ -16,7 +16,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelBase;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "log_model_column_c", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"groupColumn_id", "pos" }) })
 public class CTypeLogModelColumn extends LogModelBase {
 

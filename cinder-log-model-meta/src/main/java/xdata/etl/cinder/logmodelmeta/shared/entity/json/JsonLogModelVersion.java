@@ -1,4 +1,4 @@
-package xdata.etl.cinder.logmodelmeta.shared.entity.c;
+package xdata.etl.cinder.logmodelmeta.shared.entity.json;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,25 +15,24 @@ import org.hibernate.validator.constraints.Length;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelBase;
 
 @Entity
-@Table(name = "log_model_version_c", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "log_model_version_json", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"version", "model_id" }) })
-public class CTypeLogModelVersion extends LogModelBase {
+public class JsonLogModelVersion extends LogModelBase {
 	private static final long serialVersionUID = 2719663842833442034L;
 	private String version;
 	private String desc;
-	private CTypeLogModel model;
-	private CTypeLogModelGroupColumn rootNode;
+	private JsonLogModel model;
+	private JsonLogModelGroupColumn rootNode;
 
-	public CTypeLogModelVersion(Integer vid, Integer rootId) {
+	public JsonLogModelVersion(Integer vid, Integer rootId) {
 		this();
 		setId(vid);
 		rootNode.setId(rootId);
 	}
 
-	public CTypeLogModelVersion() {
-		rootNode = new CTypeLogModelGroupColumn();
-		rootNode.setPos(0);
-		rootNode.setName("root");
+	public JsonLogModelVersion() {
+		rootNode = new JsonLogModelGroupColumn();
+		rootNode.setPos("root");
 	}
 
 	@Length(min = 1, max = 50)
@@ -45,14 +44,14 @@ public class CTypeLogModelVersion extends LogModelBase {
 
 	@ManyToOne(optional = false)
 	@NotNull
-	public CTypeLogModel getModel() {
+	public JsonLogModel getModel() {
 		return model;
 	}
 
 	@NotNull
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "root_node_id", nullable = false)
-	public CTypeLogModelGroupColumn getRootNode() {
+	public JsonLogModelGroupColumn getRootNode() {
 		return rootNode;
 	}
 
@@ -65,7 +64,7 @@ public class CTypeLogModelVersion extends LogModelBase {
 		this.desc = desc;
 	}
 
-	public void setRootNode(CTypeLogModelGroupColumn rootNode) {
+	public void setRootNode(JsonLogModelGroupColumn rootNode) {
 		this.rootNode = rootNode;
 	}
 
@@ -73,7 +72,7 @@ public class CTypeLogModelVersion extends LogModelBase {
 		this.version = version;
 	}
 
-	public void setModel(CTypeLogModel model) {
+	public void setModel(JsonLogModel model) {
 		this.model = model;
 	}
 }

@@ -1,4 +1,4 @@
-package xdata.etl.cinder.logmodelmeta.shared.entity.c;
+package xdata.etl.cinder.logmodelmeta.shared.entity.json;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import javax.persistence.Table;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
 
 @Entity
-@Table(name = "log_model_group_column_c")
-public class CTypeLogModelGroupColumn extends CTypeLogModelColumn {
+@Table(name = "log_model_group_column_json")
+public class JsonLogModelGroupColumn extends JsonLogModelColumn {
 	private static final long serialVersionUID = 1424230533361555956L;
-	private List<CTypeLogModelColumn> columns;
+	private List<JsonLogModelColumn> columns;
 	private HbaseTableVersion hbaseTableVersion;
 
 	@OneToMany(mappedBy = "groupColumn", cascade = { CascadeType.REMOVE })
-	public List<CTypeLogModelColumn> getColumns() {
+	public List<JsonLogModelColumn> getColumns() {
 		return columns;
 	}
 
@@ -33,7 +33,7 @@ public class CTypeLogModelGroupColumn extends CTypeLogModelColumn {
 		this.hbaseTableVersion = hbaseTableVersion;
 	}
 
-	public void setColumns(List<CTypeLogModelColumn> columns) {
+	public void setColumns(List<JsonLogModelColumn> columns) {
 		this.columns = columns;
 	}
 

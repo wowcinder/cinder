@@ -1,4 +1,4 @@
-package xdata.etl.cinder.logmodelmeta.shared.entity.c;
+package xdata.etl.cinder.logmodelmeta.shared.entity.json;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -8,8 +8,8 @@ import javax.persistence.Table;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 
 @Entity
-@Table(name = "log_model_simple_column_c")
-public class CTypeLogModelSimpleColumn extends CTypeLogModelColumn {
+@Table(name = "log_model_simple_column_json")
+public class JsonLogModelSimpleColumn extends JsonLogModelColumn {
 
 	private static final long serialVersionUID = -5597434068603255025L;
 	private HbaseTableColumn hbaseTableColumn;

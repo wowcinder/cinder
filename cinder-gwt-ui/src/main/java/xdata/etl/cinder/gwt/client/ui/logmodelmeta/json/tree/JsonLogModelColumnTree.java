@@ -1,11 +1,11 @@
-package xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree;
+package xdata.etl.cinder.gwt.client.ui.logmodelmeta.json.tree;
 
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.HbaseTableVersionChangeEvent;
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.HbaseTableVersionChangeEvent.HbaseTableVersionChangeHanlder;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn;
 import xdata.etl.cinder.shared.HbaseVersionChangeUtil;
 
 import com.google.gwt.dom.client.Style.TextAlign;
@@ -20,23 +20,23 @@ import com.sencha.gxt.dnd.core.client.TreeDropTarget;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeStyle;
 
-public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
-		implements HbaseTableVersionChangeHanlder<CTypeLogModelGroupColumn> {
+public class JsonLogModelColumnTree extends Tree<JsonLogModelColumn, String>
+		implements HbaseTableVersionChangeHanlder<JsonLogModelGroupColumn> {
 
-	public CTypeLogModelColumnTree(TreeStore<CTypeLogModelColumn> store) {
-		super(store, new ValueProvider<CTypeLogModelColumn, String>() {
+	public JsonLogModelColumnTree(TreeStore<JsonLogModelColumn> store) {
+		super(store, new ValueProvider<JsonLogModelColumn, String>() {
 
 			@Override
-			public String getValue(CTypeLogModelColumn column) {
+			public String getValue(JsonLogModelColumn column) {
 				String prefix = "";
-				if (column instanceof CTypeLogModelGroupColumn) {
+				if (column instanceof JsonLogModelGroupColumn) {
 					prefix = "group:";
 				}
-				return prefix + column.getName();
+				return prefix + column.getPath();
 			}
 
 			@Override
-			public void setValue(CTypeLogModelColumn object, String value) {
+			public void setValue(JsonLogModelColumn object, String value) {
 			}
 
 			@Override
@@ -44,9 +44,9 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 				return null;
 			}
 		});
-		setIconProvider(new IconProvider<CTypeLogModelColumn>() {
+		setIconProvider(new IconProvider<JsonLogModelColumn>() {
 			@Override
-			public ImageResource getIcon(CTypeLogModelColumn model) {
+			public ImageResource getIcon(JsonLogModelColumn model) {
 				ImageResource style = null;
 				TreeStyle ts = getStyle();
 				if (!isLeaf(model)) {
@@ -58,7 +58,7 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 								.getNodeCloseIcon() : appearance
 								.closeNodeIcon();
 					}
-				} else if (model instanceof CTypeLogModelGroupColumn) {
+				} else if (model instanceof JsonLogModelGroupColumn) {
 					style = ts.getNodeCloseIcon() != null ? ts
 							.getNodeCloseIcon() : appearance.closeNodeIcon();
 				} else {
@@ -71,14 +71,14 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 		getElement().getStyle().setTextAlign(TextAlign.LEFT);
 		setWidth(300);
 		getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		setContextMenu(new CTypeColumnTreeMenu(this));
+		setContextMenu(new JsonColumnTreeMenu(this));
 
 		addHandler(this, HbaseTableVersionChangeEvent.TYPE);
 	}
 
 	private void initDND() {
-		new TreeDragSource<CTypeLogModelColumn>(this);
-		TreeDropTarget<CTypeLogModelColumn> target = new CTypeLogModelColumnTreeDropTarget(
+		new TreeDragSource<JsonLogModelColumn>(this);
+		TreeDropTarget<JsonLogModelColumn> target = new JsonLogModelColumnTreeDropTarget(
 				this);
 		target.setAllowSelfAsSource(true);
 		target.setAllowDropOnLeaf(true);
@@ -87,12 +87,12 @@ public class CTypeLogModelColumnTree extends Tree<CTypeLogModelColumn, String>
 
 	@Override
 	public void onCheckVersionChange(
-			HbaseTableVersionChangeEvent<CTypeLogModelGroupColumn> event) {
-		CTypeLogModelGroupColumn owner = event.getColumn();
+			HbaseTableVersionChangeEvent<JsonLogModelGroupColumn> event) {
+		JsonLogModelGroupColumn owner = event.getColumn();
 		HbaseTableVersion version = owner.getHbaseTableVersion();
-		for (CTypeLogModelColumn column : getStore().getChildren(owner)) {
-			if (column instanceof CTypeLogModelSimpleColumn) {
-				CTypeLogModelSimpleColumn simpleColumn = (CTypeLogModelSimpleColumn) column;
+		for (JsonLogModelColumn column : getStore().getChildren(owner)) {
+			if (column instanceof JsonLogModelSimpleColumn) {
+				JsonLogModelSimpleColumn simpleColumn = (JsonLogModelSimpleColumn) column;
 				if (simpleColumn.getHbaseTableColumn() == null) {
 					continue;
 				}

@@ -20,5 +20,10 @@ public class PropertyUtils {
     public final static xdata.etl.cinder.gwt.client.property.CTypeLogModelGroupColumnProperty CTypeLogModelGroupColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.CTypeLogModelGroupColumnProperty.class);
     public final static xdata.etl.cinder.gwt.client.property.CTypeLogModelSimpleColumnProperty CTypeLogModelSimpleColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.CTypeLogModelSimpleColumnProperty.class);
     public final static xdata.etl.cinder.gwt.client.property.CTypeLogModelVersionProperty CTypeLogModelVersionProperty = GWT.create(xdata.etl.cinder.gwt.client.property.CTypeLogModelVersionProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.JsonLogModelProperty JsonLogModelProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.JsonLogModelColumnProperty JsonLogModelColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelColumnProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.JsonLogModelGroupColumnProperty JsonLogModelGroupColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelGroupColumnProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.JsonLogModelSimpleColumnProperty JsonLogModelSimpleColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelSimpleColumnProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.JsonLogModelVersionProperty JsonLogModelVersionProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelVersionProperty.class);
 
 }

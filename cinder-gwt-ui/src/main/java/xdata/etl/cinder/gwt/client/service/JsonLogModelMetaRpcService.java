@@ -9,11 +9,11 @@ import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.engine.ValidationSupport;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModel;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -26,66 +26,66 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  * @date 2013年9月12日
  */
 @RemoteServiceRelativePath("rpc/log_model_json.rpc")
-public interface CTypeLogModelMetaRpcService extends RemoteService {
-	CTypeLogModel saveLogModel(CTypeLogModel logModel) throws SharedException,
+public interface JsonLogModelMetaRpcService extends RemoteService {
+	JsonLogModel saveLogModel(JsonLogModel logModel) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModel updateLogModel(CTypeLogModel logModel)
+	JsonLogModel updateLogModel(JsonLogModel logModel)
 			throws SharedException, ConstraintViolationException;
 
 	void deleteLogModels(List<Integer> ids) throws SharedException,
 			ConstraintViolationException;
 
-	PagingLoadResult<CTypeLogModel> pagingLogModel(
+	PagingLoadResult<JsonLogModel> pagingLogModel(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException;
 
-	List<CTypeLogModel> getLogModels() throws SharedException,
+	List<JsonLogModel> getLogModels() throws SharedException,
 			ConstraintViolationException;
 
 	ValidationSupport dummy();
 
-	CTypeLogModelVersion saveLogModelVersion(
-			CTypeLogModelVersion LogModelVersion) throws SharedException,
+	JsonLogModelVersion saveLogModelVersion(
+			JsonLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelVersion updateLogModelVersion(
-			CTypeLogModelVersion LogModelVersion) throws SharedException,
+	JsonLogModelVersion updateLogModelVersion(
+			JsonLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException;
 
 	void deleteLogModelVersions(List<Integer> ids) throws SharedException,
 			ConstraintViolationException;
 
-	PagingLoadResult<CTypeLogModelVersion> pagingLogModelVersion(
+	PagingLoadResult<JsonLogModelVersion> pagingLogModelVersion(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException;
 
-	List<CTypeLogModelVersion> getLogModelVersions() throws SharedException,
+	List<JsonLogModelVersion> getLogModelVersions() throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
+	JsonLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
 			throws SharedException, ConstraintViolationException;
 
-	CTypeLogModelSimpleColumn saveLogModelSimpleColumn(
-			CTypeLogModelSimpleColumn column) throws SharedException,
+	JsonLogModelSimpleColumn saveLogModelSimpleColumn(
+			JsonLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelSimpleColumn updateLogModelSimpleColumn(
-			CTypeLogModelSimpleColumn column) throws SharedException,
+	JsonLogModelSimpleColumn updateLogModelSimpleColumn(
+			JsonLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelGroupColumn saveLogModelGroupColumn(
-			CTypeLogModelGroupColumn column) throws SharedException,
+	JsonLogModelGroupColumn saveLogModelGroupColumn(
+			JsonLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelGroupColumn updateLogModelGroupColumn(
-			CTypeLogModelGroupColumn column) throws SharedException,
+	JsonLogModelGroupColumn updateLogModelGroupColumn(
+			JsonLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException;
 
 	void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException;
 
-	CTypeLogModelColumn move(CTypeLogModelColumn prev,
-			CTypeLogModelColumn parent, CTypeLogModelColumn curr)
+	JsonLogModelColumn move(JsonLogModelColumn prev,
+			JsonLogModelColumn parent, JsonLogModelColumn curr)
 			throws SharedException, ConstraintViolationException;
 }

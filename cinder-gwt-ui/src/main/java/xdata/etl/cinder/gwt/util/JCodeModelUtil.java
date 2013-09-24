@@ -11,7 +11,6 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JType;
 
 public class JCodeModelUtil {
@@ -51,9 +50,9 @@ public class JCodeModelUtil {
 			return getJType(arrayType.getGenericComponentType()).array();
 		} else if (type instanceof WildcardType) {
 			return jCodeModel.wildcard();
-//			return jCodeModel.ref(Object.class);
+			// return jCodeModel.ref(Object.class);
 		} else if (type instanceof TypeVariable) {
-			TypeVariable tv = (TypeVariable) type;
+//			TypeVariable tv = (TypeVariable) type;
 			return jCodeModel.ref(CTypeLogModelColumn.class);
 		} else {
 			return jCodeModel.parseType(((Class<?>) type).getName());

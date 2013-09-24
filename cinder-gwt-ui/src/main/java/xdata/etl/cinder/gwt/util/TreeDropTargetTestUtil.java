@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.CTypeLogModelColumnTree;
-import xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.CTypeLogModelColumnTreeDropTarget;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 
 import com.sencha.gxt.dnd.core.client.TreeDropTarget;
-import com.sencha.gxt.widget.core.client.info.Info;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
@@ -41,8 +39,8 @@ public class TreeDropTargetTestUtil {
 	public static void main(String[] args) throws JClassAlreadyExistsException,
 			IOException, ClassNotFoundException {
 		jCodeModelUtil = new JCodeModelUtil();
-		treeTarget = getjCodeModel()._class(
-				CTypeLogModelColumnTreeDropTarget.class.getName());
+		treeTarget = getjCodeModel()
+				._class("xdata.etl.cinder.gwt.client.ui.logmodelmeta.c.tree.CTypeLogModelColumnTreeDropTarget2");
 		treeTarget._extends(getjCodeModel().ref(TreeDropTarget.class).narrow(
 				CTypeLogModelColumn.class));
 		JMethod constructor = treeTarget.constructor(JMod.PUBLIC);
@@ -66,8 +64,9 @@ public class TreeDropTargetTestUtil {
 		for (int i = 0; i < types.size(); i++) {
 			jMethod.param(types.get(i), "arg" + i);
 		}
-		
-		jMethod.body().add(JExpr.invoke("log").arg(JExpr.lit(method.getName())));
+
+		jMethod.body()
+				.add(JExpr.invoke("log").arg(JExpr.lit(method.getName())));
 		JInvocation invokeSuper = JExpr._super().invoke(method.getName());
 		for (int i = 0; i < types.size(); i++) {
 			invokeSuper.arg(JExpr.ref("arg" + i));
