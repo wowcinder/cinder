@@ -17,7 +17,7 @@ import xdata.etl.cinder.shared.annotations.MenuToken;
  * @author XuehuiHe
  * @date 2013年9月12日
  */
-@MenuToken(name = "日志模型", token = "log_model_c", group = "CType日志模型")
+@MenuToken(name = "模型", token = "log_model_c", group = "CType日志模型")
 public class CTypeLogModelView extends AbstractCenterView<CTypeLogModel> {
 
 	/**
