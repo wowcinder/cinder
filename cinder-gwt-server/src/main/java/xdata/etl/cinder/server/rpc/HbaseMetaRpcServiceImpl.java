@@ -15,7 +15,7 @@ import xdata.etl.cinder.gwt.client.service.HbaseMetaRpcService;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableVersion;
-import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForCTypeLogModelMeta;
+import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForLogModelMeta;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForHbaseMeta;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForHbaseQuery;
 import xdata.etl.cinder.service.HbaseMetaService;
@@ -160,9 +160,9 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForHbaseMeta.ADD_TABLE_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForHbaseMeta.UPDATE_TABLE_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForHbaseMeta.QUERY_TABLE_VERSION),
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION),
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION),
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION) })
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION) })
 	public List<HbaseTableColumn> getColumnsByVersionId(Integer id) {
 		return hbaseMetaService.getColumnsByVersionId(id);
 	}
@@ -182,9 +182,9 @@ public class HbaseMetaRpcServiceImpl implements HbaseMetaRpcService {
 
 	@Override
 	@AuthorizeAnnotations({
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.QUERY_LOG_MODEL_VERSION),
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.UPDATE_LOG_MODEL_VERSION),
-			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForCTypeLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForCTypeLogModelMeta.ADD_LOG_MODEL_VERSION) })
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION),
+			@AuthorizeAnnotation(group = AuthorizeAnnotationNamesForLogModelMeta.GROUP, value = AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION) })
 	public List<HbaseTableVersion> getHbaseTableVersionsForCombox()
 			throws SharedException, ConstraintViolationException {
 		return simpleService.get(HbaseTableVersion.class);

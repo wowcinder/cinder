@@ -10,7 +10,6 @@ import javax.validation.ConstraintViolationException;
 import org.hibernate.validator.engine.ValidationSupport;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModel;
-import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
@@ -85,7 +84,4 @@ public interface JsonLogModelMetaRpcService extends RemoteService {
 	void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException;
 
-	JsonLogModelColumn move(JsonLogModelColumn prev,
-			JsonLogModelColumn parent, JsonLogModelColumn curr)
-			throws SharedException, ConstraintViolationException;
 }

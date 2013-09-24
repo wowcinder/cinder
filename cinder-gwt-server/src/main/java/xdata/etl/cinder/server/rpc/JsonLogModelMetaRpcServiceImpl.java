@@ -14,14 +14,13 @@ import org.springframework.stereotype.Service;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotations;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
-import xdata.etl.cinder.gwt.client.service.CTypeLogModelMetaRpcService;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
-import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.cinder.gwt.client.service.JsonLogModelMetaRpcService;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModel;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForLogModelMeta;
-import xdata.etl.cinder.service.CTypeLogModelMetaService;
+import xdata.etl.cinder.service.JsonLogModelMetaService;
 import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
@@ -34,23 +33,23 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  */
 @Service
 @AuthorizeGroupAnnotation(AuthorizeAnnotationNamesForLogModelMeta.GROUP)
-public class CTypeLogModelMetaRpcServiceImpl implements
-		CTypeLogModelMetaRpcService {
+public class JsonLogModelMetaRpcServiceImpl
+		implements JsonLogModelMetaRpcService {
 	@Autowired
 	private SimpleService simpleService;
 	@Autowired
-	private CTypeLogModelMetaService cTypeLogModelMetaService;
+	private JsonLogModelMetaService logModelMetaService;
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL)
-	public CTypeLogModel saveLogModel(CTypeLogModel logModel)
+	public JsonLogModel saveLogModel(JsonLogModel logModel)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.save(logModel);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL)
-	public CTypeLogModel updateLogModel(CTypeLogModel logModel)
+	public JsonLogModel updateLogModel(JsonLogModel logModel)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.update(logModel);
 	}
@@ -59,15 +58,15 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.DELETE_LOG_MODEL)
 	public void deleteLogModels(List<Integer> ids) throws SharedException,
 			ConstraintViolationException {
-		simpleService.delete(CTypeLogModel.class, ids);
+		simpleService.delete(JsonLogModel.class, ids);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL)
-	public PagingLoadResult<CTypeLogModel> pagingLogModel(
+	public PagingLoadResult<JsonLogModel> pagingLogModel(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException {
-		return simpleService.paging(CTypeLogModel.class, config);
+		return simpleService.paging(JsonLogModel.class, config);
 	}
 
 	@Override
@@ -80,47 +79,47 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION) })
-	public List<CTypeLogModel> getLogModels() throws SharedException,
+	public List<JsonLogModel> getLogModels() throws SharedException,
 			ConstraintViolationException {
-		return simpleService.get(CTypeLogModel.class);
+		return simpleService.get(JsonLogModel.class);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION)
-	public CTypeLogModelVersion saveLogModelVersion(
-			CTypeLogModelVersion LogModelVersion) throws SharedException,
+	public JsonLogModelVersion saveLogModelVersion(
+			JsonLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException {
 		return simpleService.save(LogModelVersion);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION)
-	public CTypeLogModelVersion updateLogModelVersion(
-			CTypeLogModelVersion LogModelVersion) throws SharedException,
+	public JsonLogModelVersion updateLogModelVersion(
+			JsonLogModelVersion LogModelVersion) throws SharedException,
 			ConstraintViolationException {
-		return cTypeLogModelMetaService.updateLogModelVersion(LogModelVersion);
+		return logModelMetaService.updateLogModelVersion(LogModelVersion);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.DELETE_LOG_MODEL_VERSION)
 	public void deleteLogModelVersions(List<Integer> ids)
 			throws SharedException, ConstraintViolationException {
-		simpleService.delete(CTypeLogModelVersion.class, ids);
+		simpleService.delete(JsonLogModelVersion.class, ids);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION)
-	public PagingLoadResult<CTypeLogModelVersion> pagingLogModelVersion(
+	public PagingLoadResult<JsonLogModelVersion> pagingLogModelVersion(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException {
-		return simpleService.paging(CTypeLogModelVersion.class, config);
+		return simpleService.paging(JsonLogModelVersion.class, config);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION)
-	public List<CTypeLogModelVersion> getLogModelVersions()
+	public List<JsonLogModelVersion> getLogModelVersions()
 			throws SharedException, ConstraintViolationException {
-		return simpleService.get(CTypeLogModelVersion.class);
+		return simpleService.get(JsonLogModelVersion.class);
 	}
 
 	@Override
@@ -128,56 +127,48 @@ public class CTypeLogModelMetaRpcServiceImpl implements
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.QUERY_LOG_MODEL_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION),
 			@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION) })
-	public CTypeLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
+	public JsonLogModelGroupColumn getLogModelVersionRootNode(Integer versionId)
 			throws SharedException, ConstraintViolationException {
-		return cTypeLogModelMetaService.getLogModelVersionRootNode(versionId);
+		return logModelMetaService.getLogModelVersionRootNode(versionId);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION)
-	public CTypeLogModelSimpleColumn saveLogModelSimpleColumn(
-			CTypeLogModelSimpleColumn column) throws SharedException,
+	public JsonLogModelSimpleColumn saveLogModelSimpleColumn(
+			JsonLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException {
-		return cTypeLogModelMetaService.saveLogModelColumn(column);
+		return logModelMetaService.saveLogModelColumn(column);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION)
-	public CTypeLogModelSimpleColumn updateLogModelSimpleColumn(
-			CTypeLogModelSimpleColumn column) throws SharedException,
+	public JsonLogModelSimpleColumn updateLogModelSimpleColumn(
+			JsonLogModelSimpleColumn column) throws SharedException,
 			ConstraintViolationException {
-		return cTypeLogModelMetaService.updateLogModelColumn(column);
+		return logModelMetaService.updateLogModelColumn(column);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.ADD_LOG_MODEL_VERSION)
-	public CTypeLogModelGroupColumn saveLogModelGroupColumn(
-			CTypeLogModelGroupColumn column) throws SharedException,
+	public JsonLogModelGroupColumn saveLogModelGroupColumn(
+			JsonLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException {
-		return cTypeLogModelMetaService.saveLogModelColumn(column);
+		return logModelMetaService.saveLogModelColumn(column);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION)
-	public CTypeLogModelGroupColumn updateLogModelGroupColumn(
-			CTypeLogModelGroupColumn column) throws SharedException,
+	public JsonLogModelGroupColumn updateLogModelGroupColumn(
+			JsonLogModelGroupColumn column) throws SharedException,
 			ConstraintViolationException {
-		return cTypeLogModelMetaService.updateLogModelColumn(column);
+		return logModelMetaService.updateLogModelColumn(column);
 	}
 
 	@Override
 	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.DELETE_LOG_MODEL_VERSION)
 	public void deleteLogModelColumn(Integer id) throws SharedException,
 			ConstraintViolationException {
-		cTypeLogModelMetaService.deleteLogModelColumn(id);
-	}
-
-	@Override
-	@AuthorizeAnnotation(AuthorizeAnnotationNamesForLogModelMeta.UPDATE_LOG_MODEL_VERSION)
-	public CTypeLogModelColumn move(CTypeLogModelColumn prev,
-			CTypeLogModelColumn parent, CTypeLogModelColumn curr)
-			throws SharedException, ConstraintViolationException {
-		return cTypeLogModelMetaService.move(prev, parent, curr);
+		logModelMetaService.deleteLogModelColumn(id);
 	}
 
 }

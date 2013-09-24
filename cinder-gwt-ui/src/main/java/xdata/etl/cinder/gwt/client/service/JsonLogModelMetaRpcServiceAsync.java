@@ -6,7 +6,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 import org.hibernate.validator.engine.ValidationSupport;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModel;
-import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
@@ -48,7 +47,5 @@ public interface JsonLogModelMetaRpcServiceAsync {
     public void updateLogModelGroupColumn(JsonLogModelGroupColumn arg0, AsyncCallback<JsonLogModelGroupColumn> callback);
 
     public void deleteLogModelColumn(Integer arg0, AsyncCallback<Void> callback);
-
-    public void move(JsonLogModelColumn arg0, JsonLogModelColumn arg1, JsonLogModelColumn arg2, AsyncCallback<JsonLogModelColumn> callback);
 
 }

@@ -14,9 +14,6 @@ import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.IconProvider;
 import com.sencha.gxt.data.shared.TreeStore;
-import com.sencha.gxt.dnd.core.client.DND.Feedback;
-import com.sencha.gxt.dnd.core.client.TreeDragSource;
-import com.sencha.gxt.dnd.core.client.TreeDropTarget;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeStyle;
 
@@ -77,12 +74,13 @@ public class JsonLogModelColumnTree extends Tree<JsonLogModelColumn, String>
 	}
 
 	private void initDND() {
-		new TreeDragSource<JsonLogModelColumn>(this);
-		TreeDropTarget<JsonLogModelColumn> target = new JsonLogModelColumnTreeDropTarget(
-				this);
-		target.setAllowSelfAsSource(true);
-		target.setAllowDropOnLeaf(true);
-		target.setFeedback(Feedback.BOTH);
+		// new TreeDragSource<JsonLogModelColumn>(this);
+		// TreeDropTarget<JsonLogModelColumn> target = new
+		// JsonLogModelColumnTreeDropTarget(
+		// this);
+		// target.setAllowSelfAsSource(true);
+		// target.setAllowDropOnLeaf(true);
+		// target.setFeedback(Feedback.BOTH);
 	}
 
 	@Override

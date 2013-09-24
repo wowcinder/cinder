@@ -20,7 +20,7 @@ public class AuthorizeNames {
 		public static final String QUERY_USER_GROUP = "查询用户组";
 	}
 
-	public static class AuthorizeAnnotationNamesForCTypeLogModelMeta {
+	public static class AuthorizeAnnotationNamesForLogModelMeta {
 		public static final String GROUP = "CType日志模型";
 
 		public static final String ADD_LOG_MODEL = "添加模型";
