@@ -32,7 +32,7 @@ public class JsonLogModelVersion extends LogModelBase {
 
 	public JsonLogModelVersion() {
 		rootNode = new JsonLogModelGroupColumn();
-		rootNode.setPos("root");
+		rootNode.setPath("root");
 	}
 
 	@Length(min = 1, max = 50)

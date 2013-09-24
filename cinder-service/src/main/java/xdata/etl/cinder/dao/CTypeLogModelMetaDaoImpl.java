@@ -36,7 +36,7 @@ public class CTypeLogModelMetaDaoImpl implements CTypeLogModelMetaDao {
 			throws SharedException, ConstraintViolationException {
 		String hql = "select r.id from {0} v  inner join v.rootNode as r where v.id =:versionId  ";
 		hql = MessageFormat.format(hql,
-				CTypeLogModelGroupColumn.class.getSimpleName());
+				CTypeLogModelVersion.class.getSimpleName());
 		Integer rid = (Integer) getSession().createQuery(hql)
 				.setInteger("versionId", versionId).uniqueResult();
 
@@ -158,7 +158,7 @@ public class CTypeLogModelMetaDaoImpl implements CTypeLogModelMetaDao {
 			int pos = 1;
 			for (CTypeLogModelColumn column : columns) {
 				column.setPos(pos);
-				getSession().update(column);
+				getSession().flush();
 				pos++;
 			}
 		}
@@ -209,7 +209,7 @@ public class CTypeLogModelMetaDaoImpl implements CTypeLogModelMetaDao {
 						newParent.getHbaseTableVersion())) {
 			((CTypeLogModelSimpleColumn) curr).setHbaseTableColumn(null);
 		}
-
+		getSession().flush();
 		// 修复旧的parent的pos
 		fixedIndex(oldParent);
 		return curr;

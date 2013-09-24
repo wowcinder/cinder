@@ -25,7 +25,7 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
  * @author XuehuiHe
  * @date 2013年9月12日
  */
-@RemoteServiceRelativePath("rpc/log_model_json.rpc")
+@RemoteServiceRelativePath("rpc/log_model_c.rpc")
 public interface CTypeLogModelMetaRpcService extends RemoteService {
 	CTypeLogModel saveLogModel(CTypeLogModel logModel) throws SharedException,
 			ConstraintViolationException;

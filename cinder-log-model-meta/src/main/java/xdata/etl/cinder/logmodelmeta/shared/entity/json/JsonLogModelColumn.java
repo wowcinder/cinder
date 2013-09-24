@@ -35,7 +35,7 @@ public class JsonLogModelColumn extends LogModelBase {
 		return path;
 	}
 
-	public void setPos(String path) {
+	public void setPath(String path) {
 		this.path = path;
 	}
 
