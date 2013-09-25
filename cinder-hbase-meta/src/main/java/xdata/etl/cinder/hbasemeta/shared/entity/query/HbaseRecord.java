@@ -4,6 +4,7 @@
 package xdata.etl.cinder.hbasemeta.shared.entity.query;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,12 @@ public class HbaseRecord<K extends Serializable> implements Serializable {
 
 	public HbaseRecord() {
 		data = new HashMap<String, Object>();
+	}
+
+	public HbaseRecord(Date stamp, String version) {
+		this();
+		getData().put("stamp", stamp);
+		getData().put("version", version);
 	}
 
 	public K getKey() {

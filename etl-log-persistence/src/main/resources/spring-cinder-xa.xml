@@ -75,41 +75,16 @@
 			</props>
 
 		</property>
-		<property name="eventListeners">
-			<map>
-				<entry key="pre-insert">
-					<list>
-						<ref bean="entityHasTimeStampListener" />
-						<ref bean="PasswordPersistenceEventListener" />
-					</list>
-				</entry>
-
-				<entry key="pre-update">
-					<list>
-						<ref bean="PasswordPersistenceEventListener" />
-					</list>
-				</entry>
-			</map>
-		</property>
 		<property name="packagesToScan">
 			<list>
 				<value>xdata.etl.cinder.shared.entity</value>
 				<value>xdata.etl.cinder.hbasemeta.shared.entity</value>
+				<!-- <value>xdata.etl.cinder.businessmeta.shared.entity</value> -->
 				<value>xdata.etl.cinder.logmodelmeta.shared.entity</value>
+
 			</list>
 		</property>
 
-	</bean>
-
-	<bean class="xdata.etl.cinder.service.AuthorizeServiceImpl">
-		<property name="debug">
-			<value>${app.debug}</value>
-		</property>
-	</bean>
-
-	<bean id="PasswordPersistenceEventListener"
-		class="xdata.etl.cinder.common.hibernate.listener.PasswordPersistenceEventListener">
-		<property name="passwordEncryptor" ref="SimplePasswordEncryptor"></property>
 	</bean>
 
 	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"

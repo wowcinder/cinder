@@ -165,30 +165,7 @@ public class HbaseTableHelper {
 				.getSpringCxt();
 
 		HbaseTableHelper v = factory.getBean(HbaseTableHelper.class);
-		// v.createTable();
-		// v.dropAllTables();
-		// v.dropHiveTable();
-		// v.createHiveTable();
-		// v.clearTable(V3aPlayAuth2.class);
-		// v.clearTable(V3aPlayAuth2TxtAd.class);
-		// v.clearTable(V3aPlayAuth2PicAd.class);
-		// v.clearTable(V3aPlayAuth2VideoAd.class);
-		// v.clearTable(P2pServerUploadStateV1.class);
-		// v.createHiveTable(P2pServerUploadStateV1.class);
-		// v.clearTable(P2pServerUploadStateSrvV1.class);
-		// v.createHiveTable(P2pServerUploadStateSrvV1.class);
-		// v.clearTable(LivePlayExceptionReqV1.class);
-
-		// v.dropAllTables();
-		// v.createTable();
-		// v.createHiveTable();
-		// v.createTable();
-		// v.dropHiveTable();
-		// v.createHiveTable();
-
-		v.createTable(CdnCacheInfo.class);
-		v.createHiveTable(CdnCacheInfo.class);
-
+		v.createTable();
 		factory.close();
 	}
 
