@@ -10,6 +10,8 @@ import java.util.Map;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
 
 /**
  * @author XuehuiHe
@@ -18,8 +20,21 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 public abstract class LogModelTransformer<Version extends LogModelVersion<?>> {
 	private final Version version;
 
-	public LogModelTransformer(Version version) {
+	protected LogModelTransformer(Version version) {
 		this.version = version;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <Version extends LogModelVersion<?>> LogModelTransformer<Version> createTransformer(
+			Version version) {
+		if (version instanceof CTypeLogModelVersion) {
+			return (LogModelTransformer<Version>) new CTypeLogModelTransformer(
+					(CTypeLogModelVersion) version);
+		} else if (version instanceof JsonLogModelVersion) {
+			return (LogModelTransformer<Version>) new JsonLogModelTransformer(
+					(JsonLogModelVersion) version);
+		}
+		return null;
 	}
 
 	public abstract Map<String, List<HbaseRecord<String>>> transform(String log);

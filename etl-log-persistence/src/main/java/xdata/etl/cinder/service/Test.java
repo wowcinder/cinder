@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
-import xdata.etl.logmodel.transformer.JsonLogModelTransformer;
+import xdata.etl.logmodel.transformer.LogModelTransformer;
 
 /**
  * @author XuehuiHe
@@ -30,9 +30,8 @@ public class Test {
 		JsonLogModelVersion jsonLogModelVersion = service
 				.getJsonLogModelVersion("3a_play_auth2", "0.0");
 		System.out.println(jsonLogModelVersion);
-
-		JsonLogModelTransformer transformer = new JsonLogModelTransformer(
-				jsonLogModelVersion);
+		LogModelTransformer<JsonLogModelVersion> transformer = LogModelTransformer
+				.createTransformer(jsonLogModelVersion);
 		Map<String, List<HbaseRecord<String>>> recordmap = transformer
 				.transform(json);
 		System.out.println(recordmap);

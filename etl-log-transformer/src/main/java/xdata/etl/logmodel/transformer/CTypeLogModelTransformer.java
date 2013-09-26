@@ -10,12 +10,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelSimpleColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.logmodel.transformer.exception.LogTransformException;
 
 /**
  * @author XuehuiHe
@@ -23,6 +27,8 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
  */
 public class CTypeLogModelTransformer extends
 		LogModelTransformer<CTypeLogModelVersion> {
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(CTypeLogModelTransformer.class);
 
 	private final List<CTypeLogModelColumn> columns;
 	private final Integer mainSize;
@@ -37,8 +43,10 @@ public class CTypeLogModelTransformer extends
 				if (repeatedGroupColumn == null) {
 					repeatedGroupColumn = (CTypeLogModelGroupColumn) column;
 				} else {
-					// TODO
-					throw new RuntimeException("只能有一个重复");
+					String msg = getVersion().getModel().getName() + "#"
+							+ getVersion().getVersion() + " 有多个repeated column";
+					LOGGER.warn(msg);
+					throw new LogTransformException(msg);
 				}
 			}
 		}
@@ -52,17 +60,22 @@ public class CTypeLogModelTransformer extends
 
 	@Override
 	public Map<String, List<HbaseRecord<String>>> transform(String log) {
+		final String raw = log;
 		Map<String, List<HbaseRecord<String>>> map = new HashMap<String, List<HbaseRecord<String>>>();
 		int index = log.indexOf('#');
 		if (index == -1) {
-			// TODO
+			String msg = "stamp not found\traw:" + raw;
+			LOGGER.warn(msg);
+			throw new LogTransformException(msg);
 		}
 		String stampStr = log.substring(0, index);
 		log = log.substring(index + 1);
 		Date stamp = getStamp(stampStr);
 		CTypeLogHelper helper = new CTypeLogHelper(log);
 		if (!helper.isMatchColumns()) {
-			// TODO
+			String msg = "columns not match\traw:" + raw + "\tmsg:"
+					+ helper.getColumnsMatchMsg();
+			throw new LogTransformException(msg);
 		}
 		Integer repeatedTimes = helper.getRepeatTimes();
 		String[] strs = helper.strs;
@@ -80,8 +93,21 @@ public class CTypeLogModelTransformer extends
 				CTypeLogModelSimpleColumn simpleColumn = (CTypeLogModelSimpleColumn) itemColumn;
 				HbaseTableColumn hbaseColumn = simpleColumn
 						.getHbaseTableColumn();
-				record.getData().put(hbaseColumn.getName(),
-						parse(strs[i], hbaseColumn.getType().getClazz()));
+				Object t = null;
+				try {
+					t = TypeParser.parse(strs[i], hbaseColumn.getType()
+							.getClazz());
+				} catch (Exception e) {
+					LOGGER.warn("parse wrong:str:" + strs[i] + ",table:"
+							+ hbaseColumn.getVersion().getTable().getName()
+							+ ",version:"
+							+ hbaseColumn.getVersion().getVersion()
+							+ ",column:" + hbaseColumn.getName() + ",type:"
+							+ hbaseColumn.getType().getClazz().getSimpleName());
+				}
+				if (t != null) {
+					record.getData().put(hbaseColumn.getName(), t);
+				}
 				i++;
 			} else {
 				CTypeLogModelGroupColumn groupColumn = (CTypeLogModelGroupColumn) itemColumn;
@@ -96,10 +122,27 @@ public class CTypeLogModelTransformer extends
 						CTypeLogModelSimpleColumn simpleColumn = (CTypeLogModelSimpleColumn) column;
 						HbaseTableColumn hbaseColumn = simpleColumn
 								.getHbaseTableColumn();
-						subRecord.getData()
-								.put(hbaseColumn.getName(),
-										parse(strs[i], hbaseColumn.getType()
-												.getClazz()));
+						Object t = null;
+						try {
+							t = TypeParser.parse(strs[i], hbaseColumn.getType()
+									.getClazz());
+						} catch (Exception e) {
+							LOGGER.warn("parse wrong:str:"
+									+ strs[i]
+									+ ",table:"
+									+ hbaseColumn.getVersion().getTable()
+											.getName()
+									+ ",version:"
+									+ hbaseColumn.getVersion().getVersion()
+									+ ",column:"
+									+ hbaseColumn.getName()
+									+ ",type:"
+									+ hbaseColumn.getType().getClazz()
+											.getSimpleName());
+						}
+						if (t != null) {
+							subRecord.getData().put(hbaseColumn.getName(), t);
+						}
 						i++;
 					}
 				}
@@ -174,6 +217,20 @@ public class CTypeLogModelTransformer extends
 				return (strs.length - mainSize) / repeatedSize;
 			}
 			return 0;
+		}
+
+		protected String getColumnsMatchMsg() {
+			String info = "fact:" + strs.length;
+			if (isVerticalEnding) {
+				info += "or " + (strs.length - 1);
+			}
+			info += ",expect:";
+			if (repeatedGroupColumn == null) {
+				info += mainSize;
+			} else {
+				info += mainSize + "+" + repeatedSize + "x";
+			}
+			return info;
 		}
 	}
 }

@@ -14,9 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.logmodel.transformer.LogModelTransformer;
+import xdata.etl.logmodel.transformer.TypeParser;
+import xdata.etl.logmodel.transformer.exception.LogTransformException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +31,9 @@ import com.google.gson.GsonBuilder;
  * @date 2013年9月25日
  */
 public class JsonLogModelTransformerHelper {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JsonLogModelTransformerHelper.class);
 
 	private static Gson gson;
 	static {
@@ -49,17 +57,29 @@ public class JsonLogModelTransformerHelper {
 	 */
 	private final Date stamp;
 
+	private final String raw;
+
 	@SuppressWarnings("unchecked")
 	public JsonLogModelTransformerHelper(String raw, JsonArrayMap jsonMap) {
+		this.raw = raw;
 		int index = raw.indexOf('#');
 		if (index == -1) {
-			// TODO
+			String msg = "stamp not found\traw:" + getRaw();
+			LOGGER.warn(msg);
+			throw new LogTransformException(msg);
 		}
 		String stampStr = raw.substring(0, index);
 		raw = raw.substring(index + 1);
-		stamp = LogModelTransformer.getStamp(stampStr);
+		this.stamp = LogModelTransformer.getStamp(stampStr);
 		raw = raw.replaceAll("\\[\\]", "null");
-		Object tempData = gson.fromJson(raw, Object.class);
+		Object tempData = null;
+		try {
+			tempData = gson.fromJson(raw, Object.class);
+		} catch (Exception e) {
+			String msg = "Json Syntax Exception\traw:" + getRaw();
+			LOGGER.warn(msg);
+			throw new LogTransformException(msg, e);
+		}
 		if (tempData instanceof Map) {
 			dealRequestURL((Map<String, Object>) tempData);
 		} else if (tempData instanceof Collection) {
@@ -85,6 +105,7 @@ public class JsonLogModelTransformerHelper {
 	}
 
 	public Map<String, List<HbaseRecord<String>>> analyze() {
+		LOGGER.debug("analyze:\t" + getRaw());
 		analyzeJson(data, jsonMap, null);
 		return recordMap;
 	}
@@ -100,6 +121,9 @@ public class JsonLogModelTransformerHelper {
 	@SuppressWarnings("unchecked")
 	private void analyzeJson(Object data, JsonArrayMap jsonMap,
 			HbaseRecord<String> parent) {
+		if (data == null) {
+			return;
+		}
 		if (data instanceof Collection) {
 			Collection<?> list = (Collection<?>) data;
 			int i = 1;
@@ -119,6 +143,9 @@ public class JsonLogModelTransformerHelper {
 
 	private void analyzeJsonItem(Map<String, Object> itemData,
 			JsonArrayMap jsonMap, HbaseRecord<String> parent, Integer index) {
+		if (itemData == null) {
+			return;
+		}
 		HbaseRecord<String> record = new HbaseRecord<String>(stamp, jsonMap
 				.getHbaseTableVersion().getVersion());
 		putInRecordMap(jsonMap.getHbaseTableVersion().getTable().getName(),
@@ -131,6 +158,7 @@ public class JsonLogModelTransformerHelper {
 		}
 		record.setKey(key);
 		initRecord(itemData, jsonMap, record);
+		LOGGER.debug("new record:" + key + ",size:" + record.getData().size());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -149,15 +177,33 @@ public class JsonLogModelTransformerHelper {
 					initRecord((Map<String, Object>) data.get(k),
 							(Map<String, Object>) v, record);
 				}
-			} else {// HbaseTableColumn
+			} else if (v instanceof HbaseTableColumn) {// HbaseTableColumn
 				HbaseTableColumn hbaseColumn = ((HbaseTableColumn) v);
-				// TODO
 				if (data.get(k) != null) {
-					record.getData().put(
-							hbaseColumn.getName(),
-							LogModelTransformer.parse(data.get(k).toString(),
-									hbaseColumn.getType().getClazz()));
+					Object o = null;
+					try {
+						o = TypeParser.parse(data.get(k), hbaseColumn.getType()
+								.getClazz());
+					} catch (Exception e) {
+						LOGGER.warn("parse wrong:str:o"
+								+ data.get(k).getClass().getName()
+								+ ",table:"
+								+ hbaseColumn.getVersion().getTable().getName()
+								+ ",version:"
+								+ hbaseColumn.getVersion().getVersion()
+								+ ",column:"
+								+ hbaseColumn.getName()
+								+ ",type:"
+								+ hbaseColumn.getType().getClazz()
+										.getSimpleName());
+					}
+					if (o != null) {
+						record.getData().put(hbaseColumn.getName(), o);
+					}
 				}
+			} else {
+				LOGGER.debug(v.getClass().getName()
+						+ " no have setting to analyze");
 			}
 		}
 	}
@@ -189,6 +235,10 @@ public class JsonLogModelTransformerHelper {
 			query_pairs.put(key, value);
 		}
 		return query_pairs;
+	}
+
+	public String getRaw() {
+		return raw;
 	}
 
 }
