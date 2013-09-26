@@ -26,7 +26,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
  */
 @Transactional(readOnly = true)
 @Service
-public class JsonLogModelServiceImpl implements JsonLogModelService {
+public class LogModelServiceImpl implements LogModelService {
 	@Resource(name = "cinderSf")
 	private SessionFactory sf;
 
