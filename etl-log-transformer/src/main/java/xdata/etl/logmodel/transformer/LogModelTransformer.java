@@ -24,14 +24,14 @@ public abstract class LogModelTransformer<Version extends LogModelVersion<?>> {
 		this.version = version;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <Version extends LogModelVersion<?>> LogModelTransformer<Version> createTransformer(
-			Version version) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static LogModelTransformer<LogModelVersion<?>> createTransformer(
+			LogModelVersion<?> version) {
 		if (version instanceof CTypeLogModelVersion) {
-			return (LogModelTransformer<Version>) new CTypeLogModelTransformer(
+			return (LogModelTransformer) new CTypeLogModelTransformer(
 					(CTypeLogModelVersion) version);
 		} else if (version instanceof JsonLogModelVersion) {
-			return (LogModelTransformer<Version>) new JsonLogModelTransformer(
+			return (LogModelTransformer) new JsonLogModelTransformer(
 					(JsonLogModelVersion) version);
 		}
 		return null;

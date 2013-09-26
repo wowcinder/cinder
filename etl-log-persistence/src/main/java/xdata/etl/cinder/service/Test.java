@@ -9,7 +9,7 @@ import java.util.Map;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
-import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.logmodel.transformer.LogModelTransformer;
 
 /**
@@ -27,10 +27,10 @@ public class Test {
 				"spring-cinder-xa.xml");
 		JsonLogModelService service = factory
 				.getBean(JsonLogModelService.class);
-		JsonLogModelVersion jsonLogModelVersion = service
-				.getJsonLogModelVersion("3a_play_auth2", "0.0");
+		LogModelVersion<?> jsonLogModelVersion = service.getLogModelVersion(
+				"3a_play_auth2", "0.0");
 		System.out.println(jsonLogModelVersion);
-		LogModelTransformer<JsonLogModelVersion> transformer = LogModelTransformer
+		LogModelTransformer<LogModelVersion<?>> transformer = LogModelTransformer
 				.createTransformer(jsonLogModelVersion);
 		Map<String, List<HbaseRecord<String>>> recordmap = transformer
 				.transform(json);
