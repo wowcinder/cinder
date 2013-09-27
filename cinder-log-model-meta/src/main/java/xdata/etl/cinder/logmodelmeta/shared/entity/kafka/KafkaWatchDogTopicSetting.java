@@ -69,6 +69,28 @@ public class KafkaWatchDogTopicSetting extends LogModelBase {
 		this.topic = topic;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj instanceof KafkaWatchDogTopicSetting) {
+			KafkaWatchDogTopicSetting that = (KafkaWatchDogTopicSetting) obj;
+			return this.getServer().getId().equals(that.getServer().getId())
+					&& this.getTopic().getId().equals(that.getTopic().getId());
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return getServer().getId().hashCode() + 3
+				* getTopic().getId().hashCode();
+	}
+
 	public void setThreadNum(Integer threadNum) {
 		this.threadNum = threadNum;
 	}

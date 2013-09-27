@@ -14,6 +14,40 @@
 			<artifactId>etl-log-transformer</artifactId>
 			<version>${cinder.version}</version>
 		</dependency>
+
+		<!-- hadoop -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+
+			<exclusions>
+				<exclusion>
+					<groupId>hsqldb</groupId>
+					<artifactId>hsqldb</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- /hadoop -->
+
+		<!-- hbase -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase</artifactId>
+		</dependency>
+
+		<!-- /hbase -->
+		<!-- kafka -->
+		<dependency>
+			<groupId>kafka</groupId>
+			<artifactId>core-kafka</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- /kafka -->
 		<!-- atomikos -->
 		<dependency>
 			<groupId>com.atomikos</groupId>

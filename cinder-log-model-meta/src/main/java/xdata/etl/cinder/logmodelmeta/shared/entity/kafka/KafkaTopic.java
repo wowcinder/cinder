@@ -32,9 +32,11 @@ public class KafkaTopic extends LogModelBase {
 	private LogModelVersion<?> version;
 	private List<KafkaWatchDogTopicSetting> topicSettings;
 	private KafkaTopicStatus status;
+	private KafkaTopicCharset charset;
 
 	public KafkaTopic() {
 		status = KafkaTopicStatus.ENABLED;
+		charset = KafkaTopicCharset.UTF8;
 	}
 
 	@Column(length = 100, nullable = false, unique = true)
@@ -61,6 +63,17 @@ public class KafkaTopic extends LogModelBase {
 		return status;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(length = 30, nullable = false)
+	@NotNull
+	public KafkaTopicCharset getCharset() {
+		return charset;
+	}
+
+	public void setCharset(KafkaTopicCharset charset) {
+		this.charset = charset;
+	}
+
 	public void setStatus(KafkaTopicStatus status) {
 		this.status = status;
 	}
@@ -79,5 +92,19 @@ public class KafkaTopic extends LogModelBase {
 
 	public static enum KafkaTopicStatus {
 		DISABLED, ENABLED;
+	}
+
+	public static enum KafkaTopicCharset {
+		GBK("GBK"), UTF8("UTF-8"), ISO88591("ISO-8859-1");
+		private final String charset;
+
+		private KafkaTopicCharset(String charset) {
+			this.charset = charset;
+		}
+
+		public String getCharset() {
+			return charset;
+		}
+
 	}
 }
