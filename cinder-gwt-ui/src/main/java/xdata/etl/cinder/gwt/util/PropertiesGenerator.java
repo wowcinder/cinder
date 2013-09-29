@@ -2,6 +2,7 @@ package xdata.etl.cinder.gwt.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,7 +39,9 @@ public class PropertiesGenerator {
 				"xdata.etl.cinder.hbasemeta.shared.entity",
 				"xdata.etl.cinder.logmodelmeta.shared.entity");
 		for (Class<?> clazz : scaner.getClazzes()) {
-			if (clazz.isAnnotationPresent(Entity.class)) {
+			if (clazz.isAnnotationPresent(Entity.class)
+					&& !Modifier.isAbstract(clazz.getModifiers())) {
+
 				System.out.println(clazz.getName());
 				generatePropertyClass(clazz);
 			}
@@ -77,7 +80,7 @@ public class PropertiesGenerator {
 			return true;
 		}
 		Field field = getField(name, clazz);
-		if (field!=null && field.isAnnotationPresent(Id.class)) {
+		if (field != null && field.isAnnotationPresent(Id.class)) {
 			return true;
 		}
 		return false;
@@ -113,11 +116,13 @@ public class PropertiesGenerator {
 				getjCodeModel()
 						.ref(ValueProvider.class)
 						.narrow(jCodeModelUtil.getJType(clazz))
-						.narrow(jCodeModelUtil.getJType(method
-								.getGenericReturnType())), name);
-		JClass columnConfigClass = getjCodeModel().ref(ColumnConfig.class)
+						.narrow(jCodeModelUtil.getJType(clazz,
+								method.getGenericReturnType())), name);
+		JClass columnConfigClass = getjCodeModel()
+				.ref(ColumnConfig.class)
 				.narrow(jCodeModelUtil.getJType(clazz))
-				.narrow(jCodeModelUtil.getJType(method.getGenericReturnType()));
+				.narrow(jCodeModelUtil.getJType(clazz,
+						method.getGenericReturnType()));
 		JMethod jMethod = dc2.method(JMod.PUBLIC + JMod.STATIC,
 				columnConfigClass, name);
 		JVar jVar = jMethod.body().decl(
@@ -135,7 +140,8 @@ public class PropertiesGenerator {
 		Class<?> clazz = method.getDeclaringClass();
 		return method.getName().startsWith("get")
 				&& (clazz.isAnnotationPresent(Entity.class) || clazz
-						.isAnnotationPresent(MappedSuperclass.class));
+						.isAnnotationPresent(MappedSuperclass.class))
+				&& method.getParameterTypes().length == 0;
 	}
 
 	public static JCodeModel getjCodeModel() {

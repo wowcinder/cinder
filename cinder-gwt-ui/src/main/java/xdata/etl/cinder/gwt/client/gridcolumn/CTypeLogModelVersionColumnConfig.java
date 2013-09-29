@@ -2,11 +2,13 @@
 package xdata.etl.cinder.gwt.client.gridcolumn;
 
 import java.util.Date;
+import java.util.List;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 
 public class CTypeLogModelVersionColumnConfig {
 
@@ -16,6 +18,13 @@ public class CTypeLogModelVersionColumnConfig {
         rootNode.setSortable(false);
         rootNode.setMenuDisabled(true);
         return rootNode;
+    }
+
+    public static ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>> topics() {
+        ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>> topics = new ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>>(PropertyUtils.CTypeLogModelVersionProperty.topics(), 200, "topics");
+        topics.setSortable(false);
+        topics.setMenuDisabled(true);
+        return topics;
     }
 
     public static ColumnConfig<CTypeLogModelVersion, String> desc() {

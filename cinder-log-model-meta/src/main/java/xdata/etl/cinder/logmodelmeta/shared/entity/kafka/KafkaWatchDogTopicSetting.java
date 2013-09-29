@@ -33,14 +33,12 @@ public class KafkaWatchDogTopicSetting extends LogModelBase {
 		status = KafkaWatchDogTopicSettingStatus.STOPED;
 	}
 
-	@ManyToOne
-	@Column(nullable = false)
+	@ManyToOne(optional = false)
 	public KafkaWatchDog getServer() {
 		return server;
 	}
 
-	@ManyToOne
-	@Column(nullable = false)
+	@ManyToOne(optional = false)
 	public KafkaTopic getTopic() {
 		return topic;
 	}

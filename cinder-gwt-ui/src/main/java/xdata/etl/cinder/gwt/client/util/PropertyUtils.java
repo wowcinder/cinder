@@ -25,5 +25,8 @@ public class PropertyUtils {
     public final static xdata.etl.cinder.gwt.client.property.JsonLogModelGroupColumnProperty JsonLogModelGroupColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelGroupColumnProperty.class);
     public final static xdata.etl.cinder.gwt.client.property.JsonLogModelSimpleColumnProperty JsonLogModelSimpleColumnProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelSimpleColumnProperty.class);
     public final static xdata.etl.cinder.gwt.client.property.JsonLogModelVersionProperty JsonLogModelVersionProperty = GWT.create(xdata.etl.cinder.gwt.client.property.JsonLogModelVersionProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.KafkaTopicProperty KafkaTopicProperty = GWT.create(xdata.etl.cinder.gwt.client.property.KafkaTopicProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.KafkaWatchDogProperty KafkaWatchDogProperty = GWT.create(xdata.etl.cinder.gwt.client.property.KafkaWatchDogProperty.class);
+    public final static xdata.etl.cinder.gwt.client.property.KafkaWatchDogTopicSettingProperty KafkaWatchDogTopicSettingProperty = GWT.create(xdata.etl.cinder.gwt.client.property.KafkaWatchDogTopicSettingProperty.class);
 
 }

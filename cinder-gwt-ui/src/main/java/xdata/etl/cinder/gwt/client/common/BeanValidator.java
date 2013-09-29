@@ -27,7 +27,12 @@ import com.google.gwt.validation.client.GwtValidation;
     xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn.class,
     xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn.class,
     xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelSimpleColumn.class,
-    xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion.class
+    xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.LogModel.class,
+    xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion.class
 })
 public interface BeanValidator
     extends Validator
