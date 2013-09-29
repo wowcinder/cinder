@@ -17,10 +17,10 @@ public interface WatchDogManagerRMI {
 	/**
 	 * 注册
 	 * 
-	 * @param ip
+	 * @param rmiPort
 	 * @return 注册成功或失败
 	 */
-	public Boolean registerPrcessSever(String ip);
+	public Boolean registerPrcessSever(Integer rmiPort);
 
 	/**
 	 * 发送心跳
