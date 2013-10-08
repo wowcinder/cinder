@@ -17,6 +17,7 @@ import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnn
 import xdata.etl.cinder.gwt.client.service.KafkaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForKafka;
 import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -78,6 +79,32 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	@Override
 	public ValidationSupport dummy() {
 		return null;
+	}
+
+	@Override
+	public KafkaWatchDog saveKafkaWatchDog(KafkaWatchDog dog)
+			throws SharedException, ConstraintViolationException {
+		return simpleService.save(dog);
+	}
+
+	@Override
+	public KafkaWatchDog updateKafkaWatchDog(KafkaWatchDog dog)
+			throws SharedException, ConstraintViolationException {
+		return simpleService.update(dog);
+	}
+
+	@Override
+	public void deleteKafkaWatchDogs(List<Integer> ids) throws SharedException,
+			ConstraintViolationException {
+		simpleService.delete(KafkaWatchDog.class, ids);
+
+	}
+
+	@Override
+	public PagingLoadResult<KafkaWatchDog> pagingKafkaWatchDog(
+			EtlPagingLoadConfigBean config) throws SharedException,
+			ConstraintViolationException {
+		return simpleService.paging(KafkaWatchDog.class, config);
 	}
 
 }

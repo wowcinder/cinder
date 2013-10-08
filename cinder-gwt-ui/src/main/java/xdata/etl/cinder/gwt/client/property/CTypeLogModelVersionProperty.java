@@ -9,7 +9,7 @@ import com.sencha.gxt.data.shared.PropertyAccess;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 
 public interface CTypeLogModelVersionProperty
     extends PropertyAccess<CTypeLogModelVersion>
@@ -18,7 +18,7 @@ public interface CTypeLogModelVersionProperty
 
     public ValueProvider<CTypeLogModelVersion, CTypeLogModelGroupColumn> rootNode();
 
-    public ValueProvider<CTypeLogModelVersion, List<KafkaTopic>> topics();
+    public ValueProvider<CTypeLogModelVersion, List<KafkaTopicFixedModelVersion>> topics();
 
     public ValueProvider<CTypeLogModelVersion, String> desc();
 

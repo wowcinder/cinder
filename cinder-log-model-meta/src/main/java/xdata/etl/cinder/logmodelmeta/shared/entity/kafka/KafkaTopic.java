@@ -36,7 +36,7 @@ public class KafkaTopic extends LogModelBase {
 	private KafkaTopicCharset charset;
 
 	public KafkaTopic() {
-		status = KafkaTopicStatus.ENABLED;
+		status = KafkaTopicStatus.DISABLED;
 		charset = KafkaTopicCharset.UTF8;
 	}
 

@@ -8,7 +8,7 @@ import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModel;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 
 public class CTypeLogModelVersionColumnConfig {
 
@@ -20,8 +20,8 @@ public class CTypeLogModelVersionColumnConfig {
         return rootNode;
     }
 
-    public static ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>> topics() {
-        ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>> topics = new ColumnConfig<CTypeLogModelVersion, List<KafkaTopic>>(PropertyUtils.CTypeLogModelVersionProperty.topics(), 200, "topics");
+    public static ColumnConfig<CTypeLogModelVersion, List<KafkaTopicFixedModelVersion>> topics() {
+        ColumnConfig<CTypeLogModelVersion, List<KafkaTopicFixedModelVersion>> topics = new ColumnConfig<CTypeLogModelVersion, List<KafkaTopicFixedModelVersion>>(PropertyUtils.CTypeLogModelVersionProperty.topics(), 200, "topics");
         topics.setSortable(false);
         topics.setMenuDisabled(true);
         return topics;
