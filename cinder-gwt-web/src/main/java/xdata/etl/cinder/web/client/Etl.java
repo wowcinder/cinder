@@ -22,27 +22,26 @@ public class Etl implements EntryPoint {
 			public void execute() {
 				StateManager.get().setProvider(
 						new CookieProvider("/", null, null, GXT.isSecure()));
-				
+
 				initView();
-//
-//				RpcServiceUtils.OpenAuthorizeRpcService
-//						.isLogin(new RpcAsyncCallback<Boolean>() {
-//							@Override
-//							public void _onSuccess(Boolean t) {
-//								if (t) {
-//									initView();
-//								} else {
-//									LoginWindow window = new LoginWindow();
-//									window.setCallback(new LoginSucessCallBack() {
-//										@Override
-//										public void logined() {
-//											initView();
-//										}
-//									});
-//									window.show();
-//								}
-//							}
-//						});
+				RpcServiceUtils.OpenAuthorizeRpcService
+						.isLogin(new RpcAsyncCallback<Boolean>() {
+							@Override
+							public void _onSuccess(Boolean t) {
+								if (t) {
+									initView();
+								} else {
+									LoginWindow window = new LoginWindow();
+									window.setCallback(new LoginSucessCallBack() {
+										@Override
+										public void logined() {
+											initView();
+										}
+									});
+									window.show();
+								}
+							}
+						});
 
 				onReady();
 
