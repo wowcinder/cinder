@@ -27,7 +27,9 @@ public abstract class AbstractCenterView<M> extends SimpleCenterView {
 
 		add(headerBar, vd);
 		add(grid, mainVd);
-		add(grid.getPagingToolBar(), vd);
+		if (grid.getPagingToolBar() != null) {
+			add(grid.getPagingToolBar(), vd);
+		}
 		initAddBtHandler();
 		initDelBtHandler();
 		initUpdateHandler();

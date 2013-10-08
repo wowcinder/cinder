@@ -12,6 +12,7 @@ import org.hibernate.validator.engine.ValidationSupport;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -26,6 +27,9 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 @RemoteServiceRelativePath("rpc/kafka.rpc")
 public interface KafkaRpcService extends RemoteService {
 	List<LogModelVersion<?>> getLogModelVersions() throws SharedException,
+			ConstraintViolationException;
+
+	List<KafkaTopic> getTopics() throws SharedException,
 			ConstraintViolationException;
 
 	KafkaTopic saveKafkaTopic(KafkaTopic topic) throws SharedException,
@@ -51,6 +55,21 @@ public interface KafkaRpcService extends RemoteService {
 
 	PagingLoadResult<KafkaWatchDog> pagingKafkaWatchDog(
 			EtlPagingLoadConfigBean config) throws SharedException,
+			ConstraintViolationException;
+
+	KafkaWatchDogTopicSetting saveKafkaWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting setting) throws SharedException,
+			ConstraintViolationException;
+
+	KafkaWatchDogTopicSetting updateKafkaWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting setting) throws SharedException,
+			ConstraintViolationException;
+
+	void deleteKafkaWatchDogTopicSettings(List<Integer> ids)
+			throws SharedException, ConstraintViolationException;
+
+	List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettings(
+			Integer watchDogId) throws SharedException,
 			ConstraintViolationException;
 
 	ValidationSupport dummy();

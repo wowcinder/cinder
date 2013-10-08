@@ -3,6 +3,7 @@
  */
 package xdata.etl.cinder.server.rpc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -18,6 +19,7 @@ import xdata.etl.cinder.gwt.client.service.KafkaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForKafka;
 import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.shared.exception.SharedException;
@@ -82,18 +84,21 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	}
 
 	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.ADD_WATCH_DOG)
 	public KafkaWatchDog saveKafkaWatchDog(KafkaWatchDog dog)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.save(dog);
 	}
 
 	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.UPDATE_WATCH_DOG)
 	public KafkaWatchDog updateKafkaWatchDog(KafkaWatchDog dog)
 			throws SharedException, ConstraintViolationException {
 		return simpleService.update(dog);
 	}
 
 	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.DELETE_WATCH_DOG)
 	public void deleteKafkaWatchDogs(List<Integer> ids) throws SharedException,
 			ConstraintViolationException {
 		simpleService.delete(KafkaWatchDog.class, ids);
@@ -101,10 +106,61 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	}
 
 	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_WATCH_DOG)
 	public PagingLoadResult<KafkaWatchDog> pagingKafkaWatchDog(
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException {
 		return simpleService.paging(KafkaWatchDog.class, config);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.ADD_TOPIC_SETTING)
+	public KafkaWatchDogTopicSetting saveKafkaWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting setting) throws SharedException,
+			ConstraintViolationException {
+		return simpleService.save(setting);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.UPDATE_TOPIC_SETTING)
+	public KafkaWatchDogTopicSetting updateKafkaWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting setting) throws SharedException,
+			ConstraintViolationException {
+		return simpleService.update(setting);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.DELETE_TOPIC_SETTING)
+	public void deleteKafkaWatchDogTopicSettings(List<Integer> ids)
+			throws SharedException, ConstraintViolationException {
+		simpleService.delete(KafkaWatchDogTopicSetting.class, ids);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_TOPIC_SETTING)
+	public List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettings(
+			Integer watchDogId) throws SharedException,
+			ConstraintViolationException {
+		List<KafkaWatchDogTopicSetting> list = simpleService
+				.get(KafkaWatchDogTopicSetting.class);
+		List<KafkaWatchDogTopicSetting> result = new ArrayList<KafkaWatchDogTopicSetting>();
+		for (KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting : list) {
+			if (kafkaWatchDogTopicSetting.getServer().getId()
+					.equals(watchDogId)) {
+				result.add(kafkaWatchDogTopicSetting);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	@AuthorizeAnnotations(value = {
+			@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.ADD_TOPIC_SETTING),
+			@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.UPDATE_TOPIC_SETTING),
+			@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_TOPIC_SETTING) })
+	public List<KafkaTopic> getTopics() throws SharedException,
+			ConstraintViolationException {
+		return simpleService.get(KafkaTopic.class);
 	}
 
 }
