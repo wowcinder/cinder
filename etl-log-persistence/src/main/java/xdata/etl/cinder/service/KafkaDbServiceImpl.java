@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.hibernate.Hibernate;
@@ -19,6 +21,9 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.c.CTypeLogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
 /**
  * @author XuehuiHe
@@ -26,7 +31,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
  */
 @Transactional(readOnly = true)
 @Service
-public class LogModelServiceImpl implements LogModelService {
+public class KafkaDbServiceImpl implements KafkaDbService {
 	@Resource(name = "cinderSf")
 	private SessionFactory sf;
 
@@ -76,6 +81,22 @@ public class LogModelServiceImpl implements LogModelService {
 
 	Session getSession() {
 		return sf.getCurrentSession();
+	}
+
+	@Override
+	public KafkaWatchDogTopicSetting getTopicSetting(KafkaTopic topic,
+			KafkaWatchDog watchDog) {
+		return (KafkaWatchDogTopicSetting) getSession()
+				.createCriteria(KafkaWatchDogTopicSetting.class)
+				.add(Restrictions.eq("topic", topic))
+				.add(Restrictions.eq("server", watchDog)).uniqueResult();
+	}
+
+	@Override
+	public List<KafkaWatchDogTopicSetting> getRelatedTopicSettings(
+			LogModelVersion<?> version) {
+		// TODO
+		return null;
 	}
 
 }

@@ -11,7 +11,7 @@ import xdata.etl.cinder.gwt.client.common.grid.GridConfig;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfigProvider;
 import xdata.etl.cinder.gwt.client.gridcolumn.KafkaTopicColumnConfig;
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
-import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
+import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicCharset;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus;
@@ -31,83 +31,77 @@ public class KafkaTopicGrid extends CinderGrid<KafkaTopic> {
 	private static final DateTimeFormat df = DateTimeFormat
 			.getFormat("yyyy-MM-dd HH:mm:ss");
 
+	public static class KafkaTopicGridConfigProvider extends
+			GridConfigProvider<KafkaTopic> {
+
+		/**
+		 * @param store
+		 */
+		public KafkaTopicGridConfigProvider() {
+			super(new ListStore<KafkaTopic>(
+					PropertyUtils.KafkaTopicProperty.key()));
+		}
+
+		@Override
+		public void load(EtlPagingLoadConfigBean loadConfig,
+				AsyncCallback<PagingLoadResult<KafkaTopic>> callback) {
+			RpcServiceUtils.KafkaRpcService.pagingKafkaTopic(loadConfig,
+					callback);
+		}
+
+		@Override
+		protected void initColumnConfig() {
+			ColumnConfig<KafkaTopic, String> name = (ColumnConfig<KafkaTopic, String>) KafkaTopicColumnConfig
+					.name();
+			ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicCharset> charset = (ColumnConfig<KafkaTopic, KafkaTopicCharset>) KafkaTopicColumnConfig
+					.charset();
+			charset.setCell(new SimpleSafeHtmlRenderer<KafkaTopicCharset>() {
+				@Override
+				protected String _getLabel(KafkaTopicCharset c) {
+					return c.getCharset();
+				}
+			}.getCell());
+
+			ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status = (ColumnConfig<KafkaTopic, KafkaTopicStatus>) KafkaTopicColumnConfig
+					.status();
+			status.setCell(new SimpleSafeHtmlRenderer<KafkaTopicStatus>() {
+				@Override
+				protected String _getLabel(KafkaTopicStatus c) {
+					return c.name();
+				}
+			}.getCell());
+			ColumnConfig<KafkaTopic, Date> lastUpdateTimeStamp = (ColumnConfig<KafkaTopic, Date>) KafkaTopicColumnConfig
+					.lastUpdateTimeStamp();
+			lastUpdateTimeStamp.setCell(new SimpleSafeHtmlRenderer<Date>() {
+				@Override
+				protected String _getLabel(Date c) {
+					return df.format(c);
+				}
+			}.getCell());
+			ColumnConfig<KafkaTopic, Date> createTime = (ColumnConfig<KafkaTopic, Date>) KafkaTopicColumnConfig
+					.createTime();
+			createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
+				@Override
+				protected String _getLabel(Date c) {
+					return df.format(c);
+				}
+			}.getCell());
+			columns.add(name);
+			columns.add(charset);
+			columns.add(status);
+			columns.add(lastUpdateTimeStamp);
+			columns.add(createTime);
+
+		}
+
+	}
+
 	/**
 	 * @param configProvider
 	 * @param gridConfig
 	 */
 	public KafkaTopicGrid(GridConfig gridConfig) {
-		super(new GridConfigProvider<KafkaTopic>(new ListStore<KafkaTopic>(
-				PropertyUtils.KafkaTopicProperty.key())) {
-
-			@Override
-			public void load(EtlPagingLoadConfigBean loadConfig,
-					AsyncCallback<PagingLoadResult<KafkaTopic>> callback) {
-
-			}
-
-			@Override
-			protected void initColumnConfig() {
-				ColumnConfig<KafkaTopic, String> name = KafkaTopicColumnConfig
-						.name();
-				ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicCharset> charset = KafkaTopicColumnConfig
-						.charset();
-				charset.setCell(new SimpleSafeHtmlRenderer<KafkaTopicCharset>() {
-					@Override
-					protected String _getLabel(KafkaTopicCharset c) {
-						return c.getCharset();
-					}
-				}.getCell());
-				ColumnConfig<KafkaTopic, LogModelVersion<?>> version1 = KafkaTopicColumnConfig
-						.version();
-				version1.setCell(new SimpleSafeHtmlRenderer<LogModelVersion<?>>() {
-					@Override
-					protected String _getLabel(LogModelVersion<?> c) {
-						return c.getModel().getName();
-					}
-				}.getCell());
-				version1.setHeader("model");
-				ColumnConfig<KafkaTopic, LogModelVersion<?>> version2 = KafkaTopicColumnConfig
-						.version();
-				version2.setCell(new SimpleSafeHtmlRenderer<LogModelVersion<?>>() {
-					@Override
-					protected String _getLabel(LogModelVersion<?> c) {
-						return c.getVersion();
-					}
-				}.getCell());
-				version1.setHeader("version");
-				ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status = KafkaTopicColumnConfig
-						.status();
-				status.setCell(new SimpleSafeHtmlRenderer<KafkaTopicStatus>() {
-					@Override
-					protected String _getLabel(KafkaTopicStatus c) {
-						return c.name();
-					}
-				}.getCell());
-				ColumnConfig<KafkaTopic, Date> lastUpdateTimeStamp = KafkaTopicColumnConfig
-						.lastUpdateTimeStamp();
-				lastUpdateTimeStamp.setCell(new SimpleSafeHtmlRenderer<Date>() {
-					@Override
-					protected String _getLabel(Date c) {
-						return df.format(c);
-					}
-				}.getCell());
-				ColumnConfig<KafkaTopic, Date> createTime = KafkaTopicColumnConfig
-						.createTime();
-				createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
-					@Override
-					protected String _getLabel(Date c) {
-						return df.format(c);
-					}
-				}.getCell());
-				columns.add(name);
-				columns.add(version1);
-				columns.add(version2);
-				columns.add(charset);
-				columns.add(status);
-				columns.add(lastUpdateTimeStamp);
-				columns.add(createTime);
-			}
-		}, gridConfig);
+		super(new KafkaTopicGridConfigProvider(), gridConfig);
 	}
 
 }

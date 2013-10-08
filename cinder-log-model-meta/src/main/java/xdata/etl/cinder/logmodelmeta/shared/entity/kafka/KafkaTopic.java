@@ -10,7 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelBase;
-import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 
 /**
  * @author XuehuiHe
@@ -26,10 +26,11 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
  */
 @Entity
 @Table(name = "kafka_topic")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class KafkaTopic extends LogModelBase {
 	private static final long serialVersionUID = -7632761348362494932L;
 	private String name;
-	private LogModelVersion<?> version;
+
 	private List<KafkaWatchDogTopicSetting> topicSettings;
 	private KafkaTopicStatus status;
 	private KafkaTopicCharset charset;
@@ -44,11 +45,6 @@ public class KafkaTopic extends LogModelBase {
 	@Length(min = 1, max = 100)
 	public String getName() {
 		return name;
-	}
-
-	@ManyToOne
-	public LogModelVersion<?> getVersion() {
-		return version;
 	}
 
 	@OneToMany(mappedBy = "topic", cascade = CascadeType.REMOVE)
@@ -84,10 +80,6 @@ public class KafkaTopic extends LogModelBase {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setVersion(LogModelVersion<?> version) {
-		this.version = version;
 	}
 
 	public static enum KafkaTopicStatus {

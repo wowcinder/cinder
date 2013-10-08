@@ -6,7 +6,6 @@ import java.util.List;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
@@ -20,8 +19,6 @@ public interface KafkaTopicProperty
     public ValueProvider<KafkaTopic, List<KafkaWatchDogTopicSetting>> topicSettings();
 
     public ValueProvider<KafkaTopic, String> name();
-
-    public ValueProvider<KafkaTopic, LogModelVersion<?>> version();
 
     public ValueProvider<KafkaTopic, KafkaTopic.KafkaTopicStatus> status();
 

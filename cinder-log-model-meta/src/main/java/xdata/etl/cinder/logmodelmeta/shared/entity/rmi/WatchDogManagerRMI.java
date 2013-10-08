@@ -3,9 +3,6 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.entity.rmi;
 
-import java.util.List;
-
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
 /**
  * 服务端接收的RMI
@@ -18,19 +15,12 @@ public interface WatchDogManagerRMI {
 	 * 注册
 	 * 
 	 * @param rmiPort
-	 * @return 注册成功或失败
+	 * @return WatchDog id
 	 */
-	public Boolean registerPrcessSever(Integer rmiPort);
+	public Integer registerPrcessSever(Integer rmiPort);
 
 	/**
 	 * 发送心跳
 	 */
 	public void tick();
-
-	/**
-	 * 汇报topic的状态
-	 * 
-	 * @param topicStatus
-	 */
-	public void reportTopicStatus(List<KafkaWatchDogTopicSetting> topicStatus);
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
-import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
@@ -31,13 +30,6 @@ public class KafkaTopicColumnConfig {
         name.setSortable(false);
         name.setMenuDisabled(true);
         return name;
-    }
-
-    public static ColumnConfig<KafkaTopic, LogModelVersion<?>> version() {
-        ColumnConfig<KafkaTopic, LogModelVersion<?>> version = new ColumnConfig<KafkaTopic, LogModelVersion<?>>(PropertyUtils.KafkaTopicProperty.version(), 200, "version");
-        version.setSortable(false);
-        version.setMenuDisabled(true);
-        return version;
     }
 
     public static ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status() {

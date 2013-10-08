@@ -3,8 +3,8 @@
  */
 package xdata.etl.cinder.service;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +21,10 @@ public class LogModelTransformerManagerImpl implements
 		LogModelTransformerManager {
 	private final Map<LogModelTransformerKey, LogModelTransformer<?>> transformersMap;
 	@Autowired
-	private LogModelService logModelService;
+	private KafkaDbService dbService;
 
 	public LogModelTransformerManagerImpl() {
-		transformersMap = new ConcurrentHashMap<LogModelTransformerKey, LogModelTransformer<?>>();
+		transformersMap = new HashMap<LogModelTransformerKey, LogModelTransformer<?>>();
 	}
 
 	public LogModelTransformer<?> getTransformer(String model, String version) {
@@ -54,7 +54,7 @@ public class LogModelTransformerManagerImpl implements
 		if (transformersMap.containsKey(transformerKey)) {
 			return transformersMap.get(transformerKey);
 		}
-		LogModelVersion<?> logModelVersion = logModelService
+		LogModelVersion<?> logModelVersion = dbService
 				.getLogModelVersion(transformerKey.getModel(),
 						transformerKey.getVersion());
 		LogModelTransformer<LogModelVersion<?>> transformer = null;
@@ -72,12 +72,12 @@ public class LogModelTransformerManagerImpl implements
 		return transformersMap;
 	}
 
-	public LogModelService getLogModelService() {
-		return logModelService;
+	public KafkaDbService getLogModelService() {
+		return dbService;
 	}
 
-	public void setLogModelService(LogModelService logModelService) {
-		this.logModelService = logModelService;
+	public void setLogModelService(KafkaDbService logModelService) {
+		this.dbService = logModelService;
 	}
 
 	public static class LogModelTransformerKey {

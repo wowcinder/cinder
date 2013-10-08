@@ -61,4 +61,13 @@ public class AuthorizeNames {
 
 	}
 
+	public static class AuthorizeAnnotationNamesForKafka {
+		public static final String GROUP = "Kafka";
+
+		public static final String ADD_TOPIC = "添加TOPIC";
+		public static final String UPDATE_TOPIC = "修改TOPIC";
+		public static final String DELETE_TOPIC = "删除TOPIC";
+		public static final String QUERY_TOPIC = "查询TOPIC";
+	}
+
 }
