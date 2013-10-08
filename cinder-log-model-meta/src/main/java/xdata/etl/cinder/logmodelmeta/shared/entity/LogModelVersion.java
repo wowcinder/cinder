@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 
 @Entity
 @Table(name = "log_model_version", uniqueConstraints = { @UniqueConstraint(columnNames = {
@@ -27,7 +27,7 @@ public abstract class LogModelVersion<RealLogModel extends LogModel<?>> extends
 	private String version;
 	private String desc;
 	private RealLogModel model;
-	private List<KafkaTopic> topics;
+	private List<KafkaTopicFixedModelVersion> topics;
 
 	public LogModelVersion() {
 	}
@@ -51,11 +51,11 @@ public abstract class LogModelVersion<RealLogModel extends LogModel<?>> extends
 	}
 
 	@OneToMany(mappedBy = "version", cascade = CascadeType.REMOVE)
-	public List<KafkaTopic> getTopics() {
+	public List<KafkaTopicFixedModelVersion> getTopics() {
 		return topics;
 	}
 
-	public void setTopics(List<KafkaTopic> topics) {
+	public void setTopics(List<KafkaTopicFixedModelVersion> topics) {
 		this.topics = topics;
 	}
 
