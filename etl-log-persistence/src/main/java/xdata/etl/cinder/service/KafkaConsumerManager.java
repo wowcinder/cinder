@@ -12,4 +12,6 @@ public interface KafkaConsumerManager {
 	public void startAllConsumer();
 
 	public void shutdown();
+	
+	public void refreshTopicStatus();
 }

@@ -18,6 +18,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicSt
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 
 @Service
 public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
@@ -144,6 +145,25 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 		@Override
 		public void run() {
 			holder.shutdown();
+		}
+	}
+
+	@Override
+	public synchronized void refreshTopicStatus() {
+		List<KafkaWatchDogTopicSetting> settings = dbService
+				.getAllTopicSettings(dog);
+		for (KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting : settings) {
+			kafkaWatchDogTopicSetting
+					.setStatus(KafkaWatchDogTopicSettingStatus.STOPED);
+			if (connectors.containsKey(kafkaWatchDogTopicSetting)) {
+				ConsumerConnectorHolder holder = connectors
+						.get(kafkaWatchDogTopicSetting);
+				if (!holder.isShutdown()) {
+					kafkaWatchDogTopicSetting
+							.setStatus(KafkaWatchDogTopicSettingStatus.RUNNING);
+				}
+			}
+			dbService.updateWatchDogTopicSetting(kafkaWatchDogTopicSetting);
 		}
 	}
 }

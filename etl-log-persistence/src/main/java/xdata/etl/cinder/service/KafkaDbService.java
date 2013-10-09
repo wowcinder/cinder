@@ -34,4 +34,10 @@ public interface KafkaDbService {
 	 * @return
 	 */
 	List<KafkaWatchDogTopicSetting> getAllTopicSettings(KafkaWatchDog dog);
+
+	/**
+	 * @param kafkaWatchDogTopicSetting
+	 */
+	void updateWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting);
 }

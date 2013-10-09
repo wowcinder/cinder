@@ -117,4 +117,11 @@ public class KafkaDbServiceImpl implements KafkaDbService {
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
+	@Override
+	@Transactional(readOnly = false)
+	public void updateWatchDogTopicSetting(
+			KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting) {
+		getSession().update(kafkaWatchDogTopicSetting);
+	}
+
 }
