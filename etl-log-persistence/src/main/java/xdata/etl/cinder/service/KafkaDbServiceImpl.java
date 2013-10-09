@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,6 +23,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelGroupColumn;
 import xdata.etl.cinder.logmodelmeta.shared.entity.json.JsonLogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
@@ -92,11 +94,19 @@ public class KafkaDbServiceImpl implements KafkaDbService {
 				.add(Restrictions.eq("server", watchDog)).uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<KafkaWatchDogTopicSetting> getRelatedTopicSettings(
 			LogModelVersion<?> version) {
-		// TODO
-		return null;
+		return getSession().createCriteria(KafkaTopicFixedModelVersion.class)
+				.add(Restrictions.eq("version", version))
+				.createCriteria("topicSettings")
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+
+	@Override
+	public KafkaWatchDog findWatchDog(Integer id) {
+		return (KafkaWatchDog) getSession().get(KafkaWatchDog.class, id);
 	}
 
 }

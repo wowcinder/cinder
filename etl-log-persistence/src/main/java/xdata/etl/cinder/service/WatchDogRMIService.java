@@ -6,6 +6,7 @@ package xdata.etl.cinder.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
@@ -17,15 +18,16 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogRMI;
  * @author XuehuiHe
  * @date 2013年10月8日
  */
+@Service("watchdog_rmi_service")
 public class WatchDogRMIService implements WatchDogRMI {
-	private final KafkaWatchDog watchDog;
+	@Autowired
+	private KafkaWatchDog watchDog;
 	@Autowired
 	private KafkaDbService dbService;
 	@Autowired
 	private KafkaConsumerManager consumerManager;
 
-	public WatchDogRMIService(KafkaWatchDog watchDog) {
-		this.watchDog = watchDog;
+	public WatchDogRMIService() {
 	}
 
 	@Override

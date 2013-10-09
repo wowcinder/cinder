@@ -20,7 +20,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI;
  * @author XuehuiHe
  * @date 2013年10月8日
  */
-@Service
+@Service("watchdog_rmi_service")
 @Transactional
 public class WatchDogManagerRMIService implements WatchDogManagerRMI {
 	@Autowired

@@ -22,4 +22,10 @@ public interface KafkaDbService {
 
 	List<KafkaWatchDogTopicSetting> getRelatedTopicSettings(
 			LogModelVersion<?> version);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	KafkaWatchDog findWatchDog(Integer id);
 }

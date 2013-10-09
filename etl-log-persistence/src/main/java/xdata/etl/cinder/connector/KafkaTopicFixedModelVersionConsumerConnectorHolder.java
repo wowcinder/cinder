@@ -50,7 +50,10 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 			topic = null;
 			version = null;
 			transformer = null;
-			// TODO
+			String msg = "setting_id: " + topicSetting.getId()
+					+ ",topic is not fixed model version";
+			LOGGER.warn(msg);
+			throw new RuntimeException(msg);
 		}
 	}
 
@@ -66,9 +69,12 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 				Map<String, List<HbaseRecord<String>>> recordMap = getTransformer()
 						.transform(raw);
 				recordMap.clear();
+				recordMap = null;
 				// TODO
 			}
 		} catch (Exception e) {
+			LOGGER.warn(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

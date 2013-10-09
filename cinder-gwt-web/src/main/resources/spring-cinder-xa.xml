@@ -97,7 +97,7 @@
 				<value>xdata.etl.cinder.hbasemeta.shared.entity</value>
 				<!-- <value>xdata.etl.cinder.businessmeta.shared.entity</value> -->
 				<value>xdata.etl.cinder.logmodelmeta.shared.entity</value>
-				
+
 			</list>
 		</property>
 
@@ -141,6 +141,14 @@
 		depends-on="userTransactionService">
 		<property name="transactionManager" ref="AtomikosTransactionManager" />
 		<property name="userTransaction" ref="AtomikosUserTransaction" />
+	</bean>
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<property name="serviceName" value="watchdog_manager_rmi" />
+		<property name="service" ref="watchdog_rmi_service" />
+		<property name="serviceInterface"
+			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI" />
+		<property name="registryPort" value="1199" />
 	</bean>
 
 	<aop:aspectj-autoproxy />

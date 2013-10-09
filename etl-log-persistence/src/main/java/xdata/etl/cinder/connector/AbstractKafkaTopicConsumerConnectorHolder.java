@@ -10,6 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -23,6 +26,10 @@ import xdata.etl.cinder.service.LogModelTransformerManager;
  */
 public abstract class AbstractKafkaTopicConsumerConnectorHolder implements
 		ConsumerConnectorHolder {
+
+	protected static final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractKafkaTopicConsumerConnectorHolder.class);
+
 	private final LogModelTransformerManager transformerManager;
 	private final ConsumerConfig kafkaClientConfig;
 	private final KafkaWatchDogTopicSetting topicSetting;
@@ -39,6 +46,11 @@ public abstract class AbstractKafkaTopicConsumerConnectorHolder implements
 		this.kafkaClientConfig = kafkaClientConfig;
 		this.transformerManager = transformerManager;
 		this.isShutdown = true;
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("topic: " + topicSetting.getTopic().getName()
+					+ " holder be created");
+		}
 	}
 
 	@Override
@@ -50,6 +62,10 @@ public abstract class AbstractKafkaTopicConsumerConnectorHolder implements
 	public synchronized void run() {
 		if (!isShutdown()) {
 			return;
+		}
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("topic: " + topicSetting.getTopic().getName()
+					+ " holder running");
 		}
 		isShutdown = false;
 		this.connector = kafka.consumer.Consumer
@@ -74,6 +90,8 @@ public abstract class AbstractKafkaTopicConsumerConnectorHolder implements
 		if (isShutdown()) {
 			return;
 		}
+		LOGGER.info("topic: " + topicSetting.getTopic().getName()
+				+ " holder start to shutdown");
 		if (connector != null) {
 			connector.shutdown();
 			connector = null;
@@ -94,6 +112,8 @@ public abstract class AbstractKafkaTopicConsumerConnectorHolder implements
 			}
 		}
 		isShutdown = true;
+		LOGGER.info("topic: " + topicSetting.getTopic().getName()
+				+ " holder has shutdowned");
 	}
 
 	public class HolderRunnable implements Runnable {

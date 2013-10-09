@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI;
@@ -13,6 +15,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI;
  */
 @Service
 public class WatchDogManagerClientImpl implements WatchDogManagerClient {
+	@Resource(name = "watchDogManagerRMI")
 	private WatchDogManagerRMI watchDogManagerRMI;
 
 	@Override
