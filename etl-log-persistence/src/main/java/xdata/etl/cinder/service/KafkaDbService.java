@@ -28,4 +28,10 @@ public interface KafkaDbService {
 	 * @return
 	 */
 	KafkaWatchDog findWatchDog(Integer id);
+
+	/**
+	 * @param dog
+	 * @return
+	 */
+	List<KafkaWatchDogTopicSetting> getAllTopicSettings(KafkaWatchDog dog);
 }

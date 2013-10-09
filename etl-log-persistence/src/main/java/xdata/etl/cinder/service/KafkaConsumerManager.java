@@ -8,4 +8,8 @@ public interface KafkaConsumerManager {
 	public boolean stopConsumer(KafkaWatchDogTopicSetting topicSetting);
 
 	public boolean restartConsumer(KafkaWatchDogTopicSetting topicSetting);
+
+	public void startAllConsumer();
+
+	public void shutdown();
 }

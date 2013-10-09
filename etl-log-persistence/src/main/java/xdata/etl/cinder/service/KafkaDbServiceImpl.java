@@ -109,4 +109,12 @@ public class KafkaDbServiceImpl implements KafkaDbService {
 		return (KafkaWatchDog) getSession().get(KafkaWatchDog.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<KafkaWatchDogTopicSetting> getAllTopicSettings(KafkaWatchDog dog) {
+		return getSession().createCriteria(KafkaWatchDogTopicSetting.class)
+				.add(Restrictions.eq("server", dog))
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	}
+
 }
