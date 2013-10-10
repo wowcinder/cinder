@@ -31,7 +31,7 @@ public class AnalyzeOldHbaseMeta {
 	private static HbaseMetaService service;
 
 	public static void main(String[] args) throws Exception {
-		ac = new ClassPathXmlApplicationContext("spring-cinder-xa.xml");
+		ac = new ClassPathXmlApplicationContext("spring-cinder-analyze.xml");
 		init();
 
 		ClassScaner scaner = new ClassScaner("xdata.etl.entity");

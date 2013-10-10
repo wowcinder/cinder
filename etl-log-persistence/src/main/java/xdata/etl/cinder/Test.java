@@ -17,7 +17,7 @@ public class Test {
 
 	public static void main(String[] args) throws InterruptedException {
 		final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"spring-cinder-xa.xml", "spring-log-persistence.xml");
+				"spring-log-persistence.xml");
 		manager = ctx.getBean(KafkaConsumerManager.class);
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override

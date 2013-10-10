@@ -13,32 +13,17 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-	<import resource="classpath:/spring-db-conf.xml" />
+	<import resource="classpath:/spring-cinder-service-conf.xml" />
 
-	<!-- RMI -->
 	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-		<property name="serviceName" value="watchdog_rmi" />
+		<property name="serviceName" value="watchdog_manager_rmi" />
 		<property name="service" ref="watchdog_rmi_service" />
 		<property name="serviceInterface"
-			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogRMI" />
-		<property name="registryPort" value="${rmi_port}" />
-	</bean>
-
-
-	<bean id="watchDogManagerRMI" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-		<property name="serviceUrl"
-			value="rmi://data-tj-slave1.voole.com:1199/watchdog_manager_rmi" />
-		<property name="serviceInterface"
 			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI" />
+		<property name="registryPort" value="1199" />
 	</bean>
-	<!-- /RMI -->
 
-	<bean class="xdata.etl.cinder.service.InitConfigService.PropertyHolder">
-		<constructor-arg>
-			<value>classpath:kafka.properties</value>
-		</constructor-arg>
-		<constructor-arg>
-			<value>${rmi_port}</value>
-		</constructor-arg>
-	</bean>
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	<context:component-scan base-package="xdata.etl.cinder" />
 </beans>
