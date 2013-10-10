@@ -57,4 +57,15 @@ public class WatchDogManagerRMIDaoImpl implements WatchDogManagerRMIDao {
 		}
 	}
 
+	@Override
+	public void logoff(String clientIp) {
+		KafkaWatchDog dog = (KafkaWatchDog) getSession()
+				.createCriteria(KafkaWatchDog.class)
+				.add(Restrictions.eq("ip", clientIp)).uniqueResult();
+		if (dog != null) {
+			dog.setStatus(KafkaProcessServerStatus.STOPED);
+			getSession().update(dog);
+		}
+	}
+
 }

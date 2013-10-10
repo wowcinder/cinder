@@ -13,4 +13,9 @@ public interface WatchDogManagerRMIDao {
 	KafkaWatchDog findWatchDog(String ip, Integer rmiPort);
 
 	void refreshWatchDogAliveTime(String ip);
+
+	/**
+	 * @param clientIp
+	 */
+	void logoff(String clientIp);
 }

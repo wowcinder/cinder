@@ -3,7 +3,6 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.entity.rmi;
 
-
 /**
  * 服务端接收的RMI
  * 
@@ -17,7 +16,12 @@ public interface WatchDogManagerRMI {
 	 * @param rmiPort
 	 * @return WatchDog id
 	 */
-	public Integer registerPrcessSever(Integer rmiPort);
+	public Integer login(Integer rmiPort);
+
+	/**
+	 * 注销
+	 */
+	public void logoff();
 
 	/**
 	 * 发送心跳

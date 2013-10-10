@@ -30,7 +30,7 @@ public class WatchDogManagerRMIService implements WatchDogManagerRMI {
 	}
 
 	@Override
-	public Integer registerPrcessSever(Integer rmiPort) {
+	public Integer login(Integer rmiPort) {
 		String clientIp = getClientIp();
 		KafkaWatchDog dog = dao.findWatchDog(clientIp, rmiPort);
 		if (dog != null) {
@@ -58,5 +58,11 @@ public class WatchDogManagerRMIService implements WatchDogManagerRMI {
 	public void tick() {
 		String clientIp = getClientIp();
 		dao.refreshWatchDogAliveTime(clientIp);
+	}
+
+	@Override
+	public void logoff() {
+		String clientIp = getClientIp();
+		dao.logoff(clientIp);
 	}
 }

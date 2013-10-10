@@ -32,6 +32,8 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	private KafkaWatchDog dog;
 	@Autowired
 	private KafkaDbService dbService;
+	@Autowired
+	private WatchDogManagerClient client;
 
 	private final Map<KafkaWatchDogTopicSetting, ConsumerConnectorHolder> connectors;
 
@@ -128,6 +130,7 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 
 	@Override
 	public synchronized void shutdown() {
+		client.logoff();
 		for (Map.Entry<KafkaWatchDogTopicSetting, ConsumerConnectorHolder> entry : connectors
 				.entrySet()) {
 			Thread thread = new ShutDownThread(entry.getValue());

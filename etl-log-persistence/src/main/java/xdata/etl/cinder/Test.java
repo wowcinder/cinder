@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import xdata.etl.cinder.service.KafkaConsumerManager;
@@ -29,5 +31,10 @@ public class Test {
 			}
 		});
 		manager.startAllConsumer();
+
+		TimeUnit.SECONDS.sleep(30);
+
+		manager.shutdown();
+		ctx.close();
 	}
 }

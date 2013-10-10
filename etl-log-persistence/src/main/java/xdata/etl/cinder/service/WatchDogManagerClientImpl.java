@@ -19,12 +19,17 @@ public class WatchDogManagerClientImpl implements WatchDogManagerClient {
 	private WatchDogManagerRMI watchDogManagerRMI;
 
 	@Override
-	public Integer registerPrcessSever(Integer rmiPort) {
-		return watchDogManagerRMI.registerPrcessSever(rmiPort);
+	public void tick() {
+		watchDogManagerRMI.tick();
 	}
 
 	@Override
-	public void tick() {
-		watchDogManagerRMI.tick();
+	public Integer login(Integer rmiPort) {
+		return watchDogManagerRMI.login(rmiPort);
+	}
+
+	@Override
+	public void logoff() {
+		watchDogManagerRMI.logoff();
 	}
 }

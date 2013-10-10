@@ -34,7 +34,7 @@ public class InitConfigService {
 
 	@Bean
 	public KafkaWatchDog getWatchDog() {
-		Integer id = client.registerPrcessSever(propertyHolder.getRmiPort());
+		Integer id = client.login(propertyHolder.getRmiPort());
 		return dbService.findWatchDog(id);
 	}
 
@@ -66,6 +66,5 @@ public class InitConfigService {
 		public Integer getRmiPort() {
 			return rmiPort;
 		}
-
 	}
 }
