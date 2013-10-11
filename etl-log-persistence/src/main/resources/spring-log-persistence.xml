@@ -41,4 +41,26 @@
 			<value>${rmi_port}</value>
 		</constructor-arg>
 	</bean>
+
+	<bean id="reportTopicStatus"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="kafkaConsumerManager" />
+		<property name="targetMethod" value="reportTopicStatus" />
+		<property name="concurrent" value="false" />
+		<property name="name" value="reportTopicStatus" />
+	</bean>
+
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="reportTopicStatus" />
+		<property name="startDelay" value="20000" />
+		<property name="repeatInterval" value="25000" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
 </beans>

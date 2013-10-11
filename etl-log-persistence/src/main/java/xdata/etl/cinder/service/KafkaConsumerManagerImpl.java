@@ -20,7 +20,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVer
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 
-@Service
+@Service("kafkaConsumerManager")
 public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	protected static final Logger LOGGER = LoggerFactory
 			.getLogger(KafkaConsumerManagerImpl.class);
@@ -155,6 +155,7 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 
 	@Override
 	public synchronized void reportTopicStatus() {
+		System.out.println("-------------reportTopicStatus-----------------");
 		Set<KafkaWatchDogTopicSetting> settings = connectors.keySet();
 		Set<Integer> aliveIds = new HashSet<Integer>();
 		for (KafkaWatchDogTopicSetting setting : settings) {

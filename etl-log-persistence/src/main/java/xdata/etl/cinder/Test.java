@@ -3,9 +3,10 @@
  */
 package xdata.etl.cinder;
 
-import java.util.concurrent.TimeUnit;
-
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import xdata.etl.cinder.service.KafkaConsumerManager;
 
@@ -17,24 +18,30 @@ public class Test {
 
 	public static KafkaConsumerManager manager;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException,
+			SchedulerException {
 		final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"spring-log-persistence.xml");
 		manager = ctx.getBean(KafkaConsumerManager.class);
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
+				SchedulerFactoryBean schedulerFactoryBean = ctx
+						.getBean(SchedulerFactoryBean.class);
+				if (schedulerFactoryBean != null) {
+					Scheduler scheduler = schedulerFactoryBean.getScheduler();
+					try {
+						scheduler.deleteJob("reportTopicStatus",
+								Scheduler.DEFAULT_GROUP);
+					} catch (SchedulerException e) {
+						e.printStackTrace();
+					}
+				}
 				if (manager != null) {
 					manager.shutdown();
 				}
 				ctx.close();
 			}
 		});
-		manager.startAllConsumer();
-
-		TimeUnit.SECONDS.sleep(30);
-
-		manager.shutdown();
-		ctx.close();
 	}
 }
