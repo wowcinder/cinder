@@ -8,7 +8,7 @@ import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfig;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfigProvider;
 import xdata.etl.cinder.gwt.client.gridcolumn.KafkaWatchDogColumnConfig;
-import xdata.etl.cinder.gwt.client.ui.kafka.window.KafkaWatchDogTopicSettingWindow;
+import xdata.etl.cinder.gwt.client.ui.kafka.window.KafkaWatchDogTopicSettingMonitorWindow;
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
@@ -91,7 +91,7 @@ public class KafkaWatchDogMonitorGrid extends CinderGrid<KafkaWatchDog> {
 				public void onSelect(SelectEvent event) {
 					KafkaWatchDog dog = getStore().get(
 							event.getContext().getIndex());
-					KafkaWatchDogTopicSettingWindow window = new KafkaWatchDogTopicSettingWindow(
+					KafkaWatchDogTopicSettingMonitorWindow window = new KafkaWatchDogTopicSettingMonitorWindow(
 							dog);
 					window.show();
 				}

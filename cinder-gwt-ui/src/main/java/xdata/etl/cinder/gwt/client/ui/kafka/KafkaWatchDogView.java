@@ -60,7 +60,7 @@ public class KafkaWatchDogView extends AbstractCenterView<KafkaWatchDog> {
 	@Override
 	protected void onDetach() {
 		super.onDetach();
-		timer.cancel();
+//		timer.cancel();
 	}
 
 	@Override
