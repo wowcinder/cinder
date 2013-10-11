@@ -25,18 +25,18 @@ public class KafkaTopicColumnConfig {
         return topicSettings;
     }
 
+    public static ColumnConfig<KafkaTopic, Boolean> isEnabled() {
+        ColumnConfig<KafkaTopic, Boolean> isEnabled = new ColumnConfig<KafkaTopic, Boolean>(PropertyUtils.KafkaTopicProperty.isEnabled(), 200, "isEnabled");
+        isEnabled.setSortable(false);
+        isEnabled.setMenuDisabled(true);
+        return isEnabled;
+    }
+
     public static ColumnConfig<KafkaTopic, String> name() {
         ColumnConfig<KafkaTopic, String> name = new ColumnConfig<KafkaTopic, String>(PropertyUtils.KafkaTopicProperty.name(), 200, "name");
         name.setSortable(false);
         name.setMenuDisabled(true);
         return name;
-    }
-
-    public static ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status() {
-        ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status = new ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus>(PropertyUtils.KafkaTopicProperty.status(), 200, "status");
-        status.setSortable(false);
-        status.setMenuDisabled(true);
-        return status;
     }
 
     public static ColumnConfig<KafkaTopic, Integer> id() {

@@ -14,6 +14,8 @@ public interface KafkaWatchDogTopicSettingProperty
 {
 
 
+    public ValueProvider<KafkaWatchDogTopicSetting, Boolean> isEnabled();
+
     public ValueProvider<KafkaWatchDogTopicSetting, KafkaWatchDog> server();
 
     public ValueProvider<KafkaWatchDogTopicSetting, KafkaTopic> topic();

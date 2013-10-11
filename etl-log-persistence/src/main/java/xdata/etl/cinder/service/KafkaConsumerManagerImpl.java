@@ -1,8 +1,10 @@
 package xdata.etl.cinder.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import kafka.consumer.ConsumerConfig;
 
@@ -14,11 +16,9 @@ import org.springframework.stereotype.Service;
 import xdata.etl.cinder.connector.ConsumerConnectorHolder;
 import xdata.etl.cinder.connector.KafkaTopicFixedModelVersionConsumerConnectorHolder;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 
 @Service
 public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
@@ -62,7 +62,8 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 			}
 		}
 		KafkaTopic topic = topicSetting.getTopic();
-		if (topic.getStatus().equals(KafkaTopicStatus.DISABLED)) {
+
+		if (!topic.getIsEnabled()) {
 			return false;
 		}
 		try {
@@ -126,6 +127,7 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 		for (KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting : settings) {
 			startConsumer(kafkaWatchDogTopicSetting);
 		}
+		client.tick();
 	}
 
 	@Override
@@ -152,21 +154,12 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	}
 
 	@Override
-	public synchronized void refreshTopicStatus() {
-		List<KafkaWatchDogTopicSetting> settings = dbService
-				.getAllTopicSettings(dog);
-		for (KafkaWatchDogTopicSetting kafkaWatchDogTopicSetting : settings) {
-			kafkaWatchDogTopicSetting
-					.setStatus(KafkaWatchDogTopicSettingStatus.STOPED);
-			if (connectors.containsKey(kafkaWatchDogTopicSetting)) {
-				ConsumerConnectorHolder holder = connectors
-						.get(kafkaWatchDogTopicSetting);
-				if (!holder.isShutdown()) {
-					kafkaWatchDogTopicSetting
-							.setStatus(KafkaWatchDogTopicSettingStatus.RUNNING);
-				}
-			}
-			dbService.updateWatchDogTopicSetting(kafkaWatchDogTopicSetting);
+	public synchronized void reportTopicStatus() {
+		Set<KafkaWatchDogTopicSetting> settings = connectors.keySet();
+		Set<Integer> aliveIds = new HashSet<Integer>();
+		for (KafkaWatchDogTopicSetting setting : settings) {
+			aliveIds.add(setting.getId());
 		}
+		client.reportTopicStatus(aliveIds);
 	}
 }

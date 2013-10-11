@@ -3,11 +3,13 @@
  */
 package xdata.etl.cinder.service;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI;
+import xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI;
 
 /**
  * @author XuehuiHe
@@ -31,5 +33,11 @@ public class WatchDogManagerClientImpl implements WatchDogManagerClient {
 	@Override
 	public void logoff() {
 		watchDogManagerRMI.logoff();
+	}
+
+	@Override
+	public void reportTopicStatus(Set<Integer> aliveTopicIds) {
+		// TODO Auto-generated method stub
+
 	}
 }

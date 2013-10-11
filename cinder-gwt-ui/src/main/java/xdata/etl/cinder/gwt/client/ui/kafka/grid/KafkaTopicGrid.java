@@ -14,7 +14,6 @@ import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicCharset;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -62,14 +61,6 @@ public class KafkaTopicGrid extends CinderGrid<KafkaTopic> {
 				}
 			}.getCell());
 
-			ColumnConfig<KafkaTopic, KafkaTopic.KafkaTopicStatus> status = (ColumnConfig<KafkaTopic, KafkaTopicStatus>) KafkaTopicColumnConfig
-					.status();
-			status.setCell(new SimpleSafeHtmlRenderer<KafkaTopicStatus>() {
-				@Override
-				protected String _getLabel(KafkaTopicStatus c) {
-					return c.name();
-				}
-			}.getCell());
 			ColumnConfig<KafkaTopic, Date> lastUpdateTimeStamp = (ColumnConfig<KafkaTopic, Date>) KafkaTopicColumnConfig
 					.lastUpdateTimeStamp();
 			lastUpdateTimeStamp.setCell(new SimpleSafeHtmlRenderer<Date>() {
@@ -88,7 +79,6 @@ public class KafkaTopicGrid extends CinderGrid<KafkaTopic> {
 			}.getCell());
 			columns.add(name);
 			columns.add(charset);
-			columns.add(status);
 			columns.add(lastUpdateTimeStamp);
 			columns.add(createTime);
 

@@ -8,7 +8,6 @@ import xdata.etl.cinder.gwt.client.common.editor.CinderEditor;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicCharset;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus;
 
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -50,19 +49,15 @@ public class KafkaTopicEditor<T extends KafkaTopic> extends CinderEditor<T> {
 
 	TextField name;
 	EnumComboBox<KafkaTopicCharset> charset;
-	EnumComboBox<KafkaTopicStatus> status;
 
 	@Override
 	protected void _initView() {
 		name = new TextField();
 		charset = new EnumComboBox<KafkaTopic.KafkaTopicCharset>(
 				KafkaTopicCharset.values());
-		status = new EnumComboBox<KafkaTopic.KafkaTopicStatus>(
-				KafkaTopicStatus.values());
 
 		layoutContainer.add(new FieldLabel(name, "name"), vd);
 		layoutContainer.add(new FieldLabel(charset, "charset"), vd);
-		layoutContainer.add(new FieldLabel(status, "status"), vd);
 	}
 
 }

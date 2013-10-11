@@ -1,7 +1,9 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.logmodelmeta.shared.entity.rmi;
+package xdata.etl.cinder.logmodelmeta.shared.rmi;
+
+import java.util.Set;
 
 /**
  * 服务端接收的RMI
@@ -27,4 +29,6 @@ public interface WatchDogManagerRMI {
 	 * 发送心跳
 	 */
 	public void tick();
+
+	public void reportTopicStatus(Set<Integer> aliveTopicIds);
 }

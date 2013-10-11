@@ -5,11 +5,10 @@ package xdata.etl.cinder.logmodelmeta.shared.entity.kafka;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -28,6 +27,7 @@ public class KafkaWatchDogTopicSetting extends LogModelBase {
 	private KafkaTopic topic;
 	private Integer threadNum;
 	private KafkaWatchDogTopicSettingStatus status;
+	private Boolean isEnabled;
 
 	public KafkaWatchDogTopicSetting() {
 		threadNum = 1;
@@ -50,11 +50,19 @@ public class KafkaWatchDogTopicSetting extends LogModelBase {
 		return threadNum;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(length = 30, nullable = false)
-	@NotNull
+	@Transient
 	public KafkaWatchDogTopicSettingStatus getStatus() {
 		return status;
+	}
+
+	@Column(nullable = false, columnDefinition = "boolean")
+	@NotNull
+	public Boolean getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(Boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 
 	public void setStatus(KafkaWatchDogTopicSettingStatus status) {

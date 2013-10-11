@@ -3,7 +3,7 @@
  */
 package xdata.etl.cinder.service;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI;
+import xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI;
 
 /**
  * @author XuehuiHe

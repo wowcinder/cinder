@@ -11,6 +11,13 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetti
 public class KafkaWatchDogTopicSettingColumnConfig {
 
 
+    public static ColumnConfig<KafkaWatchDogTopicSetting, Boolean> isEnabled() {
+        ColumnConfig<KafkaWatchDogTopicSetting, Boolean> isEnabled = new ColumnConfig<KafkaWatchDogTopicSetting, Boolean>(PropertyUtils.KafkaWatchDogTopicSettingProperty.isEnabled(), 200, "isEnabled");
+        isEnabled.setSortable(false);
+        isEnabled.setMenuDisabled(true);
+        return isEnabled;
+    }
+
     public static ColumnConfig<KafkaWatchDogTopicSetting, KafkaWatchDog> server() {
         ColumnConfig<KafkaWatchDogTopicSetting, KafkaWatchDog> server = new ColumnConfig<KafkaWatchDogTopicSetting, KafkaWatchDog>(PropertyUtils.KafkaWatchDogTopicSettingProperty.server(), 200, "server");
         server.setSortable(false);

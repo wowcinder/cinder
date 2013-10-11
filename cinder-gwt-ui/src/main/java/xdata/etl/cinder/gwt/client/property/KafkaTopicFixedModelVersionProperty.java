@@ -21,9 +21,9 @@ public interface KafkaTopicFixedModelVersionProperty
 
     public ValueProvider<KafkaTopicFixedModelVersion, List<KafkaWatchDogTopicSetting>> topicSettings();
 
-    public ValueProvider<KafkaTopicFixedModelVersion, String> name();
+    public ValueProvider<KafkaTopicFixedModelVersion, Boolean> isEnabled();
 
-    public ValueProvider<KafkaTopicFixedModelVersion, xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus> status();
+    public ValueProvider<KafkaTopicFixedModelVersion, String> name();
 
     @com.google.gwt.editor.client.Editor.Path("id")
     public ModelKeyProvider<KafkaTopicFixedModelVersion> key();

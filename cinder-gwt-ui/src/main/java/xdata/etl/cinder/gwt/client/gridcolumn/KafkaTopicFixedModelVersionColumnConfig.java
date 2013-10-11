@@ -33,18 +33,18 @@ public class KafkaTopicFixedModelVersionColumnConfig {
         return topicSettings;
     }
 
+    public static ColumnConfig<KafkaTopicFixedModelVersion, Boolean> isEnabled() {
+        ColumnConfig<KafkaTopicFixedModelVersion, Boolean> isEnabled = new ColumnConfig<KafkaTopicFixedModelVersion, Boolean>(PropertyUtils.KafkaTopicFixedModelVersionProperty.isEnabled(), 200, "isEnabled");
+        isEnabled.setSortable(false);
+        isEnabled.setMenuDisabled(true);
+        return isEnabled;
+    }
+
     public static ColumnConfig<KafkaTopicFixedModelVersion, String> name() {
         ColumnConfig<KafkaTopicFixedModelVersion, String> name = new ColumnConfig<KafkaTopicFixedModelVersion, String>(PropertyUtils.KafkaTopicFixedModelVersionProperty.name(), 200, "name");
         name.setSortable(false);
         name.setMenuDisabled(true);
         return name;
-    }
-
-    public static ColumnConfig<KafkaTopicFixedModelVersion, xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus> status() {
-        ColumnConfig<KafkaTopicFixedModelVersion, xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus> status = new ColumnConfig<KafkaTopicFixedModelVersion, xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicStatus>(PropertyUtils.KafkaTopicFixedModelVersionProperty.status(), 200, "status");
-        status.setSortable(false);
-        status.setMenuDisabled(true);
-        return status;
     }
 
     public static ColumnConfig<KafkaTopicFixedModelVersion, Integer> id() {

@@ -12,7 +12,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
-import xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogRMI;
+import xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogRMI;
 
 /**
  * @author XuehuiHe

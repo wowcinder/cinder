@@ -18,9 +18,9 @@ public interface KafkaTopicProperty
 
     public ValueProvider<KafkaTopic, List<KafkaWatchDogTopicSetting>> topicSettings();
 
-    public ValueProvider<KafkaTopic, String> name();
+    public ValueProvider<KafkaTopic, Boolean> isEnabled();
 
-    public ValueProvider<KafkaTopic, KafkaTopic.KafkaTopicStatus> status();
+    public ValueProvider<KafkaTopic, String> name();
 
     @com.google.gwt.editor.client.Editor.Path("id")
     public ModelKeyProvider<KafkaTopic> key();

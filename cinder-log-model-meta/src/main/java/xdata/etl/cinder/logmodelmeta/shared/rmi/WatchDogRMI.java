@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.logmodelmeta.shared.entity.rmi;
+package xdata.etl.cinder.logmodelmeta.shared.rmi;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
