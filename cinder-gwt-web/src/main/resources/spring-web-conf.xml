@@ -19,7 +19,7 @@
 		<property name="serviceName" value="watchdog_manager_rmi" />
 		<property name="service" ref="watchdog_rmi_service" />
 		<property name="serviceInterface"
-			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI" />
+			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
 		<property name="registryPort" value="1199" />
 	</bean>
 

@@ -95,5 +95,4 @@ public class KafkaStatusManagerImpl implements KafkaStatusManager {
 	public Integer getWatchDogIdByIp(String ip) {
 		return watchDogStatusManager.getWatchDogIdByIp(ip);
 	}
-
 }

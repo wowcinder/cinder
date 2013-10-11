@@ -13,10 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import xdata.etl.cinder.dao.kafka.KafkaDao;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
+import xdata.etl.cinder.service.kafka.transaction.KafkaTransactionDao;
 
 /**
  * @author XuehuiHe
@@ -27,7 +26,8 @@ public class KafkaTopicSettingStatusManagerImpl implements
 		KafkaTopicSettingStatusManager {
 	private final Map<Integer, KafkaWatchDogTopicSettingStatus> topicSettingStatusMap;
 	private final Set<Integer> aliveTopicSettingIds;
-	private KafkaDao kafkaDao;
+
+	private KafkaTransactionDao transactionDao;
 
 	public KafkaTopicSettingStatusManagerImpl() {
 		topicSettingStatusMap = new ConcurrentHashMap<Integer, KafkaWatchDogTopicSettingStatus>();
@@ -78,18 +78,8 @@ public class KafkaTopicSettingStatusManagerImpl implements
 		return topicSettingStatusMap;
 	}
 
-	public KafkaDao getKafkaDao() {
-		return kafkaDao;
-	}
-
-	@Autowired
-	public void setKafkaDao(KafkaDao kafkaDao) {
-		this.kafkaDao = kafkaDao;
-		init();
-	}
-	@Transactional(readOnly = true)
 	private void init() {
-		List<Integer> settingIds = getKafkaDao().getAllTopicSettingIds();
+		List<Integer> settingIds = transactionDao.getAllTopicSettingIds();
 		synchronized (this.topicSettingStatusMap) {
 			for (Integer id : settingIds) {
 				topicSettingStatusMap.put(id,
@@ -97,4 +87,15 @@ public class KafkaTopicSettingStatusManagerImpl implements
 			}
 		}
 	}
+
+	public KafkaTransactionDao getTransactionDao() {
+		return transactionDao;
+	}
+
+	@Autowired
+	public void setTransactionDao(KafkaTransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
+		init();
+	}
+
 }

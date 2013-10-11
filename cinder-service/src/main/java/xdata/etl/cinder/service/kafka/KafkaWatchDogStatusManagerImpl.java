@@ -14,11 +14,10 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import xdata.etl.cinder.dao.kafka.KafkaDao;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
+import xdata.etl.cinder.service.kafka.transaction.KafkaTransactionDao;
 
 /**
  * @author XuehuiHe
@@ -31,7 +30,7 @@ public class KafkaWatchDogStatusManagerImpl implements
 	private final Set<Integer> aliveDogs;
 	private final Map<Integer, Date> lastTickTimes;
 	private int tickTime = 30;
-	private KafkaDao kafkaDao;
+	private KafkaTransactionDao transactionDao;
 	private final Map<String, Integer> ipToId;
 
 	public KafkaWatchDogStatusManagerImpl() {
@@ -111,19 +110,18 @@ public class KafkaWatchDogStatusManagerImpl implements
 		return dogsStatusMap;
 	}
 
-	public KafkaDao getKafkaDao() {
-		return kafkaDao;
+	public KafkaTransactionDao getTransactionDao() {
+		return transactionDao;
 	}
 
 	@Autowired
-	public void setKafkaDao(KafkaDao kafkaDao) {
-		this.kafkaDao = kafkaDao;
+	public void setTransactionDao(KafkaTransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
 		init();
 	}
 
-	@Transactional(readOnly = true)
 	private void init() {
-		List<Integer> ids = getKafkaDao().getAllWatchDogIds();
+		List<Integer> ids = transactionDao.getAllWatchDogIds();
 		synchronized (this.dogsStatusMap) {
 			for (Integer id : ids) {
 				dogsStatusMap.put(id, KafkaProcessServerStatus.STOPED);
@@ -142,12 +140,7 @@ public class KafkaWatchDogStatusManagerImpl implements
 		if (ipToId.containsKey(ip)) {
 			return;
 		}
-		queryWatchDogIdByIp2(ip);
-	}
-
-	@Transactional(readOnly = true)
-	protected void queryWatchDogIdByIp2(String ip) {
-		Integer id = kafkaDao.queryWatchDogIdByIp(ip);
+		Integer id = transactionDao.queryWatchDogIdByIp(ip);
 		if (id != null) {
 			ipToId.put(ip, id);
 		}

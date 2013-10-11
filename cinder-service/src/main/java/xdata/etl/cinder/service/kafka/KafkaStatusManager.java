@@ -3,11 +3,13 @@
  */
 package xdata.etl.cinder.service.kafka;
 
+
 /**
  * @author XuehuiHe
  * @date 2013年10月11日
  */
-public interface KafkaStatusManager extends KafkaTopicSettingStatusManager,
-		KafkaWatchDogStatusManager {
+public interface KafkaStatusManager extends KafkaWatchDogStatusManager,
+		KafkaTopicSettingStatusManager {
 	public void refreshStatus();
+
 }

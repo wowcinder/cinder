@@ -20,7 +20,7 @@
 		<property name="serviceName" value="watchdog_rmi" />
 		<property name="service" ref="watchdog_rmi_service" />
 		<property name="serviceInterface"
-			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogRMI" />
+			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogRMI" />
 		<property name="registryPort" value="${rmi_port}" />
 	</bean>
 
@@ -29,7 +29,7 @@
 		<property name="serviceUrl"
 			value="rmi://data-tj-slave1.voole.com:1199/watchdog_manager_rmi" />
 		<property name="serviceInterface"
-			value="xdata.etl.cinder.logmodelmeta.shared.entity.rmi.WatchDogManagerRMI" />
+			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
 	</bean>
 	<!-- /RMI -->
 
