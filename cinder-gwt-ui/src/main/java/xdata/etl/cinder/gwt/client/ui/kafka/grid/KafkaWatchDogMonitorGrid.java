@@ -3,6 +3,7 @@
  */
 package xdata.etl.cinder.gwt.client.ui.kafka.grid;
 
+import xdata.etl.cinder.gwt.client.common.cell.SimpleSafeHtmlRenderer;
 import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfig;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfigProvider;
@@ -11,6 +12,7 @@ import xdata.etl.cinder.gwt.client.ui.kafka.window.KafkaWatchDogTopicSettingWind
 import xdata.etl.cinder.gwt.client.util.PropertyUtils;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -24,9 +26,9 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 
 /**
  * @author XuehuiHe
- * @date 2013年10月8日
+ * @date 2013年10月11日
  */
-public class KafkaWatchDogGrid extends CinderGrid<KafkaWatchDog> {
+public class KafkaWatchDogMonitorGrid extends CinderGrid<KafkaWatchDog> {
 
 	public static class KafkaWatchDogGridConfigProvider extends
 			GridConfigProvider<KafkaWatchDog> {
@@ -42,19 +44,24 @@ public class KafkaWatchDogGrid extends CinderGrid<KafkaWatchDog> {
 		@Override
 		public void load(EtlPagingLoadConfigBean loadConfig,
 				AsyncCallback<PagingLoadResult<KafkaWatchDog>> callback) {
+			// TODO
 			RpcServiceUtils.KafkaRpcService.pagingKafkaWatchDog(loadConfig,
 					callback);
 		}
 
 		@Override
 		protected void initColumnConfig() {
-			ColumnConfig<KafkaWatchDog, String> ip = KafkaWatchDogColumnConfig
-					.ip();
 			ColumnConfig<KafkaWatchDog, String> name = KafkaWatchDogColumnConfig
 					.name();
-			ColumnConfig<KafkaWatchDog, Integer> rmiPort = KafkaWatchDogColumnConfig
-					.rmiPort();
+			ColumnConfig<KafkaWatchDog, KafkaProcessServerStatus> status = KafkaWatchDogColumnConfig
+					.status();
+			status.setCell(new SimpleSafeHtmlRenderer<KafkaProcessServerStatus>() {
 
+				@Override
+				protected String _getLabel(KafkaProcessServerStatus c) {
+					return c.name();
+				}
+			}.getCell());
 			ColumnConfig<KafkaWatchDog, String> topics = new ColumnConfig<KafkaWatchDog, String>(
 					new ValueProvider<KafkaWatchDog, String>() {
 
@@ -75,9 +82,8 @@ public class KafkaWatchDogGrid extends CinderGrid<KafkaWatchDog> {
 					});
 			TextButtonCell bt = new TextButtonCell();
 			topics.setCell(bt);
-			columns.add(ip);
 			columns.add(name);
-			columns.add(rmiPort);
+			columns.add(status);
 			columns.add(topics);
 
 			bt.addSelectHandler(new SelectHandler() {
@@ -94,11 +100,11 @@ public class KafkaWatchDogGrid extends CinderGrid<KafkaWatchDog> {
 
 	}
 
-	/**
-	 * @param configProvider
-	 * @param gridConfig
-	 */
-	public KafkaWatchDogGrid(GridConfig gridConfig) {
+	public KafkaWatchDogMonitorGrid() {
+		this(new GridConfig(false, true));
+	}
+
+	public KafkaWatchDogMonitorGrid(GridConfig gridConfig) {
 		super(new KafkaWatchDogGridConfigProvider(), gridConfig);
 	}
 

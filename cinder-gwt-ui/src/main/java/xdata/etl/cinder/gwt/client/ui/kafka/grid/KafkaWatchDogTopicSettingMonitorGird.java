@@ -16,6 +16,7 @@ import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
 import com.google.gwt.core.client.Scheduler;
@@ -27,9 +28,9 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 
 /**
  * @author XuehuiHe
- * @date 2013年10月8日
+ * @date 2013年10月11日
  */
-public class KafkaWatchDogTopicSettingGrid extends
+public class KafkaWatchDogTopicSettingMonitorGird extends
 		CinderGrid<KafkaWatchDogTopicSetting> {
 
 	public static class KafkaWatchDogTopicSettingGridConfigProvider extends
@@ -60,24 +61,27 @@ public class KafkaWatchDogTopicSettingGrid extends
 					return c.getName();
 				}
 			}.getCell());
-			ColumnConfig<KafkaWatchDogTopicSetting, Integer> threadNum = KafkaWatchDogTopicSettingColumnConfig
-					.threadNum();
-			ColumnConfig<KafkaWatchDogTopicSetting, Boolean> isEnabled = KafkaWatchDogTopicSettingColumnConfig
-					.isEnabled();
+			ColumnConfig<KafkaWatchDogTopicSetting, KafkaWatchDogTopicSettingStatus> status = KafkaWatchDogTopicSettingColumnConfig
+					.status();
+			status.setCell(new SimpleSafeHtmlRenderer<KafkaWatchDogTopicSettingStatus>() {
+				@Override
+				protected String _getLabel(KafkaWatchDogTopicSettingStatus c) {
+					return c.name();
+				}
+			}.getCell());
 			columns.add(topic);
-			columns.add(threadNum);
-			columns.add(isEnabled);
+			columns.add(status);
 		}
 
 	}
 
 	private final KafkaWatchDog watchDog;
 
-	public KafkaWatchDogTopicSettingGrid(KafkaWatchDog watchDog) {
-		this(new GridConfig(true, false), watchDog);
+	public KafkaWatchDogTopicSettingMonitorGird(KafkaWatchDog watchDog) {
+		this(new GridConfig(false, false), watchDog);
 	}
 
-	public KafkaWatchDogTopicSettingGrid(GridConfig gridConfig,
+	public KafkaWatchDogTopicSettingMonitorGird(GridConfig gridConfig,
 			KafkaWatchDog watchDog) {
 		super(new KafkaWatchDogTopicSettingGridConfigProvider(), gridConfig);
 		this.watchDog = watchDog;
@@ -91,6 +95,7 @@ public class KafkaWatchDogTopicSettingGrid extends
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
+				// TODO
 				RpcServiceUtils.KafkaRpcService
 						.getKafkaWatchDogTopicSettings(
 								getWatchDog().getId(),

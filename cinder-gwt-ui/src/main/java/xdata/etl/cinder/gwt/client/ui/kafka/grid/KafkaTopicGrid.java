@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.gwt.client.ui.kafka.grid;
 
-import java.util.Date;
-
 import xdata.etl.cinder.gwt.client.common.cell.SimpleSafeHtmlRenderer;
 import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
 import xdata.etl.cinder.gwt.client.common.grid.GridConfig;
@@ -16,7 +14,6 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic.KafkaTopicCharset;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
@@ -27,8 +24,6 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
  * @date 2013年9月29日
  */
 public class KafkaTopicGrid extends CinderGrid<KafkaTopic> {
-	private static final DateTimeFormat df = DateTimeFormat
-			.getFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static class KafkaTopicGridConfigProvider extends
 			GridConfigProvider<KafkaTopic> {
@@ -60,27 +55,11 @@ public class KafkaTopicGrid extends CinderGrid<KafkaTopic> {
 					return c.getCharset();
 				}
 			}.getCell());
-
-			ColumnConfig<KafkaTopic, Date> lastUpdateTimeStamp = (ColumnConfig<KafkaTopic, Date>) KafkaTopicColumnConfig
-					.lastUpdateTimeStamp();
-			lastUpdateTimeStamp.setCell(new SimpleSafeHtmlRenderer<Date>() {
-				@Override
-				protected String _getLabel(Date c) {
-					return df.format(c);
-				}
-			}.getCell());
-			ColumnConfig<KafkaTopic, Date> createTime = (ColumnConfig<KafkaTopic, Date>) KafkaTopicColumnConfig
-					.createTime();
-			createTime.setCell(new SimpleSafeHtmlRenderer<Date>() {
-				@Override
-				protected String _getLabel(Date c) {
-					return df.format(c);
-				}
-			}.getCell());
+			ColumnConfig<KafkaTopic, Boolean> isEnabled = KafkaTopicColumnConfig
+					.isEnabled();
 			columns.add(name);
 			columns.add(charset);
-			columns.add(lastUpdateTimeStamp);
-			columns.add(createTime);
+			columns.add(isEnabled);
 
 		}
 

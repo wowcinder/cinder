@@ -16,9 +16,6 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetti
 import xdata.etl.cinder.shared.annotations.MenuToken;
 
 import com.google.gwt.user.client.Timer;
-import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 /**
  * @author XuehuiHe
@@ -34,6 +31,7 @@ public class KafkaWatchDogView extends AbstractCenterView<KafkaWatchDog> {
 	 */
 	public KafkaWatchDogView() {
 		super(new KafkaWatchDogGrid(new GridConfig()), new KafkaWatchDogEditor());
+		/*
 		timer = new Timer() {
 			@Override
 			public void run() {
@@ -56,7 +54,7 @@ public class KafkaWatchDogView extends AbstractCenterView<KafkaWatchDog> {
 					stopRefresh.setText("停止刷新");
 				}
 			}
-		});
+		});*/
 	}
 
 	@Override
