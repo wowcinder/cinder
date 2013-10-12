@@ -26,8 +26,11 @@
 
 
 	<bean id="watchDogManagerRMI" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+	<!--  
 		<property name="serviceUrl"
-			value="rmi://data-tj-slave1.voole.com:1199/watchdog_manager_rmi" />
+			value="rmi://data-tj-slave1.voole.com:1199/watchdog_manager_rmi" /> -->
+		<property name="serviceUrl"
+			value="rmi://localhost:1199/watchdog_manager_rmi" />
 		<property name="serviceInterface"
 			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
 	</bean>
