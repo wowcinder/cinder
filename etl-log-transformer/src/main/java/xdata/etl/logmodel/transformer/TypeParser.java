@@ -3,11 +3,14 @@
  */
 package xdata.etl.logmodel.transformer;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.hadoop.hbase.util.Bytes;
 
 /**
  * @author XuehuiHe
@@ -306,6 +309,68 @@ public class TypeParser {
 		} else {
 			return o.toString();
 		}
+	}
+
+	public static byte[] toBytes(Object b) {
+		if (b == null) {
+			return null;
+		}
+		Class<?> clazz = b.getClass();
+		if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
+			return Bytes.toBytes((Boolean) b);
+		} else if (clazz.equals(Long.class) || clazz.equals(long.class)) {
+			return Bytes.toBytes((Long) b);
+		} else if (clazz.equals(Short.class) || clazz.equals(short.class)) {
+			return Bytes.toBytes((Short) b);
+		} else if (clazz.equals(Double.class) || clazz.equals(double.class)) {
+			return Bytes.toBytes((Double) b);
+		} else if (clazz.equals(Float.class) || clazz.equals(float.class)) {
+			return Bytes.toBytes((Float) b);
+		} else if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
+			return Bytes.toBytes((Integer) b);
+		} else if (clazz.equals(String.class)) {
+			return Bytes.toBytes((String) b);
+		} else if (clazz.equals(BigDecimal.class)) {
+			return Bytes.toBytes((BigDecimal) b);
+		} else if (clazz.equals(Date.class)) {
+			Date d = (Date) b;
+			return toBytes(d.getTime());
+		} else if (clazz.equals(BigInteger.class)) {
+			// return Bytes.toBytes((BigInteger) b);
+			// TODO
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T fromBytes(byte[] b, Class<T> clazz) {
+		if (b == null) {
+			return null;
+		}
+		if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
+			return (T) (Boolean) Bytes.toBoolean(b);
+		} else if (clazz.equals(Long.class) || clazz.equals(long.class)) {
+			return (T) (Long) Bytes.toLong(b);
+		} else if (clazz.equals(Short.class) || clazz.equals(short.class)) {
+			return (T) (Short) Bytes.toShort(b);
+		} else if (clazz.equals(Double.class) || clazz.equals(double.class)) {
+			return (T) (Double) Bytes.toDouble(b);
+		} else if (clazz.equals(Float.class) || clazz.equals(float.class)) {
+			return (T) (Float) Bytes.toFloat(b);
+		} else if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
+			return (T) (Integer) Bytes.toInt(b);
+		} else if (clazz.equals(String.class)) {
+			return (T) Bytes.toString(b);
+		} else if (clazz.equals(BigDecimal.class)) {
+			return (T) Bytes.toBigDecimal(b);
+		} else if (clazz.equals(Date.class)) {
+			Date d = new Date();
+			d.setTime(Bytes.toLong(b));
+			return (T) d;
+		} else if (clazz.equals(BigInteger.class)) {
+			return (T) new BigInteger(b);
+		}
+		return null;
 	}
 
 	public static Byte getAsByte(Object o) {

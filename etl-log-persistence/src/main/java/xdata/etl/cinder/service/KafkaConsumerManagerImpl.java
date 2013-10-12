@@ -155,7 +155,6 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 
 	@Override
 	public synchronized void reportTopicStatus() {
-		System.out.println("-------------reportTopicStatus-----------------");
 		Set<Integer> aliveIds = new HashSet<Integer>();
 		Set<KafkaWatchDogTopicSetting> settings = connectors.keySet();
 		for (KafkaWatchDogTopicSetting setting : settings) {
