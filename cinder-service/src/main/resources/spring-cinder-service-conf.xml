@@ -20,5 +20,27 @@
 			<value>${app.debug}</value>
 		</property>
 	</bean>
+	
+	<bean id="refreshStatus"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="kafkaStatusManager" />
+		<property name="targetMethod" value="refreshStatus" />
+		<property name="concurrent" value="false" />
+		<property name="name" value="refreshStatus" />
+	</bean>
+
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="refreshStatus" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="30000" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
 
 </beans>

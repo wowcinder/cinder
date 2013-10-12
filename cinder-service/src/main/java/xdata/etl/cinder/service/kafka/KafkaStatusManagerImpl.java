@@ -18,7 +18,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetti
  * @author XuehuiHe
  * @date 2013年10月11日
  */
-@Service
+@Service("kafkaStatusManager")
 public class KafkaStatusManagerImpl implements KafkaStatusManager {
 	@Resource(name = "kafkaTopicSettingStatusManager")
 	private KafkaTopicSettingStatusManager topicSettingStatusManager;
