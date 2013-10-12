@@ -86,7 +86,7 @@ public class KafkaWatchDogStatusManagerImpl implements
 		for (Entry<Integer, Date> entry : lastTickTimes.entrySet()) {
 			Integer dogId = entry.getKey();
 			Date lastTickTime = entry.getValue();
-			if (aliveDogs.contains(dogId) && lastTickTime.getTime() < stamp) {
+			if (aliveDogs.contains(dogId) && lastTickTime.getTime() > stamp) {
 				dogsStatusMap.put(dogId, KafkaProcessServerStatus.EXCEPTION);
 			}
 		}

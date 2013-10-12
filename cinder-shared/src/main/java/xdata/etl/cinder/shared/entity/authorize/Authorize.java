@@ -59,8 +59,8 @@ public class Authorize extends EntityHasTimeStampImpl implements Serializable {
 		return token;
 	}
 
-	@Column(length = 20, nullable = false)
-	@Length(min = 1, max = 20)
+	@Column(length = 30, nullable = false)
+	@Length(min = 1, max = 30)
 	@NotNull
 	public String getName() {
 		return name;
