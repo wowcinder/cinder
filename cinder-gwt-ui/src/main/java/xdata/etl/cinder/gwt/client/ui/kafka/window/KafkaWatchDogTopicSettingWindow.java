@@ -5,7 +5,6 @@ package xdata.etl.cinder.gwt.client.ui.kafka.window;
 
 import java.util.List;
 
-import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
 import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
 import xdata.etl.cinder.gwt.client.common.window.FixedWindow;
 import xdata.etl.cinder.gwt.client.ui.AbstractCenterView;
@@ -14,9 +13,6 @@ import xdata.etl.cinder.gwt.client.ui.kafka.grid.KafkaWatchDogTopicSettingGrid;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
-
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 /**
  * @author XuehuiHe
