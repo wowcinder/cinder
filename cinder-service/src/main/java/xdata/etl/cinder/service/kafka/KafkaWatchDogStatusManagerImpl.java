@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.service.kafka;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,16 +26,15 @@ public class KafkaWatchDogStatusManagerImpl implements
 		KafkaWatchDogStatusManager {
 	private final Map<Integer, KafkaProcessServerStatus> dogsStatusMap;
 	private final Set<Integer> aliveDogs;
-	private final Map<Integer, Date> lastTickTimes;
-	private int tickTime = 30;
+	private final Set<Integer> lastTickDogs;
 	private KafkaTransactionDao transactionDao;
 	private final Map<String, Integer> ipToId;
 
 	public KafkaWatchDogStatusManagerImpl() {
 		dogsStatusMap = new HashMap<Integer, KafkaWatchDog.KafkaProcessServerStatus>();
 		aliveDogs = new HashSet<Integer>();
-		lastTickTimes = new HashMap<Integer, Date>();
 		ipToId = new HashMap<String, Integer>();
+		lastTickDogs = new HashSet<Integer>();
 	}
 
 	@Override
@@ -67,7 +64,7 @@ public class KafkaWatchDogStatusManagerImpl implements
 
 	@Override
 	public synchronized void logoff(Integer dogId) {
-		dogsStatusMap.remove(dogId);
+		dogsStatusMap.put(dogId, KafkaProcessServerStatus.STOPED);
 		aliveDogs.remove(dogId);
 	}
 
@@ -75,37 +72,17 @@ public class KafkaWatchDogStatusManagerImpl implements
 	public synchronized void tick(Integer dogId) {
 		dogsStatusMap.put(dogId, KafkaProcessServerStatus.RUNNING);
 		aliveDogs.add(dogId);
-		lastTickTimes.put(dogId, new Date());
+		lastTickDogs.add(dogId);
 	}
 
 	@Override
 	public synchronized void checkAliveDog() {
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.SECOND, c.get(Calendar.SECOND) - getTickTime());
-		long stamp = c.getTimeInMillis();
-		for (Entry<Integer, Date> entry : lastTickTimes.entrySet()) {
-			Integer dogId = entry.getKey();
-			Date lastTickTime = entry.getValue();
-			if (aliveDogs.contains(dogId)) {
-				if (lastTickTime.getTime() > stamp) {
-					dogsStatusMap.put(dogId, KafkaProcessServerStatus.RUNNING);
-				} else {
-					dogsStatusMap
-							.put(dogId, KafkaProcessServerStatus.EXCEPTION);
-				}
-			} else {
-				dogsStatusMap.put(dogId, KafkaProcessServerStatus.STOPED);
+		for (Integer dogId : aliveDogs) {
+			if (!lastTickDogs.contains(dogId)) {
+				dogsStatusMap.put(dogId, KafkaProcessServerStatus.EXCEPTION);
 			}
 		}
-		lastTickTimes.clear();
-	}
-
-	public int getTickTime() {
-		return tickTime;
-	}
-
-	public void setTickTime(int tickTime) {
-		this.tickTime = tickTime;
+		lastTickDogs.clear();
 	}
 
 	@Override
