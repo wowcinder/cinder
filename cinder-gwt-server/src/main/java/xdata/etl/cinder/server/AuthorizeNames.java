@@ -68,16 +68,19 @@ public class AuthorizeNames {
 		public static final String UPDATE_TOPIC = "修改TOPIC";
 		public static final String DELETE_TOPIC = "删除TOPIC";
 		public static final String QUERY_TOPIC = "查询TOPIC";
-		
+
 		public static final String ADD_WATCH_DOG = "添加WATCH_DOG";
 		public static final String UPDATE_WATCH_DOG = "修改WATCH_DOG";
 		public static final String DELETE_WATCH_DOG = "删除WATCH_DOG";
 		public static final String QUERY_WATCH_DOG = "查询WATCH_DOG";
-		
+
 		public static final String ADD_TOPIC_SETTING = "添加TOPIC_SETTING";
 		public static final String UPDATE_TOPIC_SETTING = "修改TOPIC_SETTING";
 		public static final String DELETE_TOPIC_SETTING = "删除TOPIC_SETTING";
 		public static final String QUERY_TOPIC_SETTING = "查询TOPIC_SETTING";
+
+		public static final String QUERY_WATCH_DOG_STATUS = "查询WATCH_DOG_STATUS";
+		public static final String QUERY_TOPIC_SETTING_STATUS = "查询TOPIC_SETTING_STATUS";
 	}
 
 }

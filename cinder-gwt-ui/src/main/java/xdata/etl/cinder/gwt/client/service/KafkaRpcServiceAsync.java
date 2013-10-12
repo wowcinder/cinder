@@ -44,4 +44,8 @@ public interface KafkaRpcServiceAsync {
 
     public void getKafkaWatchDogTopicSettings(Integer arg0, AsyncCallback<List<KafkaWatchDogTopicSetting>> callback);
 
+    public void pagingKafkaWatchDogStatus(EtlPagingLoadConfigBean arg0, AsyncCallback<PagingLoadResult<KafkaWatchDog>> callback);
+
+    public void getKafkaWatchDogTopicSettingStatuss(Integer arg0, AsyncCallback<List<KafkaWatchDogTopicSetting>> callback);
+
 }

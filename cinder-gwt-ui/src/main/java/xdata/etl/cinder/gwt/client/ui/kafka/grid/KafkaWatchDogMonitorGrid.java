@@ -44,9 +44,8 @@ public class KafkaWatchDogMonitorGrid extends CinderGrid<KafkaWatchDog> {
 		@Override
 		public void load(EtlPagingLoadConfigBean loadConfig,
 				AsyncCallback<PagingLoadResult<KafkaWatchDog>> callback) {
-			// TODO
-			RpcServiceUtils.KafkaRpcService.pagingKafkaWatchDog(loadConfig,
-					callback);
+			RpcServiceUtils.KafkaRpcService.pagingKafkaWatchDogStatus(
+					loadConfig, callback);
 		}
 
 		@Override

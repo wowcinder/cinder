@@ -51,6 +51,7 @@ public class KafkaWatchDogTopicSettingMonitorWindow extends FixedWindow {
 	@Override
 	protected void onShow() {
 		super.onShow();
+		/*
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
@@ -68,6 +69,6 @@ public class KafkaWatchDogTopicSettingMonitorWindow extends FixedWindow {
 									}
 								});
 			}
-		});
+		});*/
 	}
 }

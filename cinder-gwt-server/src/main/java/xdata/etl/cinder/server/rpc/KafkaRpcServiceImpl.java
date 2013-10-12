@@ -5,6 +5,7 @@ package xdata.etl.cinder.server.rpc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.ConstraintViolationException;
 
@@ -20,8 +21,11 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForKafka;
 import xdata.etl.cinder.service.SimpleService;
+import xdata.etl.cinder.service.kafka.KafkaStatusManager;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -36,6 +40,8 @@ import com.sencha.gxt.data.shared.loader.PagingLoadResult;
 public class KafkaRpcServiceImpl implements KafkaRpcService {
 	@Autowired
 	private SimpleService simpleService;
+	@Autowired
+	private KafkaStatusManager kafkaStatusManager;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -161,6 +167,43 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	public List<KafkaTopic> getTopics() throws SharedException,
 			ConstraintViolationException {
 		return simpleService.get(KafkaTopic.class);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_WATCH_DOG_STATUS)
+	public PagingLoadResult<KafkaWatchDog> pagingKafkaWatchDogStatus(
+			EtlPagingLoadConfigBean config) throws SharedException,
+			ConstraintViolationException {
+
+		PagingLoadResult<KafkaWatchDog> pr = pagingKafkaWatchDog(config);
+		if (pr.getData() != null && pr.getData().size() > 0) {
+			Map<Integer, KafkaProcessServerStatus> watchDogStauts = kafkaStatusManager
+					.getWatchDogStauts();
+			for (KafkaWatchDog dog : pr.getData()) {
+				if (watchDogStauts.containsKey(dog.getId())) {
+					dog.setStatus(watchDogStauts.get(dog.getId()));
+				}
+			}
+		}
+		return pr;
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_TOPIC_SETTING_STATUS)
+	public List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettingStatuss(
+			Integer watchDogId) throws SharedException,
+			ConstraintViolationException {
+		List<KafkaWatchDogTopicSetting> list = getKafkaWatchDogTopicSettings(watchDogId);
+		if (list != null && list.size() > 0) {
+			Map<Integer, KafkaWatchDogTopicSettingStatus> topicSettingsStatus = kafkaStatusManager
+					.getTopicSettingsStatus();
+			for (KafkaWatchDogTopicSetting setting : list) {
+				if (topicSettingsStatus.containsKey(setting.getId())) {
+					setting.setStatus(topicSettingsStatus.get(setting.getId()));
+				}
+			}
+		}
+		return list;
 	}
 
 }

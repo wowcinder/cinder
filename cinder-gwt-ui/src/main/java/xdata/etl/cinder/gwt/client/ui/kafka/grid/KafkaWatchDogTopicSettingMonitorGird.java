@@ -95,9 +95,8 @@ public class KafkaWatchDogTopicSettingMonitorGird extends
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
-				// TODO
 				RpcServiceUtils.KafkaRpcService
-						.getKafkaWatchDogTopicSettings(
+						.getKafkaWatchDogTopicSettingStatuss(
 								getWatchDog().getId(),
 								new RpcAsyncCallback<List<KafkaWatchDogTopicSetting>>() {
 

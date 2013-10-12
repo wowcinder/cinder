@@ -72,5 +72,13 @@ public interface KafkaRpcService extends RemoteService {
 			Integer watchDogId) throws SharedException,
 			ConstraintViolationException;
 
+	PagingLoadResult<KafkaWatchDog> pagingKafkaWatchDogStatus(
+			EtlPagingLoadConfigBean config) throws SharedException,
+			ConstraintViolationException;
+
+	List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettingStatuss(
+			Integer watchDogId) throws SharedException,
+			ConstraintViolationException;
+
 	ValidationSupport dummy();
 }

@@ -79,7 +79,7 @@ public class KafkaWatchDogTopicSettingWindow extends FixedWindow {
 	@Override
 	protected void onShow() {
 		super.onShow();
-		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+		/*Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
 				RpcServiceUtils.KafkaRpcService
@@ -95,6 +95,6 @@ public class KafkaWatchDogTopicSettingWindow extends FixedWindow {
 									}
 								});
 			}
-		});
+		});*/
 	}
 }
