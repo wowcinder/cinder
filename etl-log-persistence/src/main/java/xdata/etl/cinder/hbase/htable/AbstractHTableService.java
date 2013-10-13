@@ -1,7 +1,4 @@
-/*
- * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
- */
-package xdata.etl.cinder.hbase;
+package xdata.etl.cinder.hbase.htable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,42 +7,42 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.logmodel.transformer.TypeParser;
 
-/**
- * @author XuehuiHe
- * @date 2013年10月12日
- */
-@Service
-public class HbaseServiceImpl implements HbaseService {
-	private final Configuration cfg;
-
-	public HbaseServiceImpl() {
-		cfg = HBaseConfiguration.create();
-	}
-
-	public Configuration getCfg() {
-		return cfg;
-	}
+public abstract class AbstractHTableService implements HTableService {
+	private Configuration hbaseConfig;
 
 	@Override
-	public void save(Map<String, List<HbaseRecord<String>>> recordMap)
+	public void put(Map<String, List<HbaseRecord<String>>> recordMap)
 			throws IOException {
 		for (Entry<String, List<HbaseRecord<String>>> entry : recordMap
 				.entrySet()) {
-			String tableName = entry.getKey();
-			HTable htable = new HTable(getCfg(), tableName);
-			htable.put(generatePuts(entry.getValue()));
-			htable.flushCommits();
-			htable.close();
+			put(entry.getKey(), entry.getValue());
 		}
+
+	}
+
+	@Override
+	public void put(String tableName, List<HbaseRecord<String>> list)
+			throws IOException {
+		HTableInterface htable = getHTable(tableName);
+		htable.put(generatePuts(list));
+		htable.flushCommits();
+		htable.close();
+
+	}
+
+	public Configuration getHbaseConfig() {
+		return hbaseConfig;
+	}
+
+	public void setHbaseConfig(Configuration hbaseConfig) {
+		this.hbaseConfig = hbaseConfig;
 	}
 
 	protected List<Put> generatePuts(List<HbaseRecord<String>> records) {
