@@ -12,13 +12,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.hadoop.hbase.client.HTableInterface;
+import javax.annotation.PreDestroy;
 
-import xdata.etl.cinder.hbase.htable.AbstractHTableService;
 import xdata.etl.cinder.hbase.htable.HTableService;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 
@@ -26,17 +24,16 @@ import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
  * @author XuehuiHe
  * @date 2013年10月12日
  */
-public class LazyHTableServiceImpl extends AbstractHTableService implements
-		LazyHTableService {
+public class LazyHTableServiceImpl implements LazyHTableService {
 	private int thresholdSize;
 	private int timeout;
 	private HTableService hTableService;
 
 	private final ExecutorService executor;
-	private final Map<String, HTableWorker> workerMap;
+	private final Map<String, IHTableWorker> workerMap;
 
 	public LazyHTableServiceImpl() {
-		workerMap = new HashMap<String, LazyHTableServiceImpl.HTableWorker>();
+		workerMap = new HashMap<String, LazyHTableServiceImpl.IHTableWorker>();
 		executor = Executors.newFixedThreadPool(20);
 	}
 
@@ -49,13 +46,13 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 			if (!workerMap.containsKey(tableName)) {
 				createLazySaver(tableName);
 			}
-			final HTableWorker worker = workerMap.get(tableName);
+			final IHTableWorker worker = workerMap.get(tableName);
 			worker.put(entry.getValue());
 		}
 	}
 
-	@Override
-	public void put(final String tableName, final List<HbaseRecord<String>> list) {
+	protected void put(final String tableName,
+			final List<HbaseRecord<String>> list) {
 		executor.submit(new Runnable() {
 			@Override
 			public void run() {
@@ -77,13 +74,13 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 	}
 
 	public synchronized void timeout() throws IOException {
-		for (Entry<String, HTableWorker> entry : workerMap.entrySet()) {
+		for (Entry<String, IHTableWorker> entry : workerMap.entrySet()) {
 			entry.getValue().timeout();
 		}
 	}
 
-	public synchronized void flush() throws IOException {
-		for (Entry<String, HTableWorker> entry : workerMap.entrySet()) {
+	public synchronized void flush() {
+		for (Entry<String, IHTableWorker> entry : workerMap.entrySet()) {
 			entry.getValue().flush();
 		}
 	}
@@ -105,18 +102,10 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 	}
 
 	@Override
-	public HTableInterface getHTable(String tableName) throws IOException {
-		return hTableService.getHTable(tableName);
-	}
-
-	@Override
-	public void shutdown() throws IOException, InterruptedException {
+	@PreDestroy
+	public void shutdown() throws IOException {
 		flush();
 		executor.shutdown();
-		while (!executor.isTerminated()) {
-			TimeUnit.SECONDS.sleep(1);
-		}
-		hTableService.shutdown();
 	}
 
 	public int getTimeout() {
@@ -127,7 +116,7 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 		this.timeout = timeout;
 	}
 
-	public class HTableWorker {
+	public class HTableWorker implements IHTableWorker {
 		private final AtomicBoolean isSaving;
 		private final AtomicLong total;
 		private final AtomicLong lastSaveTime;
@@ -147,6 +136,10 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 			if (!tryLock()) {
 				return;
 			}
+			if (total.get() == 0) {
+				unlock();
+				return;
+			}
 			List<HbaseRecord<String>> list = clonePool();
 			unlock();
 			LazyHTableServiceImpl.this.put(tableName, list);
@@ -156,7 +149,8 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 			if (!tryLock()) {
 				return;
 			}
-			if (!isTimeout()) {
+			if (!isTimeout() || total.get() == 0) {
+				unlock();
 				return;
 			}
 			List<HbaseRecord<String>> list = clonePool();
@@ -175,20 +169,20 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 			return list;
 		}
 
-		private boolean isTimeout() {
+		protected boolean isTimeout() {
 			return System.currentTimeMillis() - getTimeout() / 2 >= lastSaveTime
 					.get();
 		}
 
-		private boolean isFull() {
+		protected boolean isFull() {
 			return total.get() >= thresholdSize;
 		}
 
-		public boolean tryLock() {
+		protected boolean tryLock() {
 			return isSaving.compareAndSet(false, true);
 		}
 
-		public void unlock() {
+		protected void unlock() {
 			isSaving.set(false);
 		}
 
@@ -206,11 +200,12 @@ public class LazyHTableServiceImpl extends AbstractHTableService implements
 			}
 		}
 
-		public void tryPut() throws IOException {
+		protected void tryPut() throws IOException {
 			if (!tryLock()) {
 				return;
 			}
 			if (!isFull()) {
+				unlock();
 				return;
 			}
 			List<HbaseRecord<String>> list = clonePool();

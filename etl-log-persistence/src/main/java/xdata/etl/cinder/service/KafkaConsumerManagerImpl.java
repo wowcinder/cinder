@@ -70,10 +70,11 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 			if (topic instanceof KafkaTopicFixedModelVersion) {
 				LOGGER.info("FixedModelVersion consumer create,topic:"
 						+ topicSetting.getTopic().getName());
-				ConsumerConnectorHolder connectorHolder = new KafkaTopicFixedModelVersionConsumerConnectorHolder(
-						kafkaClientConfig, topicSetting, transformerManager);
-				connectors.put(topicSetting, connectorHolder);
-				connectorHolder.run();
+//				ConsumerConnectorHolder connectorHolder = new KafkaTopicFixedModelVersionConsumerConnectorHolder(
+//						kafkaClientConfig, topicSetting, transformerManager);
+//				connectors.put(topicSetting, connectorHolder);
+//				connectorHolder.run();
+				//TODO
 				return true;
 			} else {
 				// TODO

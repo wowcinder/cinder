@@ -29,5 +29,5 @@ public interface HTableService {
 
 	public HTableInterface getHTable(String tableName) throws IOException;
 
-	public void shutdown() throws IOException, InterruptedException;
+	public void shutdown() throws IOException;
 }

@@ -1,36 +1,24 @@
 package xdata.etl.cinder;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 public class Test2 {
-	private static ExecutorService executor;
 
 	public static void main(String[] args) throws InterruptedException {
-		executor = Executors.newFixedThreadPool(10);
-		executor.submit(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					TimeUnit.SECONDS.sleep(3);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("shutdown");
-			}
-		});
-		TimeUnit.SECONDS.sleep(1);
-		executor.shutdown();
-
-		System.out.println(executor.isTerminated());
-		System.out.println(executor.isShutdown());
-		
-		TimeUnit.SECONDS.sleep(4);
-		
-		System.out.println(executor.isTerminated());
-		System.out.println(executor.isShutdown());
+		String a = new String("a");
+		String b = new String("b");
+		Map weakMap = new WeakHashMap();
+		weakMap.put(a, "aaa");
+		weakMap.put(b, "bbb");
+		a = null;
+		System.gc();
+		Iterator iterator = weakMap.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry en = (Entry) iterator.next();
+			System.out.println(en.getKey() + " : " + en.getValue());
+		}
 	}
 }

@@ -13,6 +13,7 @@ import kafka.consumer.KafkaStream;
 import kafka.message.Message;
 import kafka.message.MessageAndMetadata;
 import kafka.utils.Utils;
+import xdata.etl.cinder.hbase.lazy.LazyHTableService;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
@@ -29,6 +30,7 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 	private final KafkaTopicFixedModelVersion topic;
 	private final LogModelVersion<?> version;
 	private final LogModelTransformer<?> transformer;
+	private final LazyHTableService lazyHTableService;
 
 	/**
 	 * @param kafkaClientConfig
@@ -38,8 +40,10 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 	public KafkaTopicFixedModelVersionConsumerConnectorHolder(
 			ConsumerConfig kafkaClientConfig,
 			KafkaWatchDogTopicSetting topicSetting,
-			LogModelTransformerManager transformerManager) {
+			LogModelTransformerManager transformerManager,
+			LazyHTableService lazyHTableService) {
 		super(kafkaClientConfig, topicSetting, transformerManager);
+		this.lazyHTableService = lazyHTableService;
 		if (topicSetting.getTopic() instanceof KafkaTopicFixedModelVersion) {
 			topic = (KafkaTopicFixedModelVersion) topicSetting.getTopic();
 			version = topic.getVersion();
@@ -68,9 +72,7 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 						.getCharset());
 				Map<String, List<HbaseRecord<String>>> recordMap = getTransformer()
 						.transform(raw);
-				recordMap.clear();
-				recordMap = null;
-				// TODO
+				lazyHTableService.put(recordMap);
 			}
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage());
