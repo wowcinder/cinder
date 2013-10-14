@@ -29,10 +29,14 @@ public class ConfigUtil {
 
 	public static String findProjectPath() {
 		if (projectPath == null) {
-			String path = getClazz().getClassLoader().getResource("").getFile();
 			if (isRunInAJar()) {
-				projectPath = path;
+				String path = getClazz().getProtectionDomain().getCodeSource()
+						.getLocation().getPath();
+				File file = new File(path);
+				projectPath = file.getParentFile().getAbsolutePath();
 			} else {
+				String path = getClazz().getClassLoader().getResource("")
+						.getFile();
 				File file = new File(path);
 				projectPath = file.getParentFile().getParentFile()
 						.getAbsolutePath();
