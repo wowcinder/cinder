@@ -37,7 +37,7 @@
 
 	<bean class="xdata.etl.cinder.service.InitConfigService.PropertyHolder">
 		<constructor-arg>
-			<value>classpath:kafka.properties</value>
+			<value>file:${etl.conf}/kafka.properties</value>
 		</constructor-arg>
 		<constructor-arg>
 			<value>${rmi_port}</value>
