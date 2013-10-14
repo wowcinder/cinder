@@ -13,6 +13,15 @@ public class ConfigUtil {
 	private static Boolean isRunInAJar;
 	private static String projectPath;
 
+	public static void init() {
+		if (System.getProperty("etl.conf") == null) {
+			System.setProperty("etl.conf", getConfPath());
+		}
+		if (System.getProperty("etl.log") == null) {
+			System.setProperty("etl.log", getLogPath());
+		}
+	}
+
 	public static boolean isRunInAJar() {
 		if (isRunInAJar == null) {
 			String className = getClazz().getName().replace('.', '/');
@@ -45,6 +54,25 @@ public class ConfigUtil {
 		return projectPath;
 	}
 
+	public static String getConfPath() {
+		if (isRunInAJar()) {
+			return findProjectPath() + File.separator + "conf";
+		} else {
+			return findProjectPath() + File.separator + "src" + File.separator
+					+ "main" + File.separator + "resources";
+
+		}
+	}
+
+	public static String getLogPath() {
+		if (isRunInAJar()) {
+			return findProjectPath() + File.separator + "logs";
+		} else {
+			return findProjectPath() + File.separator + "target"
+					+ File.separator + "logs";
+		}
+	}
+
 	private static Class<?> getClazz() {
 		return ConfigUtil.class;
 	}
@@ -52,5 +80,7 @@ public class ConfigUtil {
 	public static void main(String[] args) {
 		System.out.println(isRunInAJar());
 		System.out.println(findProjectPath());
+		System.out.println(getConfPath());
+		System.out.println(getLogPath());
 	}
 }

@@ -20,6 +20,7 @@ public class Executable {
 
 	public static void main(String[] args) throws InterruptedException,
 			SchedulerException {
+		ConfigUtil.init();
 		final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"spring-log-persistence.xml");
 		manager = ctx.getBean(KafkaConsumerManager.class);
