@@ -66,13 +66,19 @@ public class KafkaTopicFixedModelVersionConsumerConnectorHolder extends
 		try {
 			ConsumerIterator<Message> it = stream.iterator();
 			while (it.hasNext()) {
-				MessageAndMetadata<Message> messageAndMetadata = it.next();
-				ByteBuffer bb = messageAndMetadata.message().payload();
-				String raw = Utils.toString(bb, getTopic().getCharset()
-						.getCharset());
-				Map<String, List<HbaseRecord<String>>> recordMap = getTransformer()
-						.transform(raw);
-				lazyHTableService.put(recordMap);
+				try {
+					MessageAndMetadata<Message> messageAndMetadata = it.next();
+					ByteBuffer bb = messageAndMetadata.message().payload();
+					String raw = Utils.toString(bb, getTopic().getCharset()
+							.getCharset());
+					Map<String, List<HbaseRecord<String>>> recordMap = getTransformer()
+							.transform(raw);
+					lazyHTableService.put(recordMap);
+				} catch (Exception e) {
+					LOGGER.warn(e.getMessage());
+					e.printStackTrace();
+				}
+
 			}
 		} catch (Exception e) {
 			LOGGER.warn(e.getMessage());

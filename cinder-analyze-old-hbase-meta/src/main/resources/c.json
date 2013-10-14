@@ -1,0 +1,1244 @@
+[
+  {
+    "topic": "s_live_tracker_badclient",
+    "data": {
+      "uid": "uid",
+      "port": "port",
+      "ip1": "ip1",
+      "oemid": "oemid",
+      "getuserCount": "getuserCount",
+      "provinceid": "provinceid",
+      "netid": "netid",
+      "ver": "ver",
+      "trackerId": "trackerId",
+      "channelid": "channelid",
+      "ip": "ip",
+      "cityid": "cityid",
+      "userType": "userType",
+      "port1": "port1",
+      "uuid": "uuid"
+    },
+    "orders": [
+      "trackerId",
+      "uuid",
+      "uid",
+      "channelid",
+      "ip",
+      "port",
+      "ip1",
+      "port1",
+      "provinceid",
+      "cityid",
+      "netid",
+      "userType",
+      "oemid",
+      "ver",
+      "getuserCount"
+    ],
+    "table": "msg_live_tracker_badclient"
+  },
+  {
+    "topic": "s_live_tracker_channel",
+    "data": {
+      "channelCount": "channelCount",
+      "attachments": {
+        "data": {
+          "channelUserNum": "channelUserNum",
+          "channelId": "channelId"
+        },
+        "orders": [
+          "channelId",
+          "channelUserNum"
+        ],
+        "table": "msg_live_tracker_channel_srv"
+      },
+      "trackerId": "trackerId"
+    },
+    "orders": [
+      "trackerId",
+      "channelCount",
+      "attachments"
+    ],
+    "table": "msg_live_tracker_channel"
+  },
+  {
+    "topic": "s_live_tracker_failget",
+    "data": {
+      "port": "port",
+      "uid": "uid",
+      "errCode": "errCode",
+      "authLen": "authLen",
+      "uuid": "uuid",
+      "auth": "auth",
+      "trackerId": "trackerId",
+      "channelid": "channelid",
+      "ip": "ip",
+      "userType": "userType"
+    },
+    "orders": [
+      "trackerId",
+      "uuid",
+      "uid",
+      "userType",
+      "ip",
+      "port",
+      "channelid",
+      "errCode",
+      "authLen",
+      "auth"
+    ],
+    "table": "msg_live_tracker_failget"
+  },
+  {
+    "topic": "s_live_tracker_faillogin",
+    "data": {
+      "port": "port",
+      "uid": "uid",
+      "port1": "port1",
+      "ip1": "ip1",
+      "oemid": "oemid",
+      "errorCode": "errorCode",
+      "vipid": "vipid",
+      "uuid": "uuid",
+      "trackerId": "trackerId",
+      "channelid": "channelid",
+      "ip": "ip",
+      "userType": "userType"
+    },
+    "orders": [
+      "trackerId",
+      "uuid",
+      "uid",
+      "userType",
+      "oemid",
+      "vipid",
+      "ip",
+      "port",
+      "ip1",
+      "port1",
+      "channelid",
+      "errorCode"
+    ],
+    "table": "msg_live_tracker_faillogin"
+  },
+  {
+    "topic": "s_live_status",
+    "data": {
+      "vlsId": "vlsId",
+      "vlsAllClients": "vlsAllClients",
+      "vlsSendRate": "vlsSendRate",
+      "vlsEffectiveChannels": "vlsEffectiveChannels",
+      "vlsHttpPort": "vlsHttpPort",
+      "vlsStartTime": "vlsStartTime",
+      "vlsLivePort": "vlsLivePort",
+      "vlsDownloadRate": "vlsDownloadRate",
+      "vlsType": "vlsType",
+      "vlsStatus": "vlsStatus",
+      "vlsIp": "vlsIp",
+      "vlsAllStreamBytes": "vlsAllStreamBytes",
+      "attachments": {
+        "data": {
+          "channelVlsIp": "channelVlsIp",
+          "channelType": "channelType",
+          "channelStopTime": "channelStopTime",
+          "channelStatus": "channelStatus",
+          "channelId": "channelId",
+          "channelSendBytes": "channelSendBytes",
+          "channelVlsPort": "channelVlsPort",
+          "channelCurrentClients": "channelCurrentClients",
+          "channelSendRate": "channelSendRate",
+          "channelDownloadRate": "channelDownloadRate",
+          "channelStartTime": "channelStartTime"
+        },
+        "orders": [
+          "channelId",
+          "channelType",
+          "channelStatus",
+          "channelCurrentClients",
+          "channelStartTime",
+          "channelStopTime",
+          "channelVlsIp",
+          "channelVlsPort",
+          "channelSendBytes",
+          "channelDownloadRate",
+          "channelSendRate"
+        ],
+        "table": "msg_live_vls_server_status_srv"
+      },
+      "vlsDescription": "vlsDescription"
+    },
+    "orders": [
+      "vlsId",
+      "vlsType",
+      "vlsStatus",
+      "vlsDescription",
+      "vlsIp",
+      "vlsHttpPort",
+      "vlsLivePort",
+      "vlsStartTime",
+      "vlsAllClients",
+      "vlsAllStreamBytes",
+      "vlsDownloadRate",
+      "vlsSendRate",
+      "vlsEffectiveChannels",
+      "attachments"
+    ],
+    "table": "msg_live_vls_server_status"
+  },
+  {
+    "topic": "t_live_playalive_v1",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "avgSpeed": "avgSpeed",
+      "speed": "speed",
+      "cacheSizeCur": "cacheSizeCur",
+      "channelID": "channelID",
+      "accID": "accID",
+      "aliveTick": "aliveTick"
+    },
+    "orders": [
+      "channelID",
+      "adjPlayTime",
+      "accID",
+      "aliveTick",
+      "avgSpeed",
+      "speed",
+      "cacheSizeCur"
+    ],
+    "table": "msg_live_play_alive_req_v1"
+  },
+  {
+    "topic": "t_live_playbgn_v1",
+    "data": {
+      "OEMID": "OEMID",
+      "vendorID": "vendorID",
+      "curVer": "curVer",
+      "channelID": "channelID",
+      "HID": "HID",
+      "uRLLen": "uRLLen",
+      "srvNum": "srvNum",
+      "playTick": "playTick",
+      "UID": "UID",
+      "buildTime": "buildTime",
+      "attachments": {
+        "data": {
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType"
+        ],
+        "table": "msg_live_play_bgn_req_srv_v1"
+      },
+      "getVLSTick": "getVLSTick",
+      "URL": "URL",
+      "accID": "accID",
+      "localIP": "localIP"
+    },
+    "orders": [
+      "accID",
+      "OEMID",
+      "vendorID",
+      "curVer",
+      "buildTime",
+      "HID",
+      "UID",
+      "localIP",
+      "channelID",
+      "playTick",
+      "uRLLen",
+      "URL",
+      "getVLSTick",
+      "srvNum",
+      "attachments"
+    ],
+    "table": "msg_live_play_bgn_req_v1"
+  },
+  {
+    "topic": "t_live_playend_v1",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "avgSpeed": "avgSpeed",
+      "UID": "UID",
+      "channelID": "channelID",
+      "HID": "HID",
+      "accID": "accID",
+      "localIP": "localIP",
+      "endTick": "endTick"
+    },
+    "orders": [
+      "channelID",
+      "HID",
+      "UID",
+      "localIP",
+      "adjPlayTime",
+      "accID",
+      "endTick",
+      "avgSpeed"
+    ],
+    "table": "msg_live_play_end_req_v1"
+  },
+  {
+    "topic": "t_live_playexce_v1",
+    "data": {
+      "avgSpeed": "avgSpeed",
+      "contentLen": "contentLen",
+      "speed": "speed",
+      "srvType": "srvType",
+      "cacheSizeCur": "cacheSizeCur",
+      "srvPort": "srvPort",
+      "srvIP": "srvIP",
+      "channelID": "channelID",
+      "codeType": "codeType",
+      "accID": "accID",
+      "codeContent": "codeContent"
+    },
+    "orders": [
+      "accID",
+      "channelID",
+      "srvType",
+      "srvIP",
+      "srvPort",
+      "avgSpeed",
+      "speed",
+      "cacheSizeCur",
+      "codeType",
+      "contentLen",
+      "codeContent"
+    ],
+    "table": "msg_live_play_exception_req_v1"
+  },
+  {
+    "topic": "t_playalive_v2",
+    "data": {
+      "sessID": "sessID",
+      "adjPlayTime": "adjPlayTime",
+      "readPos": "readPos",
+      "readNum": "readNum",
+      "seekNum": "seekNum",
+      "sessAvgSpeed": "sessAvgSpeed",
+      "unsuccRead": "unsuccRead",
+      "attachments": {
+        "data": {
+          "accTime": "accTime",
+          "avgSpeed": "avgSpeed",
+          "accBytes": "accBytes",
+          "srvIP": "srvIP",
+          "avgRTT": "avgRTT",
+          "connTimes": "connTimes",
+          "transNum": "transNum"
+        },
+        "orders": [
+          "srvIP",
+          "connTimes",
+          "transNum",
+          "avgRTT",
+          "accBytes",
+          "accTime",
+          "avgSpeed"
+        ],
+        "table": "msg_order_play_alive_req_srv_v2"
+      },
+      "accID": "accID",
+      "aliveTick": "aliveTick",
+      "linkNum": "linkNum"
+    },
+    "orders": [
+      "sessID",
+      "adjPlayTime",
+      "accID",
+      "aliveTick",
+      "seekNum",
+      "readNum",
+      "unsuccRead",
+      "readPos",
+      "sessAvgSpeed",
+      "linkNum",
+      "attachments"
+    ],
+    "table": "msg_order_play_alive_req_v2"
+  },
+  {
+    "topic": "t_playalive_v3",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "readPos": "readPos",
+      "sessSpeed": "sessSpeed",
+      "cacheSizeCur": "cacheSizeCur",
+      "unsuccRead": "unsuccRead",
+      "sessAvgSpeed": "sessAvgSpeed",
+      "linkNum": "linkNum",
+      "sessID": "sessID",
+      "seekNum": "seekNum",
+      "readNum": "readNum",
+      "attachments": {
+        "data": {
+          "nodeID": "nodeID",
+          "accTime": "accTime",
+          "avgSpeed": "avgSpeed",
+          "speed": "speed",
+          "accBytes": "accBytes",
+          "srvIP": "srvIP",
+          "avgRTT": "avgRTT",
+          "connTimes": "connTimes",
+          "RTT": "RTT",
+          "transNum": "transNum"
+        },
+        "orders": [
+          "srvIP",
+          "connTimes",
+          "transNum",
+          "avgRTT",
+          "accBytes",
+          "accTime",
+          "avgSpeed",
+          "speed",
+          "RTT",
+          "nodeID"
+        ],
+        "table": "msg_order_play_alive_req_srv_v3"
+      },
+      "accID": "accID",
+      "aliveTick": "aliveTick"
+    },
+    "orders": [
+      "sessID",
+      "adjPlayTime",
+      "accID",
+      "aliveTick",
+      "seekNum",
+      "readNum",
+      "unsuccRead",
+      "readPos",
+      "sessAvgSpeed",
+      "sessSpeed",
+      "linkNum",
+      "cacheSizeCur",
+      "attachments"
+    ],
+    "table": "msg_order_play_alive_req_v3"
+  },
+  {
+    "topic": "t_playbgn_v2",
+    "data": {
+      "urlLen": "urlLen",
+      "OEMID": "OEMID",
+      "vendorID": "vendorID",
+      "curVer": "curVer",
+      "idxLen": "idxLen",
+      "HID": "HID",
+      "mmime": "mmime",
+      "sessStatus": "sessStatus",
+      "srvNum": "srvNum",
+      "sessID": "sessID",
+      "mSize": "mSize",
+      "FID": "FID",
+      "playTick": "playTick",
+      "sessType": "sessType",
+      "UID": "UID",
+      "buildTime": "buildTime",
+      "attachments": {
+        "data": {
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType"
+        ],
+        "table": "msg_order_play_bgn_req_srv_v2"
+      },
+      "URL": "URL",
+      "localIP": "localIP"
+    },
+    "orders": [
+      "OEMID",
+      "vendorID",
+      "curVer",
+      "buildTime",
+      "HID",
+      "UID",
+      "localIP",
+      "sessID",
+      "sessType",
+      "sessStatus",
+      "FID",
+      "mSize",
+      "mmime",
+      "idxLen",
+      "urlLen",
+      "URL",
+      "playTick",
+      "srvNum",
+      "attachments"
+    ],
+    "table": "msg_order_play_bgn_req_v2"
+  },
+  {
+    "topic": "t_playbgn_v3",
+    "data": {
+      "urlLen": "urlLen",
+      "OEMID": "OEMID",
+      "vendorID": "vendorID",
+      "curVer": "curVer",
+      "idxLen": "idxLen",
+      "bufSize": "bufSize",
+      "HID": "HID",
+      "mmime": "mmime",
+      "sessStatus": "sessStatus",
+      "srvNum": "srvNum",
+      "sessID": "sessID",
+      "mSize": "mSize",
+      "FID": "FID",
+      "playTick": "playTick",
+      "sessType": "sessType",
+      "UID": "UID",
+      "buildTime": "buildTime",
+      "attachments": {
+        "data": {
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType"
+        ],
+        "table": "msg_order_play_bgn_req_srv_v3"
+      },
+      "packSize": "packSize",
+      "URL": "URL",
+      "localIP": "localIP",
+      "cacheSize": "cacheSize"
+    },
+    "orders": [
+      "OEMID",
+      "vendorID",
+      "curVer",
+      "buildTime",
+      "HID",
+      "UID",
+      "localIP",
+      "sessID",
+      "sessType",
+      "sessStatus",
+      "FID",
+      "mSize",
+      "mmime",
+      "idxLen",
+      "urlLen",
+      "URL",
+      "playTick",
+      "srvNum",
+      "cacheSize",
+      "packSize",
+      "bufSize",
+      "attachments"
+    ],
+    "table": "msg_order_play_bgn_req_v3"
+  },
+  {
+    "topic": "t_playend_v2",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "stopPos": "stopPos",
+      "unsuccRead": "unsuccRead",
+      "sessAvgSpeed": "sessAvgSpeed",
+      "HID": "HID",
+      "endTick": "endTick",
+      "linkNum": "linkNum",
+      "sessID": "sessID",
+      "seekNum": "seekNum",
+      "readNum": "readNum",
+      "UID": "UID",
+      "attachments": {
+        "data": {
+          "accTime": "accTime",
+          "avgSpeed": "avgSpeed",
+          "accBytes": "accBytes",
+          "srvIP": "srvIP",
+          "avgRTT": "avgRTT",
+          "connTimes": "connTimes",
+          "transNum": "transNum"
+        },
+        "orders": [
+          "srvIP",
+          "connTimes",
+          "transNum",
+          "avgRTT",
+          "accBytes",
+          "accTime",
+          "avgSpeed"
+        ],
+        "table": "msg_order_play_end_req_srv_v2"
+      },
+      "localIP": "localIP",
+      "accID": "accID"
+    },
+    "orders": [
+      "HID",
+      "UID",
+      "localIP",
+      "sessID",
+      "adjPlayTime",
+      "accID",
+      "endTick",
+      "seekNum",
+      "readNum",
+      "unsuccRead",
+      "stopPos",
+      "sessAvgSpeed",
+      "linkNum",
+      "attachments"
+    ],
+    "table": "msg_order_play_end_req_v2"
+  },
+  {
+    "topic": "t_playend_v3",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "stopPos": "stopPos",
+      "unsuccRead": "unsuccRead",
+      "sessAvgSpeed": "sessAvgSpeed",
+      "HID": "HID",
+      "endTick": "endTick",
+      "srvNum": "srvNum",
+      "sessID": "sessID",
+      "seekNum": "seekNum",
+      "readNum": "readNum",
+      "UID": "UID",
+      "attachments": {
+        "data": {
+          "shutTimes": "shutTimes",
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP",
+          "connTimes": "connTimes"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType",
+          "connTimes",
+          "shutTimes"
+        ],
+        "table": "msg_order_play_end_req_srv_v3"
+      },
+      "localIP": "localIP",
+      "accID": "accID"
+    },
+    "orders": [
+      "HID",
+      "UID",
+      "localIP",
+      "sessID",
+      "adjPlayTime",
+      "accID",
+      "endTick",
+      "seekNum",
+      "readNum",
+      "unsuccRead",
+      "stopPos",
+      "sessAvgSpeed",
+      "srvNum",
+      "attachments"
+    ],
+    "table": "msg_order_play_end_req_v3"
+  },
+  {
+    "topic": "t_playexce_v3",
+    "data": {
+      "OEMID": "OEMID",
+      "srvPort": "srvPort",
+      "exception": "exception",
+      "HID": "HID",
+      "errMsgLen": "errMsgLen",
+      "sessID": "sessID",
+      "nodeID": "nodeID",
+      "FID": "FID",
+      "tick": "tick",
+      "fIDOffset": "fIDOffset",
+      "srvType": "srvType",
+      "srvIP": "srvIP",
+      "UID": "UID",
+      "errMsg": "errMsg",
+      "satus": "satus",
+      "accID": "accID",
+      "clientVersion": "clientVersion"
+    },
+    "orders": [
+      "sessID",
+      "accID",
+      "exception",
+      "satus",
+      "srvIP",
+      "srvPort",
+      "srvType",
+      "tick",
+      "nodeID",
+      "HID",
+      "OEMID",
+      "UID",
+      "clientVersion",
+      "FID",
+      "fIDOffset",
+      "errMsgLen",
+      "errMsg"
+    ],
+    "table": "msg_order_play_exception_req_v3"
+  },
+  {
+    "topic": "t_live_p2p_playalive_v1",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "avgSpeed": "avgSpeed",
+      "readNum": "readNum",
+      "speed": "speed",
+      "cacheSizeCur": "cacheSizeCur",
+      "channelID": "channelID",
+      "unsuccRead": "unsuccRead",
+      "curFrm": "curFrm",
+      "attachments": {
+        "data": {
+          "nodeID": "nodeID",
+          "accTime": "accTime",
+          "avgSpeed": "avgSpeed",
+          "speed": "speed",
+          "accBytes": "accBytes",
+          "srvIP": "srvIP",
+          "avgRTT": "avgRTT",
+          "connTimes": "connTimes",
+          "RTT": "RTT",
+          "transNum": "transNum"
+        },
+        "orders": [
+          "srvIP",
+          "connTimes",
+          "transNum",
+          "avgRTT",
+          "accBytes",
+          "accTime",
+          "avgSpeed",
+          "speed",
+          "RTT",
+          "nodeID"
+        ],
+        "table": "msg_p2p_play_alive_req_srv_v3"
+      },
+      "accID": "accID",
+      "aliveTick": "aliveTick",
+      "linkNum": "linkNum"
+    },
+    "orders": [
+      "channelID",
+      "adjPlayTime",
+      "accID",
+      "aliveTick",
+      "readNum",
+      "unsuccRead",
+      "curFrm",
+      "avgSpeed",
+      "speed",
+      "linkNum",
+      "cacheSizeCur",
+      "attachments"
+    ],
+    "table": "msg_p2p_play_alive_req_v3"
+  },
+  {
+    "topic": "t_live_p2p_playbgn_v1",
+    "data": {
+      "OEMID": "OEMID",
+      "vendorID": "vendorID",
+      "curVer": "curVer",
+      "channelID": "channelID",
+      "bufSize": "bufSize",
+      "HID": "HID",
+      "uRLLen": "uRLLen",
+      "srvNum": "srvNum",
+      "playTick": "playTick",
+      "UID": "UID",
+      "buildTime": "buildTime",
+      "attachments": {
+        "data": {
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType"
+        ],
+        "table": "msg_p2p_play_bgn_req_srv_v3"
+      },
+      "packSize": "packSize",
+      "URL": "URL",
+      "localIP": "localIP",
+      "cacheSize": "cacheSize"
+    },
+    "orders": [
+      "OEMID",
+      "vendorID",
+      "curVer",
+      "buildTime",
+      "HID",
+      "UID",
+      "localIP",
+      "channelID",
+      "playTick",
+      "uRLLen",
+      "URL",
+      "srvNum",
+      "cacheSize",
+      "packSize",
+      "bufSize",
+      "attachments"
+    ],
+    "table": "msg_p2p_play_bgn_req_v3"
+  },
+  {
+    "topic": "t_live_p2p_c_down_v1",
+    "data": {
+      "uid": "uid",
+      "hid": "hid",
+      "oemid": "oemid",
+      "count": "count",
+      "speed": "speed",
+      "beginTime": "beginTime",
+      "dropData": "dropData",
+      "reqCount": "reqCount",
+      "dropCount": "dropCount",
+      "failCount": "failCount",
+      "dropSourceUid": "dropSourceUid",
+      "chl": "chl",
+      "uuid": "uuid",
+      "dropSourceIp": "dropSourceIp"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chl",
+      "beginTime",
+      "count",
+      "speed",
+      "reqCount",
+      "failCount",
+      "dropCount",
+      "dropData",
+      "dropSourceIp",
+      "dropSourceUid"
+    ],
+    "table": "msg_p2p_client_download_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_c_peer_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "chl": "chl",
+      "peerCount": "peerCount",
+      "attachments": {
+        "data": {
+          "peerIp": "peerIp",
+          "peerUploadSpeed": "peerUploadSpeed",
+          "peerDownSpeed": "peerDownSpeed",
+          "peerRecvReqCount": "peerRecvReqCount",
+          "peerUploadCount": "peerUploadCount",
+          "peerUid": "peerUid",
+          "peerReqCount": "peerReqCount",
+          "peerDownloadCount": "peerDownloadCount"
+        },
+        "orders": [
+          "peerIp",
+          "peerUid",
+          "peerDownloadCount",
+          "peerReqCount",
+          "peerRecvReqCount",
+          "peerUploadCount",
+          "peerDownSpeed",
+          "peerUploadSpeed"
+        ],
+        "table": "msg_p2p_client_peer_state_srv_v1"
+      },
+      "uuid": "uuid"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chl",
+      "peerCount",
+      "attachments"
+    ],
+    "table": "msg_p2p_client_peer_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_c_stat_v1",
+    "data": {
+      "uid": "uid",
+      "chCount": "chCount",
+      "oemid": "oemid",
+      "hid": "hid",
+      "downloadCount": "downloadCount",
+      "attachments": {
+        "data": {
+          "chCurPeerCounter": "chCurPeerCounter",
+          "chTime": "chTime",
+          "chDownloadclient": "chDownloadclient",
+          "chUploadspeed": "chUploadspeed",
+          "chFailcount": "chFailcount",
+          "chl": "chl",
+          "chDownload": "chDownload",
+          "chDownspeed": "chDownspeed",
+          "chUpload": "chUpload",
+          "chDownloadserver": "chDownloadserver"
+        },
+        "orders": [
+          "chl",
+          "chTime",
+          "chDownload",
+          "chUpload",
+          "chDownspeed",
+          "chUploadspeed",
+          "chFailcount",
+          "chDownloadserver",
+          "chDownloadclient",
+          "chCurPeerCounter"
+        ],
+        "table": "msg_p2p_client_statis_state_srv_v1"
+      },
+      "uploadCount": "uploadCount",
+      "uuid": "uuid"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "downloadCount",
+      "uploadCount",
+      "chCount",
+      "attachments"
+    ],
+    "table": "msg_p2p_client_statis_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_c_up_v1",
+    "data": {
+      "uid": "uid",
+      "validReqCount": "validReqCount",
+      "count": "count",
+      "oemid": "oemid",
+      "hid": "hid",
+      "speed": "speed",
+      "chl": "chl",
+      "beginTime": "beginTime",
+      "uuid": "uuid",
+      "reqCount": "reqCount"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chl",
+      "beginTime",
+      "count",
+      "speed",
+      "reqCount",
+      "validReqCount"
+    ],
+    "table": "msg_p2p_client_upload_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_playend_v1",
+    "data": {
+      "adjPlayTime": "adjPlayTime",
+      "avgSpeed": "avgSpeed",
+      "readNum": "readNum",
+      "UID": "UID",
+      "channelID": "channelID",
+      "attachments": {
+        "data": {
+          "shutTimes": "shutTimes",
+          "srvType": "srvType",
+          "srvPort": "srvPort",
+          "srvIP": "srvIP",
+          "connTimes": "connTimes"
+        },
+        "orders": [
+          "srvIP",
+          "srvPort",
+          "srvType",
+          "connTimes",
+          "shutTimes"
+        ],
+        "table": "msg_p2p_play_end_req_srv_v3"
+      },
+      "HID": "HID",
+      "accID": "accID",
+      "localIP": "localIP",
+      "srvNum": "srvNum",
+      "endTick": "endTick"
+    },
+    "orders": [
+      "channelID",
+      "HID",
+      "UID",
+      "localIP",
+      "adjPlayTime",
+      "accID",
+      "endTick",
+      "readNum",
+      "avgSpeed",
+      "srvNum",
+      "attachments"
+    ],
+    "table": "msg_p2p_play_end_req_v3"
+  },
+  {
+    "topic": "t_live_p2p_playexce_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "errorcode": "errorcode",
+      "uuid": "uuid"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "errorcode"
+    ],
+    "table": "msg_p2p_play_exception_req_v1"
+  },
+  {
+    "topic": "t_live_p2p_channel_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "attachments": {
+        "data": {
+          "time": "time",
+          "chl": "chl",
+          "concurClient": "concurClient"
+        },
+        "orders": [
+          "chl",
+          "time",
+          "concurClient"
+        ],
+        "table": "msg_p2p_server_channel_state_srv_v1"
+      },
+      "uuid": "uuid",
+      "chInstanteNum": "chInstanteNum"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chInstanteNum",
+      "attachments"
+    ],
+    "table": "msg_p2p_server_channel_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_s_down_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "attachments": {
+        "data": {
+          "dropCount": "dropCount",
+          "failCount": "failCount",
+          "count": "count",
+          "dropSourceUid": "dropSourceUid",
+          "speed": "speed",
+          "chl": "chl",
+          "beginTime": "beginTime",
+          "dropData": "dropData",
+          "dropSourceIp": "dropSourceIp",
+          "reqCount": "reqCount"
+        },
+        "orders": [
+          "chl",
+          "beginTime",
+          "count",
+          "speed",
+          "reqCount",
+          "failCount",
+          "dropCount",
+          "dropData",
+          "dropSourceIp",
+          "dropSourceUid"
+        ],
+        "table": "msg_p2p_server_download_state_srv_v1"
+      },
+      "uuid": "uuid",
+      "chInstanteNum": "chInstanteNum"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chInstanteNum",
+      "attachments"
+    ],
+    "table": "msg_p2p_server_download_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_s_peer_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "peerCount": "peerCount",
+      "attachments": {
+        "data": {
+          "peerIp": "peerIp",
+          "peerUploadSpeed": "peerUploadSpeed",
+          "peerDownSpeed": "peerDownSpeed",
+          "peerRecvReqCount": "peerRecvReqCount",
+          "peerUploadCount": "peerUploadCount",
+          "peerUid": "peerUid",
+          "peerReqCount": "peerReqCount",
+          "peerDownloadCount": "peerDownloadCount"
+        },
+        "orders": [
+          "peerIp",
+          "peerUid",
+          "peerDownloadCount",
+          "peerReqCount",
+          "peerRecvReqCount",
+          "peerUploadCount",
+          "peerDownSpeed",
+          "peerUploadSpeed"
+        ],
+        "table": "msg_p2p_server_peer_state_srv_v1"
+      },
+      "uuid": "uuid"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "peerCount",
+      "attachments"
+    ],
+    "table": "msg_p2p_server_peer_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_s_stat_v1",
+    "data": {
+      "uid": "uid",
+      "peerPartnercount": "peerPartnercount",
+      "oemid": "oemid",
+      "hid": "hid",
+      "rebootCount": "rebootCount",
+      "downloadCount": "downloadCount",
+      "peerCount": "peerCount",
+      "uploadCount": "uploadCount",
+      "uuid": "uuid",
+      "staitsCount": "staitsCount"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "peerCount",
+      "peerPartnercount",
+      "downloadCount",
+      "uploadCount",
+      "rebootCount",
+      "staitsCount"
+    ],
+    "table": "msg_p2p_server_statis_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_s_up_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "attachments": {
+        "data": {
+          "validReqCount": "validReqCount",
+          "count": "count",
+          "speed": "speed",
+          "chl": "chl",
+          "beginTime": "beginTime",
+          "reqCount": "reqCount"
+        },
+        "orders": [
+          "chl",
+          "beginTime",
+          "count",
+          "speed",
+          "reqCount",
+          "validReqCount"
+        ],
+        "table": "msg_p2p_server_upload_state_srv_v1"
+      },
+      "uuid": "uuid",
+      "chInstanteNum": "chInstanteNum"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "chInstanteNum",
+      "attachments"
+    ],
+    "table": "msg_p2p_server_upload_state_v1"
+  },
+  {
+    "topic": "t_live_p2p_vls_v1",
+    "data": {
+      "uid": "uid",
+      "oemid": "oemid",
+      "hid": "hid",
+      "totalCh": "totalCh",
+      "attachments": {
+        "data": {
+          "speed": "speed",
+          "chl": "chl"
+        },
+        "orders": [
+          "chl",
+          "speed"
+        ],
+        "table": "msg_p2p_server_vls_state_srv_v1"
+      },
+      "uuid": "uuid"
+    },
+    "orders": [
+      "uuid",
+      "uid",
+      "hid",
+      "oemid",
+      "totalCh",
+      "attachments"
+    ],
+    "table": "msg_p2p_server_vls_state_v1"
+  }
+]
