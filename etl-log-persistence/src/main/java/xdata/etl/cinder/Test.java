@@ -20,11 +20,6 @@ public class Test {
 
 	public static void main(String[] args) throws InterruptedException,
 			SchedulerException {
-		
-		System.out.println("jsljdfljsldjfljsl");
-		if(true){
-			return;
-		}
 		final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"spring-log-persistence.xml");
 		manager = ctx.getBean(KafkaConsumerManager.class);
