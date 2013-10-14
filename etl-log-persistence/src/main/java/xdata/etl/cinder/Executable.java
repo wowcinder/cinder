@@ -14,7 +14,7 @@ import xdata.etl.cinder.service.KafkaConsumerManager;
  * @author XuehuiHe
  * @date 2013年10月9日
  */
-public class Test {
+public class Executable {
 
 	public static KafkaConsumerManager manager;
 
