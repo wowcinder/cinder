@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.connector.ConsumerConnectorHolder;
 import xdata.etl.cinder.connector.KafkaTopicFixedModelVersionConsumerConnectorHolder;
+import xdata.etl.cinder.hbase.lazy.LazyHTableService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopicFixedModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
@@ -34,6 +35,8 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	private KafkaDbService dbService;
 	@Autowired
 	private WatchDogManagerClient client;
+	@Autowired
+	private LazyHTableService lazyHTableService;
 
 	private final Map<KafkaWatchDogTopicSetting, ConsumerConnectorHolder> connectors;
 
@@ -70,11 +73,12 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 			if (topic instanceof KafkaTopicFixedModelVersion) {
 				LOGGER.info("FixedModelVersion consumer create,topic:"
 						+ topicSetting.getTopic().getName());
-//				ConsumerConnectorHolder connectorHolder = new KafkaTopicFixedModelVersionConsumerConnectorHolder(
-//						kafkaClientConfig, topicSetting, transformerManager);
-//				connectors.put(topicSetting, connectorHolder);
-//				connectorHolder.run();
-				//TODO
+				ConsumerConnectorHolder connectorHolder = new KafkaTopicFixedModelVersionConsumerConnectorHolder(
+						kafkaClientConfig, topicSetting, transformerManager,
+						lazyHTableService);
+				connectors.put(topicSetting, connectorHolder);
+				connectorHolder.run();
+				// TODO
 				return true;
 			} else {
 				// TODO

@@ -15,15 +15,14 @@ public class PoolHTableService extends AbstractHTableService {
 	public PoolHTableService() {
 	}
 
-	@Override
-	public HTableInterface getHTable(String tableName) throws IOException {
-		return pool.getTable(tableName);
+	public PoolHTableService(Configuration hbaseConfig, int poolSize) {
+		setHbaseConfig(hbaseConfig);
+		pool = new HTablePool(getHbaseConfig(), poolSize);
 	}
 
 	@Override
-	public void setHbaseConfig(Configuration hbaseConfig) {
-		super.setHbaseConfig(hbaseConfig);
-		pool = new HTablePool(getHbaseConfig(), 10);
+	public HTableInterface getHTable(String tableName) throws IOException {
+		return pool.getTable(tableName);
 	}
 
 	@Override

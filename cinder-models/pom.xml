@@ -13,5 +13,6 @@
 		<module>../cinder-gwt-server</module>
 		<module>../cinder-gwt-ui</module>
 		<module>../cinder-log-model-meta</module>
+		<module>../etl-log-transformer</module>
 	</modules>
 </project>

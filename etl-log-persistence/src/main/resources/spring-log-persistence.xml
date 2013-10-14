@@ -26,11 +26,10 @@
 
 
 	<bean id="watchDogManagerRMI" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-	  
-		<property name="serviceUrl"
-			value="${watch_dog_manager_rmi}" /> 
-		<!--<property name="serviceUrl"
-			value="rmi://localhost:1199/watchdog_manager_rmi" />-->
+
+		<property name="serviceUrl" value="${watch_dog_manager_rmi}" />
+		<!--<property name="serviceUrl" value="rmi://localhost:1199/watchdog_manager_rmi" 
+			/> -->
 		<property name="serviceInterface"
 			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
 	</bean>
@@ -45,6 +44,26 @@
 		</constructor-arg>
 	</bean>
 
+
+	<!-- Hbase -->
+	<bean id="poolHTableService" class="xdata.etl.cinder.hbase.htable.PoolHTableService">
+		<constructor-arg ref="hbaseConf" />
+		<constructor-arg value="${htable_service_pool_size}" />
+	</bean>
+
+	<bean id="lazyHTableService" class="xdata.etl.cinder.hbase.lazy.LazyHTableServiceImpl">
+		<property name="hTableService" ref="poolHTableService" />
+		<property name="thresholdSize" value="${lazy_threshold_size}" />
+		<property name="timeout" value="${lazy_time_out}" />
+	</bean>
+	
+	<bean id="lazyHTableService_timeout"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="lazyHTableService" />
+		<property name="targetMethod" value="timeout" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- /Hbase -->
 	<bean id="reportTopicStatus"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="kafkaConsumerManager" />
@@ -58,11 +77,18 @@
 		<property name="startDelay" value="20000" />
 		<property name="repeatInterval" value="25000" />
 	</bean>
+	
+	<bean id="simpleTrigger2" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="lazyHTableService_timeout" />
+		<property name="startDelay" value="20000" />
+		<property name="repeatInterval" value="${lazy_time_out}" />
+	</bean>
 
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="simpleTrigger" />
+				<ref bean="simpleTrigger2" />
 			</list>
 		</property>
 	</bean>
