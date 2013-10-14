@@ -17,6 +17,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.PreDestroy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import xdata.etl.cinder.hbase.htable.HTableService;
 import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 
@@ -25,6 +28,9 @@ import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
  * @date 2013年10月12日
  */
 public class LazyHTableServiceImpl implements LazyHTableService {
+	private static Logger logger = LoggerFactory
+			.getLogger(LazyHTableService.class);
+
 	private int thresholdSize;
 	private int timeout;
 	private HTableService hTableService;
@@ -35,6 +41,7 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 	public LazyHTableServiceImpl() {
 		workerMap = new HashMap<String, LazyHTableServiceImpl.IHTableWorker>();
 		executor = Executors.newFixedThreadPool(20);
+		logger.info("create lazy service");
 	}
 
 	@Override
@@ -44,7 +51,7 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 				.entrySet()) {
 			String tableName = entry.getKey();
 			if (!workerMap.containsKey(tableName)) {
-				createLazySaver(tableName);
+				createLazyWorker(tableName);
 			}
 			final IHTableWorker worker = workerMap.get(tableName);
 			worker.put(entry.getValue());
@@ -59,27 +66,30 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 				try {
 					gethTableService().put(tableName, list);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					logger.warn("hTableService can't work");
 					e.printStackTrace();
 				}
 			}
 		});
 	}
 
-	private synchronized void createLazySaver(String tableName) {
+	private synchronized void createLazyWorker(String tableName) {
 		if (workerMap.containsKey(tableName)) {
 			return;
 		}
+		logger.debug("create lazy worker:" + tableName);
 		workerMap.put(tableName, new HTableWorker(tableName));
 	}
 
 	public synchronized void timeout() throws IOException {
+		logger.debug("lazy htable service timeout");
 		for (Entry<String, IHTableWorker> entry : workerMap.entrySet()) {
 			entry.getValue().timeout();
 		}
 	}
 
 	public synchronized void flush() {
+		logger.debug("lazy htable service flush");
 		for (Entry<String, IHTableWorker> entry : workerMap.entrySet()) {
 			entry.getValue().flush();
 		}
@@ -104,6 +114,7 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 	@Override
 	@PreDestroy
 	public void shutdown() throws IOException {
+		logger.info("lazy htable service shutdown...");
 		flush();
 		executor.shutdown();
 	}
@@ -134,12 +145,17 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 
 		public void flush() {
 			if (!tryLock()) {
+				logger.info("lazy worker :" + tableName
+						+ " flush,but can not get lock");
 				return;
 			}
 			if (total.get() == 0) {
+				logger.info("lazy worker :" + tableName
+						+ " flush,but total is 0");
 				unlock();
 				return;
 			}
+			logger.info("lazy worker :" + tableName + " flush");
 			List<HbaseRecord<String>> list = clonePool();
 			unlock();
 			LazyHTableServiceImpl.this.put(tableName, list);
@@ -147,12 +163,17 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 
 		public void timeout() {
 			if (!tryLock()) {
+				logger.debug("lazy worker :" + tableName
+						+ " timeout,but can not get lock");
 				return;
 			}
 			if (!isTimeout() || total.get() == 0) {
+				logger.debug("lazy worker :" + tableName
+						+ " timeout,but just put either total is 0");
 				unlock();
 				return;
 			}
+			logger.debug("lazy worker :" + tableName + " timeout");
 			List<HbaseRecord<String>> list = clonePool();
 			unlock();
 			LazyHTableServiceImpl.this.put(tableName, list);
@@ -202,12 +223,17 @@ public class LazyHTableServiceImpl implements LazyHTableService {
 
 		protected void tryPut() throws IOException {
 			if (!tryLock()) {
+				logger.debug("lazy worker :" + tableName
+						+ " try put ,but can not get lock");
 				return;
 			}
 			if (!isFull()) {
+				logger.debug("lazy worker :" + tableName
+						+ " try put ,but list is not full");
 				unlock();
 				return;
 			}
+			logger.debug("lazy worker :" + tableName + " putting");
 			List<HbaseRecord<String>> list = clonePool();
 			unlock();
 			LazyHTableServiceImpl.this.put(tableName, list);

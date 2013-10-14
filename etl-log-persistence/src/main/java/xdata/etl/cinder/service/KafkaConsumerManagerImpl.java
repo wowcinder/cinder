@@ -47,9 +47,14 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	@Override
 	public synchronized boolean startConsumer(
 			KafkaWatchDogTopicSetting topicSetting) {
+		KafkaTopic topic = topicSetting.getTopic();
 
+		if (!topic.getIsEnabled() || !topicSetting.getIsEnabled()) {
+			LOGGER.info("consumer start,topic:"
+					+ topicSetting.getTopic().getName() + ",but it is disabled");
+			return false;
+		}
 		LOGGER.info("consumer start,topic:" + topicSetting.getTopic().getName());
-
 		if (connectors.containsKey(topicSetting)) {
 			ConsumerConnectorHolder holder = connectors.get(topicSetting);
 			LOGGER.debug("consumer is exist,topic:"
@@ -64,11 +69,7 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 				return false;
 			}
 		}
-		KafkaTopic topic = topicSetting.getTopic();
 
-		if (!topic.getIsEnabled()) {
-			return false;
-		}
 		try {
 			if (topic instanceof KafkaTopicFixedModelVersion) {
 				LOGGER.info("FixedModelVersion consumer create,topic:"
@@ -78,10 +79,9 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 						lazyHTableService);
 				connectors.put(topicSetting, connectorHolder);
 				connectorHolder.run();
-				// TODO
 				return true;
 			} else {
-				// TODO
+				LOGGER.warn("find a unknown topic type :" + topic.getId());
 			}
 		} catch (Exception e) {
 			String msg = "topic:" + topicSetting.getTopic().getName()

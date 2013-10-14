@@ -5,6 +5,8 @@ package xdata.etl.cinder;
 
 import java.io.File;
 
+import org.apache.log4j.PropertyConfigurator;
+
 /**
  * @author XuehuiHe
  * @date 2013年10月14日
@@ -20,6 +22,9 @@ public class ConfigUtil {
 		if (System.getProperty("etl.log") == null) {
 			System.setProperty("etl.log", getLogPath());
 		}
+		PropertyConfigurator.configure(System.getProperty(
+				"log4j.configuration", getConfPath() + File.separator
+						+ "log4j.properties"));
 	}
 
 	public static boolean isRunInAJar() {

@@ -44,5 +44,6 @@ public class Executable {
 				ctx.close();
 			}
 		});
+		manager.startAllConsumer();
 	}
 }

@@ -6,6 +6,8 @@ package xdata.etl.cinder.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ import xdata.etl.logmodel.transformer.LogModelTransformer;
 @Service
 public class LogModelTransformerManagerImpl implements
 		LogModelTransformerManager {
+
+	private static Logger logger = LoggerFactory
+			.getLogger(LogModelTransformerManager.class);
 	private final Map<LogModelTransformerKey, LogModelTransformer<?>> transformersMap;
 	@Autowired
 	private KafkaDbService dbService;
@@ -54,14 +59,16 @@ public class LogModelTransformerManagerImpl implements
 		if (transformersMap.containsKey(transformerKey)) {
 			return transformersMap.get(transformerKey);
 		}
-		LogModelVersion<?> logModelVersion = dbService
-				.getLogModelVersion(transformerKey.getModel(),
-						transformerKey.getVersion());
+		logger.info("create transformer for " + transformerKey);
+		LogModelVersion<?> logModelVersion = dbService.getLogModelVersion(
+				transformerKey.getModel(), transformerKey.getVersion());
 		LogModelTransformer<LogModelVersion<?>> transformer = null;
 		try {
 			transformer = LogModelTransformer
 					.createTransformer(logModelVersion);
 		} catch (Exception e) {
+			logger.info("create transformer for " + transformerKey
+					+ ",failed,msg" + e.getMessage());
 			e.printStackTrace();
 		}
 		transformersMap.put(transformerKey, transformer);
@@ -127,6 +134,11 @@ public class LogModelTransformerManagerImpl implements
 						&& this.getModel().equals(that.getModel());
 			}
 			return false;
+		}
+
+		@Override
+		public String toString() {
+			return "model:" + model + ",version:" + version;
 		}
 
 	}
