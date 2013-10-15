@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 BEIJING UNION VOOLE TECHNOLOGY CO., LTD
  */
-package xdata.etl.cinder.web.client;
+package xdata.etl.cinder.server;
 
 import java.io.IOException;
 
