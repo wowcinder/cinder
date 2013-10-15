@@ -14,5 +14,6 @@
 		<module>../cinder-gwt-ui</module>
 		<module>../cinder-log-model-meta</module>
 		<module>../etl-log-transformer</module>
+		<module>../cinder-analyze-old-hbase-meta</module>
 	</modules>
 </project>
