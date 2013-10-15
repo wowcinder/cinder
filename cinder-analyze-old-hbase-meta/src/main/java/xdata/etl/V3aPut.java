@@ -1,8 +1,9 @@
 package xdata.etl;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,15 +131,29 @@ public class V3aPut {
 
 	}
 
+	// public static String read(String fileName) throws IOException {
+	// String path = CTypePut.class.getClassLoader().getResource(fileName)
+	// .getPath();
+	// InputStream fis = CTypePut.class.getClassLoader().getResourceAsStream(
+	// fileName);
+	// File file = new File(path);
+	// FileInputStream fis = new FileInputStream(file);
+	// byte[] data = new byte[(int) file.length()];
+	// fis.read(data);
+	// fis.close();
+	// return new String(data, "UTF-8");
+	// }
 	public static String read(String fileName) throws IOException {
-		String path = CTypePut.class.getClassLoader().getResource(fileName)
-				.getPath();
-		File file = new File(path);
-		FileInputStream fis = new FileInputStream(file);
-		byte[] data = new byte[(int) file.length()];
-		fis.read(data);
-		fis.close();
-		return new String(data, "UTF-8");
+		InputStream fis = CTypePut.class.getClassLoader().getResourceAsStream(
+				fileName);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+		String line = null;
+		StringBuffer sb = new StringBuffer();
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+		reader.close();
+		return sb.toString();
 	}
 
 	private static void init() {
