@@ -1,0 +1,219 @@
+[
+  {
+    "topic": "3a_pay_subscribe_3",
+    "data": {
+      "request.spid": "request_spid",
+      "serverip": "serverIp",
+      "response.status": "response_status",
+      "request.hid": "request_hid",
+      "response.balance": "response_balance",
+      "request.pid": "request_pid",
+      "request.price": "request_price",
+      "request.feetype": "request_feetype",
+      "request.orderid": "request_orderid",
+      "request.orderfrom": "request_orderfrom",
+      "endTime": "responseTime",
+      "response.cardno": "response_cardno",
+      "startTime": "requestTime",
+      "request.uid": "request_uid",
+      "response.money": "response_money",
+      "request.oemid": "request_oemid",
+      "response.uid": "response_uid"
+    },
+    "table": "msg_v3a_3rd_payment"
+  },
+  {
+    "topic": "3a_delaydeduct",
+    "data": {
+      "startTime": "requestTime",
+      "request.sid": "request_sid",
+      "request.uid": "request_uid",
+      "serverip": "serverIp",
+      "response.balance": "response_balance",
+      "response.status": "response_status",
+      "request.hid": "request_hid",
+      "request.fid": "request_fid",
+      "request.pid": "request_pid",
+      "endTime": "responseTime",
+      "request.oemid": "request_oemid",
+      "request.mid": "request_mid"
+    },
+    "table": "msg_v3a_delay_deduct"
+  },
+  {
+    "topic": "3a_onlinestatus",
+    "data": {
+      "startTime": "requestTime",
+      "request.status": "request_status",
+      "request.uid": "request_uid",
+      "serverip": "serverIp",
+      "response.status": "response_status",
+      "request.hid": "request_hid",
+      "endTime": "responseTime",
+      "request.oemid": "request_oemid"
+    },
+    "table": "msg_v3a_online_status"
+  },
+  {
+    "topic": "3a_subscribe",
+    "data": {
+      "startTime": "requestTime",
+      "request.spid": "request_spid",
+      "serverip": "serverIp",
+      "response.status": "response_status",
+      "request.pid": "request_pid",
+      "request.feetype": "request_feetype",
+      "endTime": "responseTime",
+      "request.oemid": "request_oemid",
+      "request.starttime": "request_starttime"
+    },
+    "table": "msg_v3a_order"
+  },
+  {
+    "topic": "3a_subs_cancel",
+    "data": {
+      "startTime": "requestTime",
+      "request.spid": "request_spid",
+      "serverip": "serverIp",
+      "response.status": "response_status",
+      "request.pid": "request_pid",
+      "request.feetype": "request_feetype",
+      "endTime": "responseTime",
+      "request.oemid": "request_oemid"
+    },
+    "table": "msg_v3a_order_cancel"
+  },
+  {
+    "topic": "3a_price_query2",
+    "data": {
+      "startTime": "requestTime",
+      "response.FilmPrice": {
+        "data": {
+          "Mtype": "mtype",
+          "Mid": "mid",
+          "Price": "price"
+        },
+        "table": "msg_v3a_order_price_query_film_price"
+      },
+      "response.Count": "response_Count",
+      "request.spid": "request_spid",
+      "request.epgid": "request_epgid",
+      "request.uid": "request_uid",
+      "serverip": "serverIp",
+      "request.hid": "request_hid",
+      "endTime": "responseTime",
+      "request.oemid": "request_oemid"
+    },
+    "table": "msg_v3a_order_price_query"
+  },
+  {
+    "topic": "3a_play_auth2",
+    "data": {
+      "response.delaydeduct": "response_delaydeduct",
+      "response.playtime.stime": "response_stime",
+      "serverip": "serverIp",
+      "request.hid": "request_hid",
+      "response.status": "response_status",
+      "response.play_url": "response_play_url",
+      "request.pid": "request_pid",
+      "response.delaytime": "response_delaytime",
+      "response.pid": "response_pid",
+      "response.adinfo.videolist": {
+        "data": {
+          "inserttime": "inserttime",
+          "length": "length",
+          "txt": "txt",
+          "video": "video"
+        },
+        "table": "msg_v3a_play_auth2_video_ad"
+      },
+      "response.adinfo.piclist": {
+        "data": {
+          "length": "length",
+          "pic": "pic"
+        },
+        "table": "msg_v3a_play_auth2_pic_ad"
+      },
+      "endTime": "responseTime",
+      "response.adinfo.txtlist": {
+        "data": {
+          "inserttime": "inserttime",
+          "txtid": "txtid",
+          "txt": "txt"
+        },
+        "table": "msg_v3a_play_auth2_txt_ad"
+      },
+      "request.mid": "request_mid",
+      "startTime": "requestTime",
+      "request.sid": "request_sid",
+      "request.uid": "request_uid",
+      "response.playtime.etime": "response_etime",
+      "request.fid": "request_fid",
+      "request.playtype": "request_playtype",
+      "request.oemid": "request_oemid",
+      "response.playtime.time": "response_time"
+    },
+    "table": "msg_v3a_play_auth2"
+  },
+  {
+    "topic": "3a_pay",
+    "data": {
+      "request.cardno": "request_cardno",
+      "request.spid": "request_spid",
+      "serverip": "serverIp",
+      "request.hid": "request_hid",
+      "response.status": "response_status",
+      "response.balance": "response_balance",
+      "request.pid": "request_pid",
+      "request.feetype": "request_feetype",
+      "request.orderid": "request_orderid",
+      "request.orderfrom": "request_orderfrom",
+      "endTime": "responseTime",
+      "request.mobile": "request_mobile",
+      "startTime": "requestTime",
+      "request.uid": "request_uid",
+      "response.money": "response_money",
+      "request.oemid": "request_oemid"
+    },
+    "table": "msg_v3a_recharge"
+  },
+  {
+    "topic": "3a_price_query1",
+    "data": {
+      "response.viewed": "response_viewed",
+      "response.order": "response_order",
+      "serverip": "serverIp",
+      "request.hid": "request_hid",
+      "response.status": "response_status",
+      "request.tj": "request_tj",
+      "response.pid": "response_pid",
+      "endTime": "responseTime",
+      "request.mid": "request_mid",
+      "startTime": "requestTime",
+      "response.tjpid": "response_tjpid",
+      "request.sid": "request_sid",
+      "request.uid": "request_uid",
+      "response.endtime": "response_endtime",
+      "request.fid": "request_fid",
+      "request.oemid": "request_oemid"
+    },
+    "table": "msg_v3a_repreat_play_query"
+  },
+  {
+    "topic": "3a_userauth",
+    "data": {
+      "startTime": "requestTime",
+      "response.userinfo.balance": "response_balance",
+      "response.userinfo.oemid": "response_oemid",
+      "serverip": "serverIp",
+      "response.status": "response_status",
+      "response.userinfo.epgportal2": "response_epgportal2",
+      "response.userinfo.ispid": "response_ispid",
+      "response.userinfo.uid": "response_uid",
+      "endTime": "responseTime",
+      "response.userinfo.epgportal": "response_epgportal",
+      "response.userinfo.hid": "response_hid"
+    },
+    "table": "msg_v3a_user_auth"
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "topic": "t_get_aboutus",
+    "data": {
+      "uid": "uid",
+      "appId": "appId",
+      "hid": "hid",
+      "oemid": "oemid",
+      "packagename": "packagename",
+      "resultCode": "resultCode",
+      "type": "type",
+      "ip": "serverIp",
+      "version": "version"
+    },
+    "table": "msg_assist_about_us"
+  },
+  {
+    "topic": "t_exception",
+    "data": {
+      "uid": "uid",
+      "appId": "appId",
+      "exceptionInfo.appname": "exceptionInfo_appname",
+      "oemid": "oemid",
+      "hid": "hid",
+      "exceptionInfo.logcategory": "exceptionInfo_logcategory",
+      "exceptionInfo.excepinfo": "exceptionInfo_excepinfo",
+      "packagename": "packagename",
+      "exceptionInfo.version": "exceptionInfo_version",
+      "exceptionInfo.priority": "exceptionInfo_priority",
+      "ip": "serverIp",
+      "optionCode": "optionCode",
+      "exceptionInfo.errcode": "exceptionInfo_errcode",
+      "exceptionInfo.packagename": "exceptionInfo_packagename",
+      "resultCode": "resultCode"
+    },
+    "table": "msg_assist_exception"
+  },
+  {
+    "topic": "t_feedback",
+    "data": {
+      "uid": "uid",
+      "appId": "appId",
+      "oemid": "oemid",
+      "hid": "hid",
+      "packagename": "packagename",
+      "feedBackInfo.content": "feedBackInfo_content",
+      "optionCode": "optionCode",
+      "ip": "serverIp",
+      "feedBackInfo.phone": "feedBackInfo_phone",
+      "feedBackInfo.email": "feedBackInfo_email",
+      "resultCode": "resultCode",
+      "feedBackInfo.optioncode": "feedBackInfo_optioncode",
+      "feedBackInfo.version": "feedBackInfo_version"
+    },
+    "table": "msg_assist_feedback"
+  },
+  {
+    "topic": "t_get_help",
+    "data": {
+      "uid": "uid",
+      "appId": "appId",
+      "hid": "hid",
+      "oemid": "oemid",
+      "packagename": "packagename",
+      "resultCode": "resultCode",
+      "type": "type",
+      "ip": "serverIp",
+      "version": "version"
+    },
+    "table": "msg_assist_get_help"
+  },
+  {
+    "topic": "t_vercheck",
+    "data": {
+      "uid": "uid",
+      "fid": "fid",
+      "dependPackegeVersion": "dependPackegeVersion",
+      "detailUrl": "detailUrl",
+      "appSize": "appSize",
+      "appId": "appId",
+      "oemid": "oemid",
+      "hid": "hid",
+      "updateTime": "updateTime",
+      "packagename": "packagename",
+      "downloadUrl": "downloadUrl",
+      "ip": "serverIp",
+      "version": "version",
+      "requiredSdk": "requiredSdk",
+      "updateStyle": "updateStyle",
+      "resultCode": "resultCode",
+      "currentVersion": "currentVersion",
+      "updateAvailabe": "updateAvailabe",
+      "resultText": "resultText",
+      "introduction": "introduction",
+      "dependPackageName": "dependPackageName"
+    },
+    "table": "msg_assist_update_check"
+  },
+  {
+    "topic": "t_verupdate",
+    "data": {
+      "uid": "uid",
+      "appId": "appId",
+      "hid": "hid",
+      "oemid": "oemid",
+      "packagename": "packagename",
+      "resultCode": "resultCode",
+      "xmlList": {
+        "data": {
+          "uid": "uid",
+          "appName": "appName",
+          "errorText": "errorText",
+          "appId": "appId",
+          "hid": "hid",
+          "oemid": "oemid",
+          "appVersion": "appVersion",
+          "value": "value",
+          "errorCode": "errorCode",
+          "type": "type"
+        },
+        "table": "msg_assist_update_statistics_srv"
+      },
+      "resultText": "resultText",
+      "ip": "serverIp"
+    },
+    "table": "msg_assist_update_statistics"
+  }
+]
