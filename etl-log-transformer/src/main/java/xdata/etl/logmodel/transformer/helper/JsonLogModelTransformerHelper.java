@@ -185,7 +185,9 @@ public class JsonLogModelTransformerHelper {
 						o = TypeParser.parse(data.get(k), hbaseColumn.getType()
 								.getClazz());
 					} catch (Exception e) {
-						LOGGER.warn("parse wrong:str:o"
+						LOGGER.warn("parse wrong:str:o:"
+								+ data.get(k)
+								+ ","
 								+ data.get(k).getClass().getName()
 								+ ",table:"
 								+ hbaseColumn.getVersion().getTable().getName()
