@@ -32,7 +32,8 @@ public class KafkaWatchDogTopicSetting extends LogModelBase {
 	public KafkaWatchDogTopicSetting() {
 		threadNum = 1;
 		status = KafkaWatchDogTopicSettingStatus.STOPED;
-		isEnabled = false;
+//		isEnabled = false;
+		isEnabled = true;
 	}
 
 	@ManyToOne(optional = false)

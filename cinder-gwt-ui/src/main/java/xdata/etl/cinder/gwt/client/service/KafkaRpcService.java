@@ -80,5 +80,10 @@ public interface KafkaRpcService extends RemoteService {
 			Integer watchDogId) throws SharedException,
 			ConstraintViolationException;
 
+	List<KafkaTopic> getRemainKafkaTopics(Integer dogId);
+
+	List<KafkaWatchDogTopicSetting> saveWatchDogTopicSettings(Integer dogId,
+			List<Integer> topicIds);
+
 	ValidationSupport dummy();
 }

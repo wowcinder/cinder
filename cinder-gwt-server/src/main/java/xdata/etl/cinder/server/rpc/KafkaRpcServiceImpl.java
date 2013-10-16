@@ -12,10 +12,12 @@ import javax.validation.ConstraintViolationException;
 import org.hibernate.validator.engine.ValidationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotation;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeAnnotations;
 import xdata.etl.cinder.annotations.AuthorizeSystemAnnotations.AuthorizeGroupAnnotation;
+import xdata.etl.cinder.dao.kafka.KafkaDao;
 import xdata.etl.cinder.gwt.client.service.KafkaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
@@ -202,6 +204,37 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 					setting.setStatus(topicSettingsStatus.get(setting.getId()));
 				}
 			}
+		}
+		return list;
+	}
+
+	@Autowired
+	private KafkaDao kafkaDao;
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.ADD_TOPIC_SETTING)
+	@Transactional(readOnly = true)
+	public List<KafkaTopic> getRemainKafkaTopics(Integer dogId) {
+		return kafkaDao.getRemainKafkaTopics(dogId);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.ADD_TOPIC_SETTING)
+	public List<KafkaWatchDogTopicSetting> saveWatchDogTopicSettings(
+			Integer dogId, List<Integer> topicIds) {
+		List<KafkaWatchDogTopicSetting> list = new ArrayList<KafkaWatchDogTopicSetting>();
+		KafkaWatchDog dog = new KafkaWatchDog();
+		dog.setId(dogId);
+		for (Integer topicId : topicIds) {
+			KafkaTopic topic = new KafkaTopic();
+			topic.setId(topicId);
+
+			KafkaWatchDogTopicSetting setting = new KafkaWatchDogTopicSetting();
+			setting.setServer(dog);
+			setting.setTopic(topic);
+			setting.setThreadNum(1);
+			simpleService.save(setting);
+			list.add(setting);
 		}
 		return list;
 	}

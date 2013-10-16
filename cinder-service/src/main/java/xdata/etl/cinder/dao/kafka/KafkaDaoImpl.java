@@ -4,6 +4,7 @@
 package xdata.etl.cinder.dao.kafka;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
@@ -72,5 +74,24 @@ public class KafkaDaoImpl implements KafkaDao {
 				KafkaWatchDog.class, dogId);
 		dog.setRmiPort(rmiPort);
 		getSession().update(dog);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<KafkaTopic> getRemainKafkaTopics(Integer dogId) {
+		List<KafkaWatchDogTopicSetting> now = getSession()
+				.createCriteria(KafkaWatchDogTopicSetting.class)
+				.createAlias("server", "server")
+				.add(Restrictions.eq("server.id", dogId)).list();
+		List<Integer> ids = new ArrayList<Integer>();
+		for (KafkaWatchDogTopicSetting setting : now) {
+			if (setting.getTopic() != null) {
+				ids.add(setting.getTopic().getId());
+			}
+		}
+		List<KafkaTopic> remain = getSession().createCriteria(KafkaTopic.class)
+				.add(Restrictions.not(Restrictions.in("id", ids))).list();
+
+		return remain;
 	}
 }

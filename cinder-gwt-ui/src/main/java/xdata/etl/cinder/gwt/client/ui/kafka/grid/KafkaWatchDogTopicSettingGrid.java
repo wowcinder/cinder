@@ -23,6 +23,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.PagingLoadResult;
+import com.sencha.gxt.messages.client.DefaultMessages;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 
 /**
@@ -91,6 +92,7 @@ public class KafkaWatchDogTopicSettingGrid extends
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
+				mask(DefaultMessages.getMessages().loadMask_msg());
 				RpcServiceUtils.KafkaRpcService
 						.getKafkaWatchDogTopicSettings(
 								getWatchDog().getId(),
@@ -101,6 +103,12 @@ public class KafkaWatchDogTopicSettingGrid extends
 											List<KafkaWatchDogTopicSetting> t) {
 										getStore().clear();
 										getStore().addAll(t);
+									}
+
+									@Override
+									public void post() {
+										super.post();
+										unmask();
 									}
 								});
 			}

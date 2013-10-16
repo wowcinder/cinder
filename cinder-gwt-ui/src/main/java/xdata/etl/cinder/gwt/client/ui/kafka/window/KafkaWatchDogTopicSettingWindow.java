@@ -3,16 +3,29 @@
  */
 package xdata.etl.cinder.gwt.client.ui.kafka.window;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
 import xdata.etl.cinder.gwt.client.common.grid.CinderGrid;
+import xdata.etl.cinder.gwt.client.common.grid.GridConfig;
 import xdata.etl.cinder.gwt.client.common.window.FixedWindow;
 import xdata.etl.cinder.gwt.client.ui.AbstractCenterView;
 import xdata.etl.cinder.gwt.client.ui.kafka.editor.KafkaWatchDogTopicSettingEditor;
+import xdata.etl.cinder.gwt.client.ui.kafka.grid.KafkaTopicGrid;
 import xdata.etl.cinder.gwt.client.ui.kafka.grid.KafkaWatchDogTopicSettingGrid;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
+
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.sencha.gxt.messages.client.DefaultMessages;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 /**
  * @author XuehuiHe
@@ -20,16 +33,107 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetti
  */
 public class KafkaWatchDogTopicSettingWindow extends FixedWindow {
 
-	public static class KafkaWatchDogTopicSettingView extends
-			AbstractCenterView<KafkaWatchDogTopicSetting> {
+	public class MultiAddWindow extends FixedWindow {
+		private final TextButton submitBt;
+		private final KafkaTopicGrid topicsGrid;
 
-		/**
-		 * @param grid
-		 * @param editor
-		 */
+		public MultiAddWindow() {
+			setHeadingText("批量添加Kafka topic");
+
+			submitBt = new TextButton("添加");
+			addButton(submitBt);
+			setButtonAlign(BoxLayoutPack.CENTER);
+
+			topicsGrid = new KafkaTopicGrid(new GridConfig(true, false));
+			topicsGrid.setHeight(450);
+			setWidget(topicsGrid);
+
+			submitBt.addSelectHandler(new SelectHandler() {
+				@Override
+				public void onSelect(SelectEvent event) {
+					List<KafkaTopic> list = topicsGrid.getSelectionModel()
+							.getSelectedItems();
+					if (list.size() == 0) {
+						return;
+					}
+					List<Integer> topicIds = new ArrayList<Integer>();
+					for (KafkaTopic kafkaTopic : list) {
+						topicIds.add(kafkaTopic.getId());
+					}
+					topicsGrid.mask(DefaultMessages.getMessages()
+							.loadMask_msg());
+					RpcServiceUtils.KafkaRpcService
+							.saveWatchDogTopicSettings(
+									grid.getWatchDog().getId(),
+									topicIds,
+									new RpcAsyncCallback<List<KafkaWatchDogTopicSetting>>() {
+
+										@Override
+										public void _onSuccess(
+												List<KafkaWatchDogTopicSetting> t) {
+											grid.getStore().addAll(t);
+										}
+
+										@Override
+										public void post() {
+											super.post();
+											topicsGrid.unmask();
+											MultiAddWindow.this.hide();
+											MultiAddWindow.this
+													.removeFromParent();
+										}
+									});
+				}
+			});
+
+		}
+
+		@Override
+		protected void onShow() {
+			super.onShow();
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+				@Override
+				public void execute() {
+					topicsGrid.mask(DefaultMessages.getMessages()
+							.loadMask_msg());
+					RpcServiceUtils.KafkaRpcService.getRemainKafkaTopics(grid
+							.getWatchDog().getId(),
+							new RpcAsyncCallback<List<KafkaTopic>>() {
+								@Override
+								public void _onSuccess(List<KafkaTopic> t) {
+									topicsGrid.getStore().clear();
+									topicsGrid.getStore().addAll(t);
+								}
+
+								@Override
+								public void post() {
+									super.post();
+									topicsGrid.unmask();
+								}
+							});
+				}
+			});
+		}
+	}
+
+	public class KafkaWatchDogTopicSettingView extends
+			AbstractCenterView<KafkaWatchDogTopicSetting> {
+		private final TextButton addMultiBt;
+
 		public KafkaWatchDogTopicSettingView(
 				CinderGrid<KafkaWatchDogTopicSetting> grid) {
 			super(grid, new KafkaWatchDogTopicSettingEditor());
+			addMultiBt = new TextButton("批量添加");
+			getHeaderBar().add(addMultiBt);
+
+			addMultiBt.addSelectHandler(new SelectHandler() {
+				@Override
+				public void onSelect(SelectEvent event) {
+					MultiAddWindow multiAddWindow = new MultiAddWindow();
+					multiAddWindow.show();
+				}
+			});
+
 		}
 
 		@Override
@@ -75,22 +179,5 @@ public class KafkaWatchDogTopicSettingWindow extends FixedWindow {
 	@Override
 	protected void onShow() {
 		super.onShow();
-		/*Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				RpcServiceUtils.KafkaRpcService
-						.getKafkaWatchDogTopicSettings(
-								grid.getWatchDog().getId(),
-								new RpcAsyncCallback<List<KafkaWatchDogTopicSetting>>() {
-
-									@Override
-									public void _onSuccess(
-											List<KafkaWatchDogTopicSetting> t) {
-										grid.getStore().clear();
-										grid.getStore().addAll(t);
-									}
-								});
-			}
-		});*/
 	}
 }
