@@ -21,6 +21,7 @@ import kafka.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import xdata.etl.cinder.kafka.streamholder.KafkaStreamHolderFactory;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
@@ -31,6 +32,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetti
  * @author XuehuiHe
  * @date 2013年10月16日
  */
+@Service
 public class KafkaConsumerManager2 {
 
 	private static Logger logger = LoggerFactory
@@ -83,10 +85,14 @@ public class KafkaConsumerManager2 {
 			KafkaTopic TopicObj = topicMap.get(topic);
 			List<KafkaStream<Message>> streams = entry.getValue();
 			for (KafkaStream<Message> stream : streams) {
-				executor.submit(holderFactory.createHolder(stream,
-						TopicObj));
+				executor.submit(holderFactory.createHolder(stream, TopicObj));
 			}
 		}
+	}
+
+	public void restart() throws InterruptedException {
+		shutdown();
+		run();
 	}
 
 	public void shutdown() throws InterruptedException {
