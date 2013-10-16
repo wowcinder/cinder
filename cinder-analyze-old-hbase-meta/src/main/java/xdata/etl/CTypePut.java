@@ -116,6 +116,7 @@ public class CTypePut {
 		KafkaTopicFixedModelVersion kafkaTopic = new KafkaTopicFixedModelVersion();
 		kafkaTopic.setName(topic);
 		kafkaTopic.setCharset(KafkaTopicCharset.ISO88591);
+//		kafkaTopic.setCharset(KafkaTopicCharset.UTF8);
 		kafkaTopic.setIsEnabled(true);
 		kafkaTopic.setVersion(version);
 		simpleService.save(kafkaTopic);

@@ -5,7 +5,9 @@ package xdata.etl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.GsonBuilder;
@@ -24,7 +26,9 @@ public class TestJson2 {
 		map.put("table", "msg_apache_log");
 
 		Map<String, String> data = new HashMap<String, String>();
+		List<String> orders = new ArrayList<String>();
 		map.put("data", data);
+		map.put("orders", orders);
 
 		for (Field field : ApacheLog.class.getDeclaredFields()) {
 			int mod = field.getModifiers();
@@ -32,6 +36,7 @@ public class TestJson2 {
 				HbaseColumn hbaseColumn = field
 						.getAnnotation(HbaseColumn.class);
 				data.put(field.getName(), hbaseColumn.name());
+				orders.add(field.getName());
 			}
 		}
 		
