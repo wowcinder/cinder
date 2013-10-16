@@ -13,7 +13,6 @@ import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import xdata.etl.RunableCLI;
-import xdata.etl.entity.cdn.CdnCacheInfo;
 import xdata.etl.hbase.HbaseContext;
 import xdata.etl.hbase.column.HbaseColumnInfo;
 import xdata.etl.hbase.column.HbaseColumnInfoIndex;

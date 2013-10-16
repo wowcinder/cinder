@@ -57,7 +57,7 @@ public abstract class LogModelTransformer<Version extends LogModelVersion<?>> {
 		if (stamp == null) {
 			stamp = new Date();
 		}
-		return (Long.MAX_VALUE - stamp.getTime()) / 1000 + "_" + getRandom();
+		return (10000000000000l - stamp.getTime()) / 1000 + "_" + getRandom();
 	}
 
 	public static String generateKey(String parentKey, Integer index) {

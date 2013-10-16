@@ -21,6 +21,7 @@ public class CleanHbase {
 		HTableDescriptor[] tables = admin.listTables();
 		for (HTableDescriptor hTableDescriptor : tables) {
 			admin.disableTable(hTableDescriptor.getName());
+			admin.deleteTable(hTableDescriptor.getName());
 		}
 		admin.close();
 	}

@@ -66,6 +66,9 @@ public class AnalyzeOldHbaseMeta {
 		for (Field field : getField(clazz)) {
 			String name = getColumnName(field);
 			HbaseTableColumn column = new HbaseTableColumn();
+			if (name.equals("mainPart")) {
+				continue;
+			}
 			column.setName(name);
 			column.setShortname(name);
 			column.setDesc(name);
@@ -74,6 +77,15 @@ public class AnalyzeOldHbaseMeta {
 
 			service.saveHbaseTableColumn(column);
 		}
+		HbaseTableColumn column = new HbaseTableColumn();
+		String name = "version";
+		column.setName(name);
+		column.setShortname(name);
+		column.setDesc(name);
+		column.setVersion(v);
+		column.setType(HbaseTableColumnType.STRING);
+
+		service.saveHbaseTableColumn(column);
 	}
 
 	private static List<Field> getField(Class<?> clazz) {
