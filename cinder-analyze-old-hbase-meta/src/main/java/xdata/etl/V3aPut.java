@@ -57,6 +57,14 @@ public class V3aPut {
 			Map<String, Object> data = (Map<String, Object>) map.get("data");
 			save(table, topic, data, KafkaTopicCharset.GBK);
 		}
+		List<Map<String, Object>> list3 = gson.fromJson(read("apache.json"),
+				List.class);
+		for (Map<String, Object> map : list3) {
+			String table = (String) map.get("table");
+			String topic = (String) map.get("topic");
+			Map<String, Object> data = (Map<String, Object>) map.get("data");
+			save(table, topic, data, KafkaTopicCharset.UTF8);
+		}
 		ac.close();
 	}
 

@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -292,15 +294,29 @@ public class TypeParser {
 
 	private static Date parseDate(String value) {
 		if (value.matches("^\\d+$")) {
-			Long l = parseLong(value);
-			return getAsDate(l);
+			Calendar c = Calendar.getInstance();
+			c.setTimeInMillis(Long.parseLong(value));
+			return c.getTime();
 		} else {
+			Pattern pattern = Pattern
+					.compile("^\\d{4}\\-\\d{2}-\\d{2}[\\s/]\\d{2}:\\d{2}:\\d{2}");
+			Matcher matcher = pattern.matcher(value);
+			String dateStr = null;
+			if (matcher.find()) {
+				dateStr = matcher.group();
+			}
+			if (dateStr == null) {
+				return null;
+			}
+			dateStr = dateStr.replace("/", " ");
+
+			Date date = null;
 			try {
-				return df.parse(value);
+				date = df.parse(dateStr);
 			} catch (ParseException e) {
 			}
+			return date;
 		}
-		return null;
 	}
 
 	public static String getAsString(Object o) {

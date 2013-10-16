@@ -1,0 +1,19 @@
+[{
+  "topic": "apache",
+  "data": {
+    "requestUri": "request_uri",
+    "userIp": "user_ip",
+    "httpCode": "http_code",
+    "requestTime": "request_time",
+    "userAgent": "user_agent",
+    "requestHost": "request_host",
+    "serverIp": "server_ip",
+    "referer": "referer",
+    "usedTime": "used_time",
+    "requestMethod": "request_method",
+    "responseLen": "response_len",
+    "urlQueryString": "url_query_string"
+  },
+  "table": "msg_apache_log"
+}
+]
