@@ -37,7 +37,6 @@ public class WatchDogManagerClientImpl implements WatchDogManagerClient {
 
 	@Override
 	public void reportTopicStatus(Set<Integer> aliveTopicIds) {
-		// TODO Auto-generated method stub
-
+		watchDogManagerRMI.reportTopicStatus(aliveTopicIds);
 	}
 }

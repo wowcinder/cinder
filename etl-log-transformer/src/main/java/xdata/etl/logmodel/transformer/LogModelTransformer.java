@@ -38,7 +38,7 @@ public abstract class LogModelTransformer<Version extends LogModelVersion<?>> {
 	}
 
 	public abstract Map<String, List<HbaseRecord<String>>> transform(String log);
-
+	
 	public static Date getStamp(String stamp) {
 		if (!stamp.matches("^\\d+$")) {
 			return null;
