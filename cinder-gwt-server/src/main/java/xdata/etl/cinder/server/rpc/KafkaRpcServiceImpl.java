@@ -24,7 +24,6 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForKafka;
 import xdata.etl.cinder.service.SimpleService;
 import xdata.etl.cinder.service.kafka.KafkaWatchDogStatusManager;
@@ -190,24 +189,6 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 		return pr;
 	}
 
-	@Override
-	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.QUERY_TOPIC_SETTING_STATUS)
-	public List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettingStatuss(
-			Integer watchDogId) throws SharedException,
-			ConstraintViolationException {
-		List<KafkaWatchDogTopicSetting> list = getKafkaWatchDogTopicSettings(watchDogId);
-		if (list != null && list.size() > 0) {
-			Map<Integer, KafkaWatchDogTopicSettingStatus> topicSettingsStatus = kafkaStatusManager
-					.getTopicSettingsStatus();
-			for (KafkaWatchDogTopicSetting setting : list) {
-				if (topicSettingsStatus.containsKey(setting.getId())) {
-					setting.setStatus(topicSettingsStatus.get(setting.getId()));
-				}
-			}
-		}
-		return list;
-	}
-
 	@Autowired
 	private KafkaDao kafkaDao;
 
@@ -237,6 +218,12 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 			list.add(setting);
 		}
 		return list;
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.RESTART_WATCH_DOG)
+	public void restart(Integer dogId) {
+		kafkaStatusManager.restart(dogId);
 	}
 
 }

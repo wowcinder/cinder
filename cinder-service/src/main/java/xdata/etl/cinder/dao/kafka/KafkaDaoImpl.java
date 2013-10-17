@@ -94,4 +94,10 @@ public class KafkaDaoImpl implements KafkaDao {
 
 		return remain;
 	}
+
+	@Override
+	public KafkaWatchDog getDogById(Integer id) {
+		return (KafkaWatchDog) getSession().createCriteria(KafkaWatchDog.class)
+				.add(Restrictions.idEq(id)).uniqueResult();
+	}
 }

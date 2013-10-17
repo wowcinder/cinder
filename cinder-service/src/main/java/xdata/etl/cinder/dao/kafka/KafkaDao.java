@@ -6,6 +6,7 @@ package xdata.etl.cinder.dao.kafka;
 import java.util.List;
 
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 
 /**
  * @author XuehuiHe
@@ -29,4 +30,10 @@ public interface KafkaDao {
 	public void updateRmiPort(Integer dogId, Integer rmiPort);
 	
 	public List<KafkaTopic> getRemainKafkaTopics(Integer dogId);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public KafkaWatchDog getDogById(Integer id);
 }

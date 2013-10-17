@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import xdata.etl.cinder.dao.kafka.KafkaDao;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 
 /**
  * @author XuehuiHe
@@ -22,5 +23,10 @@ public class KafkaTransactionDaoImpl implements KafkaTransactionDao {
 	@Override
 	public Integer queryWatchDogIdByIp(String ip) {
 		return kafkaDao.queryWatchDogIdByIp(ip);
+	}
+
+	@Override
+	public KafkaWatchDog getDogById(Integer id) {
+		return kafkaDao.getDogById(id);
 	}
 }

@@ -24,4 +24,9 @@ public interface KafkaWatchDogStatusManager {
 	public Map<Integer, KafkaProcessServerStatus> getWatchDogStauts();
 
 	public Integer getWatchDogIdByIp(String ip);
+
+	/**
+	 * @param dogId
+	 */
+	public void restart(Integer dogId);
 }

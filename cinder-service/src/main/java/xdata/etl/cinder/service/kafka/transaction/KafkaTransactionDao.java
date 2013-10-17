@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.service.kafka.transaction;
 
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
+
 
 /**
  * @author XuehuiHe
@@ -10,4 +12,5 @@ package xdata.etl.cinder.service.kafka.transaction;
  */
 public interface KafkaTransactionDao {
 	public Integer queryWatchDogIdByIp(String ip);
+	public KafkaWatchDog getDogById(Integer id);
 }
