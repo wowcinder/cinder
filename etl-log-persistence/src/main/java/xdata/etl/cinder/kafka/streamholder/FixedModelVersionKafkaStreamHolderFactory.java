@@ -78,7 +78,6 @@ public class FixedModelVersionKafkaStreamHolderFactory implements
 		@Override
 		public void run() {
 			try {
-
 				ConsumerIterator<Message> it = getStream().iterator();
 				while (it.hasNext()) {
 					try {
@@ -92,14 +91,14 @@ public class FixedModelVersionKafkaStreamHolderFactory implements
 						getLazyHTableService().put(recordMap);
 					} catch (Exception e) {
 						logger.warn(e.getMessage());
-						e.printStackTrace();
+						logger.trace(e.getMessage(), e);
 					}
 
 				}
 
 			} catch (Exception e) {
 				logger.warn(e.getMessage());
-				e.printStackTrace();
+				logger.trace(e.getMessage(), e);
 			}
 		}
 

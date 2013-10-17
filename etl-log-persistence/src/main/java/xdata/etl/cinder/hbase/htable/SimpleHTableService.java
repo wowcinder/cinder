@@ -5,8 +5,6 @@ package xdata.etl.cinder.hbase.htable;
 
 import java.io.IOException;
 
-import javax.annotation.PreDestroy;
-
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.springframework.stereotype.Service;
@@ -27,9 +25,7 @@ public class SimpleHTableService extends AbstractHTableService {
 	}
 
 	@Override
-	@PreDestroy
 	public void shutdown() {
-
 	}
 
 }

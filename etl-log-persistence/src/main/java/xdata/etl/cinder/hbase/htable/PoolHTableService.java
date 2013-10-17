@@ -2,8 +2,6 @@ package xdata.etl.cinder.hbase.htable;
 
 import java.io.IOException;
 
-import javax.annotation.PreDestroy;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
@@ -26,12 +24,12 @@ public class PoolHTableService extends AbstractHTableService {
 	}
 
 	@Override
-	@PreDestroy
+//	@PreDestroy
 	public void shutdown() throws IOException {
-		if (pool != null) {
-			pool.close();
-			pool = null;
-		}
+//		if (pool != null) {
+//			pool.close();
+//			pool = null;
+//		}
 	}
 
 }
