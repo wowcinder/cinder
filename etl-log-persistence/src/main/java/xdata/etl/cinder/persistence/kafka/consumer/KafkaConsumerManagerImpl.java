@@ -190,7 +190,9 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 		if (connector != null && threadTotal > 0) {
 			if (compareAndSet(ConsumerStatus.RUNNING,
 					ConsumerStatus.COMMITOFFSETSING)) {
+				logger.info("commitOffsets.....");
 				connector.commitOffsets();
+				logger.info("commitOffsets end");
 				status = ConsumerStatus.RUNNING;
 			}
 		}
