@@ -73,8 +73,9 @@ public class CTypeLogModelTransformer extends
 		Date stamp = getStamp(stampStr);
 		CTypeLogHelper helper = new CTypeLogHelper(log);
 		if (!helper.isMatchColumns()) {
-			String msg = "columns not match\traw:" + raw + "\tmsg:"
-					+ helper.getColumnsMatchMsg();
+			String msg = "columns not match\t"
+					+ getVersion().getModel().getName() + ",raw:" + raw
+					+ "\tmsg:" + helper.getColumnsMatchMsg();
 			throw new LogTransformException(msg);
 		}
 		Integer repeatedTimes = helper.getRepeatTimes();
@@ -181,7 +182,7 @@ public class CTypeLogModelTransformer extends
 			if (raw.charAt(raw.length() - 1) == '|') {
 				isVerticalEnding = true;
 			}
-			strs = raw.split("\\|");
+			strs = raw.split("\\||\\t");
 			if (isVerticalEnding) {
 				String[] tempStrs = new String[strs.length + 1];
 				for (int i = 0; i < strs.length; i++) {
