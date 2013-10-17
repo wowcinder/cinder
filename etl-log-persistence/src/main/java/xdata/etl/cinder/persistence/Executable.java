@@ -3,6 +3,8 @@
  */
 package xdata.etl.cinder.persistence;
 
+import java.util.concurrent.TimeUnit;
+
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -49,5 +51,9 @@ public class Executable {
 			}
 		});
 		manager.run();
+		
+		TimeUnit.SECONDS.sleep(10);
+		manager.shutdown();
+		
 	}
 }

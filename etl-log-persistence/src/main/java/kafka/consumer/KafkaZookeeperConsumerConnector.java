@@ -38,11 +38,12 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 		}
 		super.shutdown();
 	}
-	
-	public ZkClient getZkClient(){
+
+	public ZkClient getZkClient() {
 		Field field;
 		try {
-			field = ZookeeperConsumerConnector.class.getField("zkClient");
+			field = ZookeeperConsumerConnector.class
+					.getDeclaredField("kafka$consumer$ZookeeperConsumerConnector$$zkClient");
 			field.setAccessible(true);
 			return (ZkClient) field.get(this);
 		} catch (SecurityException e) {
@@ -61,7 +62,7 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 		Method method;
 		try {
 			method = ZookeeperConsumerConnector.class
-					.getMethod("sendShutdownToAllQueues");
+					.getDeclaredMethod("sendShutdownToAllQueues");
 			method.setAccessible(true);
 			method.invoke(this);
 		} catch (SecurityException e) {
@@ -81,7 +82,8 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 	protected Option<Fetcher> getFetcher() {
 		Field field;
 		try {
-			field = ZookeeperConsumerConnector.class.getField("fetcher");
+			field = ZookeeperConsumerConnector.class
+					.getDeclaredField("kafka$consumer$ZookeeperConsumerConnector$$fetcher");
 			field.setAccessible(true);
 			return (Option<Fetcher>) field.get(this);
 		} catch (SecurityException e) {
@@ -99,7 +101,8 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 	protected AtomicBoolean getIsShuttingDown() {
 		Field field;
 		try {
-			field = ZookeeperConsumerConnector.class.getField("isShuttingDown");
+			field = ZookeeperConsumerConnector.class
+					.getDeclaredField("kafka$consumer$ZookeeperConsumerConnector$$isShuttingDown");
 			field.setAccessible(true);
 			return (AtomicBoolean) field.get(this);
 		} catch (SecurityException e) {
@@ -117,7 +120,8 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 	protected KafkaScheduler getScheduler() {
 		Field field;
 		try {
-			field = ZookeeperConsumerConnector.class.getField("scheduler");
+			field = ZookeeperConsumerConnector.class
+					.getDeclaredField("scheduler");
 			field.setAccessible(true);
 			return (KafkaScheduler) field.get(this);
 		} catch (SecurityException e) {
@@ -136,7 +140,7 @@ public class KafkaZookeeperConsumerConnector extends ZookeeperConsumerConnector 
 		Field field;
 		try {
 			field = ZookeeperConsumerConnector.class
-					.getField("wildcardTopicWatcher");
+					.getDeclaredField("kafka$consumer$ZookeeperConsumerConnector$$wildcardTopicWatcher");
 			field.setAccessible(true);
 			return (ZookeeperTopicEventWatcher) field.get(this);
 		} catch (SecurityException e) {
