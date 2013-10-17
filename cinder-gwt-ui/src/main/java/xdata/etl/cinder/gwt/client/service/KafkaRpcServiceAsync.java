@@ -50,6 +50,10 @@ public interface KafkaRpcServiceAsync {
 
     public void saveWatchDogTopicSettings(Integer arg0, List<Integer> arg1, AsyncCallback<List<KafkaWatchDogTopicSetting>> callback);
 
+    public void start(Integer arg0, AsyncCallback<Void> callback);
+
+    public void stop(Integer arg0, AsyncCallback<Void> callback);
+
     public void restart(Integer arg0, AsyncCallback<Void> callback);
 
 }

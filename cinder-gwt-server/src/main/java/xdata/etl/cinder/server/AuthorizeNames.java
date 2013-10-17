@@ -73,7 +73,7 @@ public class AuthorizeNames {
 		public static final String UPDATE_WATCH_DOG = "修改WATCH_DOG";
 		public static final String DELETE_WATCH_DOG = "删除WATCH_DOG";
 		public static final String QUERY_WATCH_DOG = "查询WATCH_DOG";
-		public static final String RESTART_WATCH_DOG = "重启WATCH_DOG";
+		public static final String OP_WATCH_DOG = "操作WATCH_DOG";
 
 		public static final String ADD_TOPIC_SETTING = "添加TOPIC_SETTING";
 		public static final String UPDATE_TOPIC_SETTING = "修改TOPIC_SETTING";

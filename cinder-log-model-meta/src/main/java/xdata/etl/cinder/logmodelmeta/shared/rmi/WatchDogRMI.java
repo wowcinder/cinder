@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.rmi;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * 
  * WatchDog 接收的RMI
@@ -15,5 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public interface WatchDogRMI {
 	public void restart();
 
-	public AtomicBoolean getIsRunning();
+	public void start();
+
+	public void stop();
+
 }

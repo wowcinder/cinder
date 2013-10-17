@@ -29,4 +29,14 @@ public interface KafkaWatchDogStatusManager {
 	 * @param dogId
 	 */
 	public void restart(Integer dogId);
+
+	/**
+	 * @param dogId
+	 */
+	public void start(Integer dogId);
+
+	/**
+	 * @param dogId
+	 */
+	public void stop(Integer dogId);
 }

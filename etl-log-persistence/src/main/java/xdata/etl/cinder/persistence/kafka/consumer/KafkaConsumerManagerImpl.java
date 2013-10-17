@@ -3,6 +3,7 @@
  */
 package xdata.etl.cinder.persistence.kafka.consumer;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Resource;
 
@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sun.misc.Unsafe;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
@@ -35,8 +36,38 @@ import xdata.etl.cinder.persistence.rmi.WatchDogManagerClient;
  * @author XuehuiHe
  * @date 2013年10月16日
  */
+@SuppressWarnings("restriction")
 @Service
 public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
+
+	private static Unsafe unsafe = null;
+	static {
+		try {
+			Class<?> clazz = Unsafe.class;
+			Field f;
+			f = clazz.getDeclaredField("theUnsafe");
+			f.setAccessible(true);
+			unsafe = (Unsafe) f.get(clazz);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static final long valueOffset;
+
+	static {
+		try {
+			valueOffset = unsafe
+					.objectFieldOffset(KafkaConsumerManagerImpl.class
+							.getDeclaredField("status"));
+		} catch (Exception ex) {
+			throw new Error(ex);
+		}
+	}
 
 	private static Logger logger = LoggerFactory
 			.getLogger(KafkaConsumerManagerImpl.class);
@@ -53,26 +84,21 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	@Autowired
 	private WatchDogManagerClient client;
 
-	private final AtomicBoolean isRunning;
+	private volatile ConsumerStatus status;
 
 	private ConsumerConnector connector;
 	private ExecutorService executor;
 	private int threadTotal;
 
 	public KafkaConsumerManagerImpl() {
-		isRunning = new AtomicBoolean(false);
+		status = ConsumerStatus.STOPED;
 	}
 
 	public boolean run() {
-		if (isRunning.get()) {
-			logger.info("consuner已经启动");
+		if (!compareAndSet(ConsumerStatus.STOPED, ConsumerStatus.STARTING)) {
+			logger.info("consuner正处在" + status.name() + ",无法启动");
 			return false;
 		}
-		if (!isRunning.compareAndSet(false, true)) {
-			logger.info("consuner正在启动中....");
-			return false;
-		}
-
 		threadTotal = 0;
 		logger.info("consuner启动.....");
 		this.connector = kafka.consumer.Consumer
@@ -92,36 +118,36 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 					setting.getThreadNum());
 			threadTotal += setting.getThreadNum();
 		}
+		if (threadTotal > 0) {
+			// init connector
+			Map<String, List<KafkaStream<Message>>> consumerMap = connector
+					.createMessageStreams(topicCountMap);
+			executor = Executors.newFixedThreadPool(threadTotal);
 
-		// init connector
-		Map<String, List<KafkaStream<Message>>> consumerMap = connector
-				.createMessageStreams(topicCountMap);
-		executor = Executors.newFixedThreadPool(threadTotal);
-
-		for (Entry<String, List<KafkaStream<Message>>> entry : consumerMap
-				.entrySet()) {
-			String topic = entry.getKey();
-			KafkaTopic TopicObj = topicMap.get(topic);
-			List<KafkaStream<Message>> streams = entry.getValue();
-			for (KafkaStream<Message> stream : streams) {
-				executor.submit(holderFactory.createHolder(stream, TopicObj));
+			for (Entry<String, List<KafkaStream<Message>>> entry : consumerMap
+					.entrySet()) {
+				String topic = entry.getKey();
+				KafkaTopic TopicObj = topicMap.get(topic);
+				List<KafkaStream<Message>> streams = entry.getValue();
+				for (KafkaStream<Message> stream : streams) {
+					executor.submit(holderFactory
+							.createHolder(stream, TopicObj));
+				}
 			}
 		}
 
 		client.enabled();
 		client.tick();
 		logger.info("consuner启动完毕.....");
+		status = ConsumerStatus.RUNNING;
 
 		return true;
 	}
 
 	public boolean shutdown() throws InterruptedException {
-		if (!isRunning.get()) {
-			logger.info("consuner已经关闭...");
-			return false;
-		}
-		if (!isRunning.compareAndSet(true, false)) {
-			logger.info("consuner正在关闭中...");
+
+		if (!compareAndSet(ConsumerStatus.RUNNING, ConsumerStatus.STOPPING)) {
+			logger.info("consuner正处在" + status.name() + ",无法关闭");
 			return false;
 		}
 		client.disabled();
@@ -140,6 +166,16 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 			}
 		}
 		logger.info("consuner关闭完毕.....");
+		status = ConsumerStatus.STOPED;
 		return true;
+	}
+
+	public final boolean compareAndSet(ConsumerStatus expect,
+			ConsumerStatus update) {
+		return unsafe.compareAndSwapObject(this, valueOffset, expect, update);
+	}
+
+	public enum ConsumerStatus {
+		STARTING, RUNNING, STOPPING, STOPED;
 	}
 }

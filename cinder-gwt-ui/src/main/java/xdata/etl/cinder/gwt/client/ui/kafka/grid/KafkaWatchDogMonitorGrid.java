@@ -61,12 +61,83 @@ public class KafkaWatchDogMonitorGrid extends CinderGrid<KafkaWatchDog> {
 					return c.name();
 				}
 			}.getCell());
-			ColumnConfig<KafkaWatchDog, String> topics = new ColumnConfig<KafkaWatchDog, String>(
+
+			ColumnConfig<KafkaWatchDog, String> stop = createColumn("stop");
+			TextButtonCell stopBt = new TextButtonCell();
+			stop.setCell(stopBt);
+
+			ColumnConfig<KafkaWatchDog, String> start = createColumn("start");
+			TextButtonCell startBt = new TextButtonCell();
+			start.setCell(startBt);
+
+			ColumnConfig<KafkaWatchDog, String> restart = createColumn("restart");
+			TextButtonCell restartBt = new TextButtonCell();
+			restart.setCell(restartBt);
+
+			startBt.addSelectHandler(new SelectHandler() {
+
+				@Override
+				public void onSelect(SelectEvent event) {
+					KafkaWatchDog dog = getStore().get(
+							event.getContext().getIndex());
+					RpcServiceUtils.KafkaRpcService.start(dog.getId(),
+							new RpcAsyncCallback<Void>() {
+								@Override
+								public void _onSuccess(Void t) {
+
+								}
+							});
+
+				}
+			});
+
+			stopBt.addSelectHandler(new SelectHandler() {
+
+				@Override
+				public void onSelect(SelectEvent event) {
+					KafkaWatchDog dog = getStore().get(
+							event.getContext().getIndex());
+					RpcServiceUtils.KafkaRpcService.stop(dog.getId(),
+							new RpcAsyncCallback<Void>() {
+								@Override
+								public void _onSuccess(Void t) {
+
+								}
+							});
+
+				}
+			});
+
+			restartBt.addSelectHandler(new SelectHandler() {
+				@Override
+				public void onSelect(SelectEvent event) {
+					KafkaWatchDog dog = getStore().get(
+							event.getContext().getIndex());
+					RpcServiceUtils.KafkaRpcService.restart(dog.getId(),
+							new RpcAsyncCallback<Void>() {
+								@Override
+								public void _onSuccess(Void t) {
+
+								}
+							});
+				}
+			});
+
+			columns.add(name);
+			columns.add(status);
+			columns.add(stop);
+			columns.add(start);
+			columns.add(restart);
+		}
+
+		private ColumnConfig<KafkaWatchDog, String> createColumn(
+				final String name) {
+			return new ColumnConfig<KafkaWatchDog, String>(
 					new ValueProvider<KafkaWatchDog, String>() {
 
 						@Override
 						public String getValue(KafkaWatchDog object) {
-							return "restart";
+							return name;
 						}
 
 						@Override
@@ -79,31 +150,6 @@ public class KafkaWatchDogMonitorGrid extends CinderGrid<KafkaWatchDog> {
 							return null;
 						}
 					});
-			TextButtonCell bt = new TextButtonCell();
-			topics.setCell(bt);
-			columns.add(name);
-			columns.add(status);
-			columns.add(topics);
-
-			bt.addSelectHandler(new SelectHandler() {
-				@Override
-				public void onSelect(SelectEvent event) {
-					KafkaWatchDog dog = getStore().get(
-							event.getContext().getIndex());
-					RpcServiceUtils.KafkaRpcService.restart(dog.getId(),
-							new RpcAsyncCallback<Void>() {
-								@Override
-								public void _onSuccess(Void t) {
-
-								}
-
-								@Override
-								public void post() {
-									super.post();
-								}
-							});
-				}
-			});
 		}
 
 	}

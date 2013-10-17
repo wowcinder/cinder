@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -89,9 +90,11 @@ public class KafkaDaoImpl implements KafkaDao {
 				ids.add(setting.getTopic().getId());
 			}
 		}
-		List<KafkaTopic> remain = getSession().createCriteria(KafkaTopic.class)
-				.add(Restrictions.not(Restrictions.in("id", ids))).list();
-
+		Criteria c = getSession().createCriteria(KafkaTopic.class);
+		if (ids.size() > 0) {
+			c.add(Restrictions.not(Restrictions.in("id", ids)));
+		}
+		List<KafkaTopic> remain = c.list();
 		return remain;
 	}
 

@@ -221,9 +221,21 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	}
 
 	@Override
-	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.RESTART_WATCH_DOG)
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.OP_WATCH_DOG)
 	public void restart(Integer dogId) {
 		kafkaStatusManager.restart(dogId);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.OP_WATCH_DOG)
+	public void start(Integer dogId) {
+		kafkaStatusManager.start(dogId);
+	}
+
+	@Override
+	@AuthorizeAnnotation(value = AuthorizeAnnotationNamesForKafka.OP_WATCH_DOG)
+	public void stop(Integer dogId) {
+		kafkaStatusManager.stop(dogId);
 	}
 
 }

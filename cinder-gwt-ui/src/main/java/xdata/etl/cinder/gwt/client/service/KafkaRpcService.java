@@ -83,5 +83,9 @@ public interface KafkaRpcService extends RemoteService {
 
 	void restart(Integer dogId);
 
+	void start(Integer dogId);
+
+	void stop(Integer dogId);
+
 	ValidationSupport dummy();
 }

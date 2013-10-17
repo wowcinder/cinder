@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.persistence.rmi;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,32 +21,46 @@ public class WatchDogRMIService implements WatchDogRMI {
 	@Autowired
 	private LogModelTransformerManager transformerManager;
 
-	private final AtomicBoolean isRunning;
-
-	public WatchDogRMIService() {
-		isRunning = new AtomicBoolean(false);
+	@Override
+	public void restart() {
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					if (kafkaConsumerManager.shutdown()) {
+						transformerManager.clear();
+						kafkaConsumerManager.run();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 
 	@Override
-	public void restart() {
-		if (isRunning.compareAndSet(true, false)) {
-			new Thread() {
-				@Override
-				public void run() {
-					try {
-						if(kafkaConsumerManager.shutdown()){
-							transformerManager.clear();
-							kafkaConsumerManager.run();
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}.start();
-		}
+	public void start() {
+		new Thread() {
+			public void run() {
+				kafkaConsumerManager.run();
+			};
+		}.start();
 	}
 
-	public AtomicBoolean getIsRunning() {
-		return isRunning;
+	@Override
+	public void stop() {
+		new Thread() {
+			public void run() {
+				try {
+					if (kafkaConsumerManager.shutdown()) {
+						transformerManager.clear();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			};
+		}.start();
+
 	}
+
 }
