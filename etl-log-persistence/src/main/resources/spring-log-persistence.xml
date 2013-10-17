@@ -30,10 +30,13 @@
 		<property name="serviceUrl" value="${watch_dog_manager_rmi}" />
 		<property name="serviceInterface"
 			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
+		<property name="lookupStubOnStartup" value="false" />
+		<property name="refreshStubOnConnectFailure" value="false" />
 	</bean>
 	<!-- /RMI -->
 
-	<bean class="xdata.etl.cinder.persistence.config.ConfigurationService.PropertyHolder">
+	<bean
+		class="xdata.etl.cinder.persistence.config.ConfigurationService.PropertyHolder">
 		<constructor-arg>
 			<value>file:${etl.conf}/kafka.properties</value>
 		</constructor-arg>
@@ -44,12 +47,14 @@
 
 
 	<!-- Hbase -->
-	<bean id="poolHTableService" class="xdata.etl.cinder.persistence.hbase.htable.PoolHTableService">
+	<bean id="poolHTableService"
+		class="xdata.etl.cinder.persistence.hbase.htable.PoolHTableService">
 		<constructor-arg ref="hbaseConf" />
 		<constructor-arg value="${htable_service_pool_size}" />
 	</bean>
 
-	<bean id="lazyHTableService" class="xdata.etl.cinder.persistence.hbase.lazy.LazyHTableServiceImpl">
+	<bean id="lazyHTableService"
+		class="xdata.etl.cinder.persistence.hbase.lazy.LazyHTableServiceImpl">
 		<property name="hTableService" ref="poolHTableService" />
 		<property name="thresholdSize" value="${lazy_threshold_size}" />
 		<property name="timeout" value="${lazy_time_out}" />
