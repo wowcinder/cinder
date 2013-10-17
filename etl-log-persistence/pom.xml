@@ -241,7 +241,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>xdata.etl.cinder.Executable</mainClass>
+							<mainClass>xdata.etl.cinder.persistence.Executable</mainClass>
 							<classpathPrefix>dependency-jars/</classpathPrefix>
 						</manifest>
 					</archive>
