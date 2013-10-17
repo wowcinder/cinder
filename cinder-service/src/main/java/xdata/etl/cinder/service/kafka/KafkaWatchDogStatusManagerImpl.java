@@ -5,9 +5,7 @@ package xdata.etl.cinder.service.kafka;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,7 @@ public class KafkaWatchDogStatusManagerImpl implements
 	private final Map<Integer, KafkaProcessServerStatus> dogsStatusMap;
 	private final Set<Integer> aliveDogs;
 	private final Set<Integer> lastTickDogs;
+	@Autowired
 	private KafkaTransactionDao transactionDao;
 	private final Map<String, Integer> ipToId;
 
@@ -35,25 +34,6 @@ public class KafkaWatchDogStatusManagerImpl implements
 		aliveDogs = new HashSet<Integer>();
 		ipToId = new HashMap<String, Integer>();
 		lastTickDogs = new HashSet<Integer>();
-	}
-
-	@Override
-	public synchronized void addKafkaWatchDog(KafkaWatchDog dog) {
-		dogsStatusMap.put(dog.getId(), dog.getStatus());
-	}
-
-	@Override
-	public synchronized void removeKafkaWatchDog(KafkaWatchDog dog) {
-		dogsStatusMap.remove(dog.getId());
-		String ip = null;
-		for (Entry<String, Integer> entry : ipToId.entrySet()) {
-			Integer id = entry.getValue();
-			if (dog.getId().equals(id)) {
-				ip = entry.getKey();
-				break;
-			}
-		}
-		ipToId.remove(ip);
 	}
 
 	@Override
@@ -79,7 +59,11 @@ public class KafkaWatchDogStatusManagerImpl implements
 	public synchronized void checkAliveDog() {
 		for (Integer dogId : aliveDogs) {
 			if (!lastTickDogs.contains(dogId)) {
-				dogsStatusMap.put(dogId, KafkaProcessServerStatus.EXCEPTION);
+				if (!KafkaProcessServerStatus.STARTING.equals(dogsStatusMap
+						.get(dogId))) {
+					dogsStatusMap
+							.put(dogId, KafkaProcessServerStatus.EXCEPTION);
+				}
 			}
 		}
 		lastTickDogs.clear();
@@ -94,23 +78,9 @@ public class KafkaWatchDogStatusManagerImpl implements
 		return dogsStatusMap;
 	}
 
-	public KafkaTransactionDao getTransactionDao() {
-		return transactionDao;
-	}
-
-	@Autowired
+	
 	public void setTransactionDao(KafkaTransactionDao transactionDao) {
 		this.transactionDao = transactionDao;
-		init();
-	}
-
-	private void init() {
-		List<Integer> ids = transactionDao.getAllWatchDogIds();
-		synchronized (this.dogsStatusMap) {
-			for (Integer id : ids) {
-				dogsStatusMap.put(id, KafkaProcessServerStatus.STOPED);
-			}
-		}
 	}
 
 	public Integer getWatchDogIdByIp(String ip) {

@@ -3,7 +3,6 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.rmi;
 
-import java.util.Set;
 
 /**
  * 服务端接收的RMI
@@ -30,5 +29,4 @@ public interface WatchDogManagerRMI {
 	 */
 	public void tick();
 
-	public void reportTopicStatus(Set<Integer> aliveTopicIds);
 }

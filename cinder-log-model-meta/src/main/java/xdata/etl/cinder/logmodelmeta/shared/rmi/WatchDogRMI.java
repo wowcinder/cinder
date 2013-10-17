@@ -3,8 +3,7 @@
  */
 package xdata.etl.cinder.logmodelmeta.shared.rmi;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 
@@ -14,38 +13,7 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
  * @date 2013年9月26日
  */
 public interface WatchDogRMI {
-	/**
-	 * LogModelVersion发生了改变
-	 * 
-	 * @param version
-	 */
-	public void logModelVersionChanged(LogModelVersion<?> version);
+	public void restart();
 
-	/**
-	 * KafkaTopic 发生了改变
-	 * 
-	 * @param topic
-	 */
-	public void topicChanged(KafkaTopic topic);
-
-	/**
-	 * 启动某个kafka主题的监听
-	 * 
-	 * @param topic
-	 */
-	public void startTopic(KafkaTopic topic);
-
-	/**
-	 * 停止某个kafka主题的监听
-	 * 
-	 * @param topic
-	 */
-	public void stopTopic(KafkaTopic topic);
-
-	/**
-	 * 重启某个kafka主题的监听
-	 * 
-	 * @param topic
-	 */
-	public void restartTopic(KafkaTopic topic);
+	public AtomicBoolean getIsRunning();
 }

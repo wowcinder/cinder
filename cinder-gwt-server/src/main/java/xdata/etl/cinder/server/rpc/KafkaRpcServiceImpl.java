@@ -22,12 +22,12 @@ import xdata.etl.cinder.gwt.client.service.KafkaRpcService;
 import xdata.etl.cinder.logmodelmeta.shared.entity.LogModelVersion;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaTopic;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
+import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDogTopicSetting.KafkaWatchDogTopicSettingStatus;
 import xdata.etl.cinder.server.AuthorizeNames.AuthorizeAnnotationNamesForKafka;
 import xdata.etl.cinder.service.SimpleService;
-import xdata.etl.cinder.service.kafka.KafkaStatusManager;
+import xdata.etl.cinder.service.kafka.KafkaWatchDogStatusManager;
 import xdata.etl.cinder.shared.exception.SharedException;
 import xdata.etl.cinder.shared.paging.EtlPagingLoadConfigBean;
 
@@ -43,7 +43,7 @@ public class KafkaRpcServiceImpl implements KafkaRpcService {
 	@Autowired
 	private SimpleService simpleService;
 	@Autowired
-	private KafkaStatusManager kafkaStatusManager;
+	private KafkaWatchDogStatusManager kafkaStatusManager;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

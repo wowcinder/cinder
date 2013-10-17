@@ -5,7 +5,6 @@ package xdata.etl.cinder.service.kafka;
 
 import java.util.Map;
 
-import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog;
 import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProcessServerStatus;
 
 /**
@@ -13,9 +12,6 @@ import xdata.etl.cinder.logmodelmeta.shared.entity.kafka.KafkaWatchDog.KafkaProc
  * @date 2013年10月11日
  */
 public interface KafkaWatchDogStatusManager {
-	public void addKafkaWatchDog(KafkaWatchDog dog);
-
-	public void removeKafkaWatchDog(KafkaWatchDog dog);
 
 	public void login(Integer dogId);
 

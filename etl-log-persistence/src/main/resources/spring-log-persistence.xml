@@ -28,14 +28,12 @@
 	<bean id="watchDogManagerRMI" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
 
 		<property name="serviceUrl" value="${watch_dog_manager_rmi}" />
-		<!--<property name="serviceUrl" value="rmi://localhost:1199/watchdog_manager_rmi" 
-			/> -->
 		<property name="serviceInterface"
 			value="xdata.etl.cinder.logmodelmeta.shared.rmi.WatchDogManagerRMI" />
 	</bean>
 	<!-- /RMI -->
 
-	<bean class="xdata.etl.cinder.service.InitConfigService.PropertyHolder">
+	<bean class="xdata.etl.cinder.persistence.config.ConfigurationService.PropertyHolder">
 		<constructor-arg>
 			<value>file:${etl.conf}/kafka.properties</value>
 		</constructor-arg>
@@ -46,17 +44,17 @@
 
 
 	<!-- Hbase -->
-	<bean id="poolHTableService" class="xdata.etl.cinder.hbase.htable.PoolHTableService">
+	<bean id="poolHTableService" class="xdata.etl.cinder.persistence.hbase.htable.PoolHTableService">
 		<constructor-arg ref="hbaseConf" />
 		<constructor-arg value="${htable_service_pool_size}" />
 	</bean>
 
-	<bean id="lazyHTableService" class="xdata.etl.cinder.hbase.lazy.LazyHTableServiceImpl">
+	<bean id="lazyHTableService" class="xdata.etl.cinder.persistence.hbase.lazy.LazyHTableServiceImpl">
 		<property name="hTableService" ref="poolHTableService" />
 		<property name="thresholdSize" value="${lazy_threshold_size}" />
 		<property name="timeout" value="${lazy_time_out}" />
 	</bean>
-	
+
 	<bean id="lazyHTableService_timeout"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="lazyHTableService" />
@@ -64,20 +62,19 @@
 		<property name="concurrent" value="false" />
 	</bean>
 	<!-- /Hbase -->
-	<bean id="reportTopicStatus"
+	<bean id="watchDogManagerClientTick"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="kafkaConsumerManager" />
-		<property name="targetMethod" value="reportTopicStatus" />
+		<property name="targetObject" ref="watchDogManagerClient" />
+		<property name="targetMethod" value="tick" />
 		<property name="concurrent" value="false" />
-		<property name="name" value="reportTopicStatus" />
 	</bean>
 
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-		<property name="jobDetail" ref="reportTopicStatus" />
-		<property name="startDelay" value="20000" />
+		<property name="jobDetail" ref="watchDogManagerClientTick" />
+		<property name="startDelay" value="0" />
 		<property name="repeatInterval" value="25000" />
 	</bean>
-	
+
 	<bean id="simpleTrigger2" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="lazyHTableService_timeout" />
 		<property name="startDelay" value="20000" />

@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.service.kafka.transaction;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,15 +23,4 @@ public class KafkaTransactionDaoImpl implements KafkaTransactionDao {
 	public Integer queryWatchDogIdByIp(String ip) {
 		return kafkaDao.queryWatchDogIdByIp(ip);
 	}
-
-	@Override
-	public List<Integer> getAllWatchDogIds() {
-		return kafkaDao.getAllWatchDogIds();
-	}
-
-	@Override
-	public List<Integer> getAllTopicSettingIds() {
-		return kafkaDao.getAllTopicSettingIds();
-	}
-
 }

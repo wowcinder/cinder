@@ -76,14 +76,12 @@ public interface KafkaRpcService extends RemoteService {
 			EtlPagingLoadConfigBean config) throws SharedException,
 			ConstraintViolationException;
 
-	List<KafkaWatchDogTopicSetting> getKafkaWatchDogTopicSettingStatuss(
-			Integer watchDogId) throws SharedException,
-			ConstraintViolationException;
-
 	List<KafkaTopic> getRemainKafkaTopics(Integer dogId);
 
 	List<KafkaWatchDogTopicSetting> saveWatchDogTopicSettings(Integer dogId,
 			List<Integer> topicIds);
+
+	void restart(Integer dogId);
 
 	ValidationSupport dummy();
 }

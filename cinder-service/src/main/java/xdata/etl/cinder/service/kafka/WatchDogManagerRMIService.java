@@ -3,7 +3,6 @@
  */
 package xdata.etl.cinder.service.kafka;
 
-import java.util.Set;
 
 /**
  * @author XuehuiHe
@@ -28,10 +27,5 @@ public interface WatchDogManagerRMIService {
 	 */
 	void tick(String clientIp);
 
-	/**
-	 * @param clientIp
-	 * @param aliveTopicIds
-	 */
-	void reportTopicStatus(Set<Integer> aliveTopicIds);
 
 }

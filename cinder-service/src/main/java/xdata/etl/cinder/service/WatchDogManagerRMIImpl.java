@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.server.RemoteServer;
 import java.rmi.server.ServerNotActiveException;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,16 +46,6 @@ public class WatchDogManagerRMIImpl implements WatchDogManagerRMI {
 			@Override
 			public void run() {
 				rmiService.tick(ip);
-			}
-		}.start();
-	}
-
-	@Override
-	public void reportTopicStatus(final Set<Integer> aliveTopicIds) {
-		new Thread() {
-			@Override
-			public void run() {
-				rmiService.reportTopicStatus(aliveTopicIds);
 			}
 		}.start();
 	}

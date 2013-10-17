@@ -3,7 +3,6 @@
  */
 package xdata.etl.cinder.service.kafka.transaction;
 
-import java.util.List;
 
 /**
  * @author XuehuiHe
@@ -11,8 +10,4 @@ import java.util.List;
  */
 public interface KafkaTransactionDao {
 	public Integer queryWatchDogIdByIp(String ip);
-
-	public List<Integer> getAllWatchDogIds();
-
-	public List<Integer> getAllTopicSettingIds();
 }

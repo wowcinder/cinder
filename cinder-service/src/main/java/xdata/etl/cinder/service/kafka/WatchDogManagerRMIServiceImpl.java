@@ -3,8 +3,6 @@
  */
 package xdata.etl.cinder.service.kafka;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,7 @@ public class WatchDogManagerRMIServiceImpl implements WatchDogManagerRMIService 
 	@Autowired
 	private KafkaDao kafkaDao;
 	@Autowired
-	private KafkaStatusManager kafkaStatusManager;
+	private KafkaWatchDogStatusManager kafkaWatchDogStatusManager;
 
 	public WatchDogManagerRMIServiceImpl() {
 	}
@@ -29,7 +27,7 @@ public class WatchDogManagerRMIServiceImpl implements WatchDogManagerRMIService 
 	@Transactional
 	public Integer login(String clientIp, Integer rmiPort) {
 		Integer dogId = getWatchDogIdByIp(clientIp);
-		kafkaStatusManager.login(dogId);
+		kafkaWatchDogStatusManager.login(dogId);
 		kafkaDao.updateRmiPort(dogId, rmiPort);
 		return dogId;
 	}
@@ -37,22 +35,18 @@ public class WatchDogManagerRMIServiceImpl implements WatchDogManagerRMIService 
 	@Override
 	public void logoff(String clientIp) {
 		Integer dogId = getWatchDogIdByIp(clientIp);
-		kafkaStatusManager.logoff(dogId);
+		kafkaWatchDogStatusManager.logoff(dogId);
 	}
 
 	@Override
 	public void tick(String clientIp) {
 		Integer dogId = getWatchDogIdByIp(clientIp);
-		kafkaStatusManager.tick(dogId);
+		kafkaWatchDogStatusManager.tick(dogId);
 	}
 
-	@Override
-	public void reportTopicStatus(Set<Integer> aliveTopicIds) {
-		kafkaStatusManager.reportAliveTopic(aliveTopicIds);
-	}
 
 	protected Integer getWatchDogIdByIp(String ip) {
-		return kafkaStatusManager.getWatchDogIdByIp(ip);
+		return kafkaWatchDogStatusManager.getWatchDogIdByIp(ip);
 	}
 
 }
