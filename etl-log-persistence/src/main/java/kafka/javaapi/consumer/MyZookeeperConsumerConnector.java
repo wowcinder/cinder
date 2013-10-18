@@ -25,6 +25,7 @@ public class MyZookeeperConsumerConnector implements ConsumerConnector {
 		underlying = new KafkaZookeeperConsumerConnector(config);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public <T> Map<String, List<KafkaStream<T>>> createMessageStreams(
 			Map<String, Integer> topicCountMap, Decoder<T> decoder) {
