@@ -91,7 +91,21 @@
 			<list>
 				<ref bean="simpleTrigger" />
 				<ref bean="simpleTrigger2" />
+				<ref bean="simpleTrigger3" />
 			</list>
 		</property>
+	</bean>
+	
+	<bean id="kafkaConsumerManagerCommitOffsets"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="kafkaConsumerManager" />
+		<property name="targetMethod" value="commitOffsets" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="simpleTrigger3" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="kafkaConsumerManagerCommitOffsets" />
+		<property name="startDelay" value="0" />
+		<property name="repeatInterval" value="30000" />
 	</bean>
 </beans>

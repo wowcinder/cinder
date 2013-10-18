@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
-import kafka.javaapi.consumer.ConsumerConnector;
+import kafka.javaapi.consumer.MyZookeeperConsumerConnector;
 import kafka.message.Message;
 
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ import xdata.etl.cinder.persistence.rmi.WatchDogManagerClient;
  * @date 2013年10月16日
  */
 @SuppressWarnings("restriction")
-@Service
+@Service("kafkaConsumerManager")
 public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 
 	private static Unsafe unsafe = null;
@@ -86,9 +86,11 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 
 	private volatile ConsumerStatus status;
 
-	private ConsumerConnector connector;
+//	private ConsumerConnector connector;
+	private MyZookeeperConsumerConnector connector;
+	
 	private ExecutorService executor;
-	private int threadTotal;
+	private volatile int threadTotal;
 
 	public KafkaConsumerManagerImpl() {
 		status = ConsumerStatus.STOPED;
@@ -101,9 +103,9 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 		}
 		threadTotal = 0;
 		logger.info("consuner启动.....");
-		this.connector = kafka.consumer.Consumer
-				.createJavaConsumerConnector(kafkaClientConfig);
-
+//		this.connector = kafka.consumer.Consumer
+//				.createJavaConsumerConnector(kafkaClientConfig);
+		this.connector = new MyZookeeperConsumerConnector(kafkaClientConfig);
 		List<KafkaWatchDogTopicSetting> settings = metaService
 				.getAllTopicSettings(dog);
 
@@ -145,7 +147,6 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	}
 
 	public boolean shutdown() throws InterruptedException {
-
 		if (!compareAndSet(ConsumerStatus.RUNNING, ConsumerStatus.STOPPING)) {
 			logger.info("consuner正处在" + status.name() + ",无法关闭");
 			return false;
@@ -156,7 +157,6 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 		if (connector != null) {
 			logger.info("正在关闭consuner connector");
 			connector.shutdown();
-			connector = null;
 		}
 		if (executor != null && !executor.isShutdown()) {
 			executor.shutdown();
@@ -164,6 +164,12 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 				logger.info("正在等待处理进程shutdown,sleep 1 second");
 				TimeUnit.SECONDS.sleep(1);
 			}
+		}
+		if (connector != null) {
+			logger.info("正在commitOffsets...shutdownZkClient");
+			connector.commitOffsets();
+			connector.shutdownZkClient();
+			connector = null;
 		}
 		logger.info("consuner关闭完毕.....");
 		status = ConsumerStatus.STOPED;
@@ -176,6 +182,19 @@ public class KafkaConsumerManagerImpl implements KafkaConsumerManager {
 	}
 
 	public enum ConsumerStatus {
-		STARTING, RUNNING, STOPPING, STOPED;
+		STARTING, RUNNING, STOPPING, STOPED, COMMITOFFSETSING;
+	}
+
+	@Override
+	public void commitOffsets() {
+		if (connector != null && threadTotal > 0) {
+			if (compareAndSet(ConsumerStatus.RUNNING,
+					ConsumerStatus.COMMITOFFSETSING)) {
+				logger.info("commitOffsets.....");
+				connector.commitOffsets();
+				logger.info("commitOffsets end");
+				status = ConsumerStatus.RUNNING;
+			}
+		}
 	}
 }
