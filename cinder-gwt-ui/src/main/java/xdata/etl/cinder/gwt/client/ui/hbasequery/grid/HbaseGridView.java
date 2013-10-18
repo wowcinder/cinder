@@ -51,12 +51,17 @@ public abstract class HbaseGridView<M> extends GridView<M> {
 				.getLastRow());
 	}
 
-	protected void handleComponentEvent(Event event) {
-		if (event.getTypeInt() == Event.ONSCROLL) {
-			if (isArriveBottom()) {
-				doLoadNext();
-			}
+	@Override
+	protected void syncScroll() {
+		super.syncScroll();
+		if (!isGetAllData() && isArriveBottom()) {
+			doLoadNext();
 		}
+
+	}
+
+	protected void handleComponentEvent(Event event) {
+		super.handleComponentEvent(event);
 	}
 
 	private boolean isArriveBottom() {

@@ -28,6 +28,8 @@ public class HbaseColumnConfig<K extends Serializable> extends
 		super(new HbaseRecordValueProvider(column.getName()), 100, column
 				.getShortname());
 		this.column = column;
+		this.setSortable(false);
+		this.setMenuDisabled(true);
 		initValueProvider();
 	}
 

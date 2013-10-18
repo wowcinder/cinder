@@ -167,8 +167,7 @@ public class MenuView extends Tree<MenuNode, MenuNode> {
 			if (parent != null) {
 				setExpanded(parent, true);
 			}
-			// tree.scrollIntoView(mn);
-			// TODO
+			scrollIntoView(mn);
 			getSelectionModel().select(mn, true);
 		} else {
 			getSelectionModel().deselectAll();

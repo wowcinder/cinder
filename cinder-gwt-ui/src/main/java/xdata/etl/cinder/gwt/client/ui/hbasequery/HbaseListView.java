@@ -3,13 +3,17 @@
  */
 package xdata.etl.cinder.gwt.client.ui.hbasequery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import xdata.etl.cinder.gwt.client.common.RpcAsyncCallback;
 import xdata.etl.cinder.gwt.client.ui.CenterView;
-import xdata.etl.cinder.gwt.client.ui.hbasequery.grid.HbaseQueryGrid;
+import xdata.etl.cinder.gwt.client.ui.hbasequery.column.HbaseColumnConfig;
+import xdata.etl.cinder.gwt.client.ui.hbasequery.grid.HbaseQueryGrid2;
 import xdata.etl.cinder.gwt.client.util.RpcServiceUtils;
 import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTable;
+import xdata.etl.cinder.hbasemeta.shared.entity.base.HbaseTableColumn;
+import xdata.etl.cinder.hbasemeta.shared.entity.query.HbaseRecord;
 import xdata.etl.cinder.shared.annotations.MenuToken;
 
 import com.google.gwt.core.client.Scheduler;
@@ -17,6 +21,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.sencha.gxt.core.client.IdentityValueProvider;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
@@ -27,6 +32,8 @@ import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.MarginData;
+import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
+import com.sencha.gxt.widget.core.client.grid.RowNumberer;
 
 /**
  * @author XuehuiHe
@@ -37,6 +44,7 @@ public class HbaseListView extends BorderLayoutContainer implements CenterView {
 	private ListView<HbaseTable, String> hbaseTableList;
 	private ListStore<HbaseTable> HbaseTableListStore;
 	private TabPanel viewPanel;
+	ContentPanel west;
 
 	public HbaseListView() {
 		initHbaseTableList();
@@ -48,7 +56,7 @@ public class HbaseListView extends BorderLayoutContainer implements CenterView {
 		westData.setCollapseHidden(true);
 		westData.setCollapseMini(true);
 
-		ContentPanel west = new ContentPanel();
+		west = new ContentPanel();
 		west.setHeadingText("hbase表");
 		west.setBodyBorder(true);
 		west.add(hbaseTableList);
@@ -113,6 +121,8 @@ public class HbaseListView extends BorderLayoutContainer implements CenterView {
 			}
 		};
 
+		hbaseTableList.getElement().getStyle().setTextAlign(TextAlign.LEFT);
+
 		hbaseTableList.getSelectionModel().addSelectionHandler(
 				new SelectionHandler<HbaseTable>() {
 
@@ -123,10 +133,56 @@ public class HbaseListView extends BorderLayoutContainer implements CenterView {
 				});
 	}
 
-	private void showTable(String tableName) {
-		HbaseQueryGrid tab = new HbaseQueryGrid(tableName);
-		viewPanel.add(tab, new TabItemConfig(tableName, true));
-		viewPanel.setActiveWidget(tab);
+	private void showTable(final String tableName) {
+		hbaseTableList.mask("加载meta...");
+		RpcServiceUtils.HbaseMetaRpcService.getTableAllColumns(tableName, null,
+				new RpcAsyncCallback<List<HbaseTableColumn>>() {
+
+					@Override
+					public void _onSuccess(List<HbaseTableColumn> t) {
+						List<ColumnConfig<HbaseRecord<String>, ?>> columns = new ArrayList<ColumnConfig<HbaseRecord<String>, ?>>();
+						RowNumberer<HbaseRecord<String>> rowNumberer = new RowNumberer<HbaseRecord<String>>(
+								new IdentityValueProvider<HbaseRecord<String>>());
+						rowNumberer.setResizable(true);
+						rowNumberer.setFixed(false);
+						columns.add(rowNumberer);
+						columns.add(new ColumnConfig<HbaseRecord<String>, String>(
+								new ValueProvider<HbaseRecord<String>, String>() {
+									@Override
+									public String getValue(
+											HbaseRecord<String> object) {
+										return object.getKey().toString();
+									}
+
+									@Override
+									public void setValue(
+											HbaseRecord<String> object,
+											String value) {
+
+									}
+
+									@Override
+									public String getPath() {
+										return null;
+									}
+								}, 100, "key"));
+						for (HbaseTableColumn hbaseTableColumn : t) {
+							columns.add(new HbaseColumnConfig<String>(
+									hbaseTableColumn));
+						}
+						HbaseQueryGrid2 tab = new HbaseQueryGrid2(columns,
+								tableName);
+						viewPanel.add(tab, new TabItemConfig(tableName, true));
+						viewPanel.setActiveWidget(tab);
+					}
+
+					@Override
+					public void post() {
+						super.post();
+						hbaseTableList.unmask();
+					}
+				});
+
 	}
 
 	private CenterViewConfig centerViewConfig;
